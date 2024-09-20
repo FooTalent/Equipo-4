@@ -11,10 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@RequiredArgsConstructor
 public class UsuarioController {
+    private final UsuarioService usuarioService;
 
-    private  UsuarioService usuarioService;
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> obtenerTodos() {

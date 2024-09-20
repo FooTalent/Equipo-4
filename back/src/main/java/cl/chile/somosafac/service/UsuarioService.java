@@ -13,11 +13,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class UsuarioService {
 
-    private  UsuarioRepository usuarioRepository;
-    private  UsuarioMapper usuarioMapper;
+    private final UsuarioRepository usuarioRepository;
+    private final UsuarioMapper usuarioMapper;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper) {
+        this.usuarioRepository = usuarioRepository;
+        this.usuarioMapper = usuarioMapper;
+    }
 
     @Transactional(readOnly = true)
     public List<UsuarioDTO> obtenerTodos() {

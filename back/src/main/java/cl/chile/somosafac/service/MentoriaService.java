@@ -4,7 +4,6 @@ import cl.chile.somosafac.DTO.MentoriaDTO;
 import cl.chile.somosafac.entity.MentoriaEntity;
 import cl.chile.somosafac.mapper.MentoriaMapper;
 import cl.chile.somosafac.repository.MentoriaRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,11 +11,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class MentoriaService {
 
-    private  MentoriaRepository mentoriaRepository;
-    private  MentoriaMapper mentoriaMapper;
+    private final MentoriaRepository mentoriaRepository;
+    private final MentoriaMapper mentoriaMapper;
+
+    public MentoriaService(MentoriaRepository mentoriaRepository, MentoriaMapper mentoriaMapper) {
+        this.mentoriaRepository = mentoriaRepository;
+        this.mentoriaMapper = mentoriaMapper;
+    }
 
     @Transactional(readOnly = true)
     public List<MentoriaDTO> getAllMentorias() {

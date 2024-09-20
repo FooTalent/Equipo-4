@@ -4,7 +4,6 @@ import cl.chile.somosafac.DTO.FamiliaDTO;
 import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.mapper.FamiliaMapper;
 import cl.chile.somosafac.repository.FamiliaRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
