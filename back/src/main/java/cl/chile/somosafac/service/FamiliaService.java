@@ -12,11 +12,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class FamiliaService {
 
-    private  FamiliaRepository familiaRepository;
-    private  FamiliaMapper familiaMapper;
+    private final FamiliaRepository familiaRepository;
+    private final FamiliaMapper familiaMapper;
+
+    public FamiliaService(FamiliaRepository familiaRepository, FamiliaMapper familiaMapper) {
+        this.familiaRepository = familiaRepository;
+        this.familiaMapper = familiaMapper;
+    }
 
     @Transactional(readOnly = true)
     public List<FamiliaDTO> getFamilia() {

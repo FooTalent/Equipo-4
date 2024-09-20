@@ -12,10 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/familias")
-@RequiredArgsConstructor
 public class FamiliaController {
 
-    private  FamiliaService familiaService;
+    private final FamiliaService familiaService;
+
+    public FamiliaController(FamiliaService familiaService) {
+        this.familiaService = familiaService;
+    }
 
     @GetMapping
     public ResponseEntity<List<FamiliaDTO>> obtenerTodos() {
