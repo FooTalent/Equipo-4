@@ -2,7 +2,6 @@ package cl.chile.somosafac.controller;
 
 import cl.chile.somosafac.DTO.MentoriaDTO;
 import cl.chile.somosafac.service.MentoriaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,12 @@ import java.util.List;
 @RequestMapping("/api/mentorias")
 public class MentoriaController {
 
-    @Autowired
-    private MentoriaService mentoriaService;
+
+    private final MentoriaService mentoriaService;
+
+    public MentoriaController(MentoriaService mentoriaService) {
+        this.mentoriaService = mentoriaService;
+    }
 
     @GetMapping
     public ResponseEntity<List<MentoriaDTO>> obtenerTodasLasMentorias() {

@@ -4,9 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -103,4 +107,13 @@ public class FamiliaEntity {
 
     @Column(name = "fecha_ultimo_contacto")
     private LocalDate fechaUltimoContacto;
+
+    @CreatedBy
+    private String usuarioCreacion;
+
+    @CreatedDate
+    private Date fechaCreacion;
+
+    @LastModifiedDate
+    private Date fechaModificacion;
 }

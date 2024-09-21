@@ -1,10 +1,9 @@
 package cl.chile.somosafac.service;
-import cl.chile.somosafac.DTO.UsuarioDTO;
 
+import cl.chile.somosafac.DTO.UsuarioDTO;
 import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.mapper.UsuarioMapper;
 import cl.chile.somosafac.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +25,17 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public List<UsuarioDTO> obtenerTodos() {
         List<UsuarioEntity> usuarios = usuarioRepository.findAll();
+        System.out.println("Datos recuperados: ");
+        usuarios.forEach(usuario -> System.out.println("Entidad: " + usuario.getId() + ", " + usuario.getCorreo()));
+
         return usuarios.stream()
-                .map(usuarioMapper::usuarioToUsuarioDTO)
+                .map(usuario -> {
+                    UsuarioDTO usuarioDTO = usuarioMapper.usuarioToUsuarioDTO(usuario);
+                    System.out.println("DTO: " + usuarioDTO.getId() + ", " + usuarioDTO.getCorreo());
+                    return usuarioDTO;
+                })
                 .collect(Collectors.toList());
+
     }
 
     @Transactional(readOnly = true)
@@ -49,7 +56,7 @@ public class UsuarioService {
         Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findById(id);
         if (usuarioExistente.isPresent()) {
             UsuarioEntity usuario = usuarioExistente.get();
-            usuarioMapper.usuarioDTOToUsuario(usuarioDTO);
+            usuario = usuarioMapper.usuarioDTOToUsuario(usuarioDTO); // Actualiza el objeto usuario
             UsuarioEntity usuarioActualizado = usuarioRepository.save(usuario);
             return usuarioMapper.usuarioToUsuarioDTO(usuarioActualizado);
         }

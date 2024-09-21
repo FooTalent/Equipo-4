@@ -32,7 +32,7 @@ public class FamiliaController {
         return familia != null ? ResponseEntity.ok(familia) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<FamiliaEntity> crearFamilia(@RequestBody FamiliaDTO familiaDTO) {
         FamiliaEntity nuevaFamilia = familiaService.createFamilia(familiaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaFamilia);
