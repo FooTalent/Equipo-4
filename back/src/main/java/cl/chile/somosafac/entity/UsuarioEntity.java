@@ -1,11 +1,10 @@
 package cl.chile.somosafac.entity;
 import jakarta.persistence.*;
-import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
-
     public class UsuarioEntity {
 
     @Id

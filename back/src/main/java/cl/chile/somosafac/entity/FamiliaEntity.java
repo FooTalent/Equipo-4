@@ -1,20 +1,16 @@
 package cl.chile.somosafac.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "familias")
 public class FamiliaEntity {
@@ -85,7 +81,7 @@ public class FamiliaEntity {
     private String estadoAcogimiento;
 
     @Column(name = "fecha_inicio_acogimiento")
-    private LocalDate fechaInicioAcogimiento;
+    private LocalDateTime fechaInicioAcogimiento;
 
     @Column(name = "edad_nna")
     private Integer edadNna;
@@ -106,7 +102,7 @@ public class FamiliaEntity {
     private BigDecimal ingresoAfac;
 
     @Column(name = "fecha_ultimo_contacto")
-    private LocalDate fechaUltimoContacto;
+    private LocalDateTime fechaUltimoContacto;
 
     @CreatedBy
     private String usuarioCreacion;
@@ -116,4 +112,260 @@ public class FamiliaEntity {
 
     @LastModifiedDate
     private Date fechaModificacion;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public UsuarioEntity getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioEntity usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getNombreFaUno() {
+        return nombreFaUno;
+    }
+
+    public void setNombreFaUno(String nombreFaUno) {
+        this.nombreFaUno = nombreFaUno;
+    }
+
+    public String getNombreFaDos() {
+        return nombreFaDos;
+    }
+
+    public void setNombreFaDos(String nombreFaDos) {
+        this.nombreFaDos = nombreFaDos;
+    }
+
+    public String getRutFaUno() {
+        return rutFaUno;
+    }
+
+    public void setRutFaUno(String rutFaUno) {
+        this.rutFaUno = rutFaUno;
+    }
+
+    public String getRutFaDos() {
+        return rutFaDos;
+    }
+
+    public void setRutFaDos(String rutFaDos) {
+        this.rutFaDos = rutFaDos;
+    }
+
+    public LocalDate getFechaNacimientoFaUno() {
+        return fechaNacimientoFaUno;
+    }
+
+    public void setFechaNacimientoFaUno(LocalDate fechaNacimientoFaUno) {
+        this.fechaNacimientoFaUno = fechaNacimientoFaUno;
+    }
+
+    public LocalDate getFechaNacimientoFaDos() {
+        return fechaNacimientoFaDos;
+    }
+
+    public void setFechaNacimientoFaDos(LocalDate fechaNacimientoFaDos) {
+        this.fechaNacimientoFaDos = fechaNacimientoFaDos;
+    }
+
+    public String getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(String estadoCivil) {
+        this.estadoCivil = estadoCivil;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getComuna() {
+        return comuna;
+    }
+
+    public void setComuna(String comuna) {
+        this.comuna = comuna;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getProgramaFundacionActual() {
+        return programaFundacionActual;
+    }
+
+    public void setProgramaFundacionActual(String programaFundacionActual) {
+        this.programaFundacionActual = programaFundacionActual;
+    }
+
+    public String getProgramaFundacionAnterior() {
+        return programaFundacionAnterior;
+    }
+
+    public void setProgramaFundacionAnterior(String programaFundacionAnterior) {
+        this.programaFundacionAnterior = programaFundacionAnterior;
+    }
+
+    public BigDecimal getIngresoFa() {
+        return ingresoFa;
+    }
+
+    public void setIngresoFa(BigDecimal ingresoFa) {
+        this.ingresoFa = ingresoFa;
+    }
+
+    public Integer getDuracionEvaluacion() {
+        return duracionEvaluacion;
+    }
+
+    public void setDuracionEvaluacion(Integer duracionEvaluacion) {
+        this.duracionEvaluacion = duracionEvaluacion;
+    }
+
+    public Integer getTiempoParaAcoger() {
+        return tiempoParaAcoger;
+    }
+
+    public void setTiempoParaAcoger(Integer tiempoParaAcoger) {
+        this.tiempoParaAcoger = tiempoParaAcoger;
+    }
+
+    public Integer getCantidadAcogimientos() {
+        return cantidadAcogimientos;
+    }
+
+    public void setCantidadAcogimientos(Integer cantidadAcogimientos) {
+        this.cantidadAcogimientos = cantidadAcogimientos;
+    }
+
+    public String getEstadoAcogimiento() {
+        return estadoAcogimiento;
+    }
+
+    public void setEstadoAcogimiento(String estadoAcogimiento) {
+        this.estadoAcogimiento = estadoAcogimiento;
+    }
+
+    public LocalDateTime getFechaInicioAcogimiento() {
+        return fechaInicioAcogimiento;
+    }
+
+    public void setFechaInicioAcogimiento(LocalDateTime fechaInicioAcogimiento) {
+        this.fechaInicioAcogimiento = fechaInicioAcogimiento;
+    }
+
+    public Integer getEdadNna() {
+        return edadNna;
+    }
+
+    public void setEdadNna(Integer edadNna) {
+        this.edadNna = edadNna;
+    }
+
+    public String getRangoEdadNna() {
+        return rangoEdadNna;
+    }
+
+    public void setRangoEdadNna(String rangoEdadNna) {
+        this.rangoEdadNna = rangoEdadNna;
+    }
+
+    public String getSexoNna() {
+        return sexoNna;
+    }
+
+    public void setSexoNna(String sexoNna) {
+        this.sexoNna = sexoNna;
+    }
+
+    public String getNacionalidadNna() {
+        return nacionalidadNna;
+    }
+
+    public void setNacionalidadNna(String nacionalidadNna) {
+        this.nacionalidadNna = nacionalidadNna;
+    }
+
+    public Integer getTiempoAcogimiento() {
+        return tiempoAcogimiento;
+    }
+
+    public void setTiempoAcogimiento(Integer tiempoAcogimiento) {
+        this.tiempoAcogimiento = tiempoAcogimiento;
+    }
+
+    public BigDecimal getIngresoAfac() {
+        return ingresoAfac;
+    }
+
+    public void setIngresoAfac(BigDecimal ingresoAfac) {
+        this.ingresoAfac = ingresoAfac;
+    }
+
+    public LocalDateTime getFechaUltimoContacto() {
+        return fechaUltimoContacto;
+    }
+
+    public void setFechaUltimoContacto(LocalDateTime fechaUltimoContacto) {
+        this.fechaUltimoContacto = fechaUltimoContacto;
+    }
+
+    public String getUsuarioCreacion() {
+        return usuarioCreacion;
+    }
+
+    public void setUsuarioCreacion(String usuarioCreacion) {
+        this.usuarioCreacion = usuarioCreacion;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
 }

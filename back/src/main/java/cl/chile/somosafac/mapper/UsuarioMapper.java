@@ -10,16 +10,10 @@ import org.mapstruct.Mappings;
 public interface UsuarioMapper {
 
 
-    @Mappings({
-            @Mapping(source = "id", target = "id"),
-            @Mapping(source = "correo", target = "correo")
-    })
+
     UsuarioDTO usuarioToUsuarioDTO(UsuarioEntity usuario);
 
-    @Mappings({
-            @Mapping(source = "id", target = "id"),
-            @Mapping(source = "correo", target = "correo")
-    })
+
     UsuarioEntity usuarioDTOToUsuario(UsuarioDTO usuarioDTO);
 
 
