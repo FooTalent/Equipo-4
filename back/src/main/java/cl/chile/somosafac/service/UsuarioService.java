@@ -7,6 +7,7 @@ import cl.chile.somosafac.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,6 +48,7 @@ public class UsuarioService {
     @Transactional
     public UsuarioDTO crearUsuario(UsuarioDTO usuarioDTO) {
         UsuarioEntity usuario = usuarioMapper.usuarioDTOToUsuario(usuarioDTO);
+        usuario.setFechaRegistro(LocalDateTime.now());
         UsuarioEntity nuevoUsuario = usuarioRepository.save(usuario);
         return usuarioMapper.usuarioToUsuarioDTO(nuevoUsuario);
     }

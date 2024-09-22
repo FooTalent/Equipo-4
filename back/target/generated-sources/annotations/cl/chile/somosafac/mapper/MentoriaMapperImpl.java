@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-22T15:32:56-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22.0.1 (Oracle Corporation)"
+    date = "2024-09-22T18:49:17-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23 (Oracle Corporation)"
 )
 @Component
 public class MentoriaMapperImpl implements MentoriaMapper {
@@ -21,10 +21,6 @@ public class MentoriaMapperImpl implements MentoriaMapper {
 
         MentoriaDTO mentoriaDTO = new MentoriaDTO();
 
-        mentoriaDTO.setId( mentoria.getId() );
-        mentoriaDTO.setFechaAsignacion( mentoria.getFechaAsignacion() );
-        mentoriaDTO.setEstadoMentoria( mentoria.getEstadoMentoria() );
-
         return mentoriaDTO;
     }
 
@@ -36,10 +32,6 @@ public class MentoriaMapperImpl implements MentoriaMapper {
 
         MentoriaEntity mentoriaEntity = new MentoriaEntity();
 
-        mentoriaEntity.setId( mentoriaDTO.getId() );
-        mentoriaEntity.setFechaAsignacion( mentoriaDTO.getFechaAsignacion() );
-        mentoriaEntity.setEstadoMentoria( mentoriaDTO.getEstadoMentoria() );
-
         return mentoriaEntity;
     }
 
@@ -48,9 +40,5 @@ public class MentoriaMapperImpl implements MentoriaMapper {
         if ( mentoriaDTO == null ) {
             return;
         }
-
-        mentoria.setId( mentoriaDTO.getId() );
-        mentoria.setFechaAsignacion( mentoriaDTO.getFechaAsignacion() );
-        mentoria.setEstadoMentoria( mentoriaDTO.getEstadoMentoria() );
     }
 }
