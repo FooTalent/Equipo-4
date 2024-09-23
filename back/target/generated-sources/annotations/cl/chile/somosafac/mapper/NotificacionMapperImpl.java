@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-22T18:49:17-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23 (Oracle Corporation)"
+    date = "2024-09-22T19:47:31-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22.0.1 (Oracle Corporation)"
 )
 @Component
 public class NotificacionMapperImpl implements NotificacionMapper {
@@ -21,6 +21,11 @@ public class NotificacionMapperImpl implements NotificacionMapper {
 
         NotificacionDTO notificacionDTO = new NotificacionDTO();
 
+        notificacionDTO.setId( notificacion.getId() );
+        notificacionDTO.setMensaje( notificacion.getMensaje() );
+        notificacionDTO.setFechaEnvio( notificacion.getFechaEnvio() );
+        notificacionDTO.setTipoNotificacion( notificacion.getTipoNotificacion() );
+
         return notificacionDTO;
     }
 
@@ -32,6 +37,11 @@ public class NotificacionMapperImpl implements NotificacionMapper {
 
         NotificacionEntity notificacionEntity = new NotificacionEntity();
 
+        notificacionEntity.setId( notificacionDTO.getId() );
+        notificacionEntity.setMensaje( notificacionDTO.getMensaje() );
+        notificacionEntity.setFechaEnvio( notificacionDTO.getFechaEnvio() );
+        notificacionEntity.setTipoNotificacion( notificacionDTO.getTipoNotificacion() );
+
         return notificacionEntity;
     }
 
@@ -40,5 +50,10 @@ public class NotificacionMapperImpl implements NotificacionMapper {
         if ( notificacionDTO == null ) {
             return;
         }
+
+        notificacion.setId( notificacionDTO.getId() );
+        notificacion.setMensaje( notificacionDTO.getMensaje() );
+        notificacion.setFechaEnvio( notificacionDTO.getFechaEnvio() );
+        notificacion.setTipoNotificacion( notificacionDTO.getTipoNotificacion() );
     }
 }

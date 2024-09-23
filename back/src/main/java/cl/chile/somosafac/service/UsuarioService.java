@@ -26,31 +26,23 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public List<UsuarioDTO> obtenerTodos() {
         List<UsuarioEntity> usuarios = usuarioRepository.findAll();
-        System.out.println("Datos recuperados: ");
-        usuarios.forEach(usuario -> System.out.println("Entidad: " + usuario.getId() + ", " + usuario.getCorreo()));
-
         return usuarios.stream()
-                .map(usuario -> {
-                    UsuarioDTO usuarioDTO = usuarioMapper.usuarioToUsuarioDTO(usuario);
-                    System.out.println("DTO: " + usuarioDTO.getId() + ", " + usuarioDTO.getCorreo());
-                    return usuarioDTO;
-                })
+                .map(usuarioMapper::usuarioToDto)
                 .collect(Collectors.toList());
-
     }
 
     @Transactional(readOnly = true)
     public UsuarioDTO obtenerPorId(Long id) {
         Optional<UsuarioEntity> usuario = usuarioRepository.findById(id);
-        return usuario.map(usuarioMapper::usuarioToUsuarioDTO).orElse(null);
+        return usuario.map(usuarioMapper::usuarioToDto).orElse(null);
     }
 
     @Transactional
     public UsuarioDTO crearUsuario(UsuarioDTO usuarioDTO) {
-        UsuarioEntity usuario = usuarioMapper.usuarioDTOToUsuario(usuarioDTO);
+        UsuarioEntity usuario = usuarioMapper.usuarioToEntity(usuarioDTO);
         usuario.setFechaRegistro(LocalDateTime.now());
         UsuarioEntity nuevoUsuario = usuarioRepository.save(usuario);
-        return usuarioMapper.usuarioToUsuarioDTO(nuevoUsuario);
+        return usuarioMapper.usuarioToDto(nuevoUsuario);
     }
 
     @Transactional
@@ -58,9 +50,9 @@ public class UsuarioService {
         Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findById(id);
         if (usuarioExistente.isPresent()) {
             UsuarioEntity usuario = usuarioExistente.get();
-            usuario = usuarioMapper.usuarioDTOToUsuario(usuarioDTO); // Actualiza el objeto usuario
+            usuarioMapper.updateUsuarioFromDto(usuarioDTO, usuario);
             UsuarioEntity usuarioActualizado = usuarioRepository.save(usuario);
-            return usuarioMapper.usuarioToUsuarioDTO(usuarioActualizado);
+            return usuarioMapper.usuarioToDto(usuarioActualizado);
         }
         return null; // Manejar el caso donde no se encuentra el usuario
     }
@@ -70,6 +62,3 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 }
-
-
-

@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-22T18:49:17-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23 (Oracle Corporation)"
+    date = "2024-09-22T19:47:31-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22.0.1 (Oracle Corporation)"
 )
 @Component
 public class UsuarioMapperImpl implements UsuarioMapper {
 
     @Override
-    public UsuarioDTO usuarioToUsuarioDTO(UsuarioEntity usuario) {
+    public UsuarioDTO usuarioToDto(UsuarioEntity usuario) {
         if ( usuario == null ) {
             return null;
         }
@@ -35,7 +35,7 @@ public class UsuarioMapperImpl implements UsuarioMapper {
     }
 
     @Override
-    public UsuarioEntity usuarioDTOToUsuario(UsuarioDTO usuarioDTO) {
+    public UsuarioEntity usuarioToEntity(UsuarioDTO usuarioDTO) {
         if ( usuarioDTO == null ) {
             return null;
         }
@@ -53,5 +53,22 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         usuarioEntity.setAceptarTerminos( usuarioDTO.getAceptarTerminos() );
 
         return usuarioEntity;
+    }
+
+    @Override
+    public void updateUsuarioFromDto(UsuarioDTO usuarioDTO, UsuarioEntity usuario) {
+        if ( usuarioDTO == null ) {
+            return;
+        }
+
+        usuario.setId( usuarioDTO.getId() );
+        usuario.setCorreo( usuarioDTO.getCorreo() );
+        usuario.setContrasenaHash( usuarioDTO.getContrasenaHash() );
+        usuario.setTipoUsuario( usuarioDTO.getTipoUsuario() );
+        usuario.setFechaRegistro( usuarioDTO.getFechaRegistro() );
+        usuario.setActivo( usuarioDTO.getActivo() );
+        usuario.setVerificado( usuarioDTO.getVerificado() );
+        usuario.setFechaUltimoAcceso( usuarioDTO.getFechaUltimoAcceso() );
+        usuario.setAceptarTerminos( usuarioDTO.getAceptarTerminos() );
     }
 }

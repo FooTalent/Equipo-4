@@ -3,7 +3,6 @@ package cl.chile.somosafac.mapper;
 import cl.chile.somosafac.DTO.NotificacionDTO;
 import cl.chile.somosafac.entity.NotificacionEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
