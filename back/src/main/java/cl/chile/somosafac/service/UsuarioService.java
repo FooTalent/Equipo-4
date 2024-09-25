@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,38 +28,54 @@ public class UsuarioService {
     public List<UsuarioDTO> obtenerTodos() {
         List<UsuarioEntity> usuarios = usuarioRepository.findAll();
         return usuarios.stream()
-                .map(usuarioMapper::usuarioToDto)
+                .map(UsuarioDTO::fromEntity)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public UsuarioDTO obtenerPorId(Long id) {
         Optional<UsuarioEntity> usuario = usuarioRepository.findById(id);
-        return usuario.map(usuarioMapper::usuarioToDto).orElse(null);
+        return usuario.map(UsuarioDTO::fromEntity).orElse(null);
     }
 
     @Transactional
     public UsuarioDTO crearUsuario(UsuarioDTO usuarioDTO) {
-        UsuarioEntity usuario = usuarioMapper.usuarioToEntity(usuarioDTO);
+        UsuarioEntity usuario = usuarioDTO.toEntity();
         usuario.setFechaRegistro(LocalDateTime.now());
         UsuarioEntity nuevoUsuario = usuarioRepository.save(usuario);
-        return usuarioMapper.usuarioToDto(nuevoUsuario);
+        return UsuarioDTO.fromEntity(nuevoUsuario);
     }
 
     @Transactional
     public UsuarioDTO actualizarUsuario(Long id, UsuarioDTO usuarioDTO) {
         Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findById(id);
+
         if (usuarioExistente.isPresent()) {
             UsuarioEntity usuario = usuarioExistente.get();
-            usuarioMapper.updateUsuarioFromDto(usuarioDTO, usuario);
-            UsuarioEntity usuarioActualizado = usuarioRepository.save(usuario);
-            return usuarioMapper.usuarioToDto(usuarioActualizado);
+            usuario.setCorreo(usuarioDTO.getCorreo());
+//            usuario.setContrasenaHash(usuarioDTO.getContrasenaHash());
+            usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
+            usuario.setActivo(usuarioDTO.getActivo());
+            usuario.setVerificado(usuarioDTO.getVerificado());
+            usuario.setAceptarTerminos(usuarioDTO.getAceptarTerminos());
+
+            usuario = usuarioRepository.save(usuario);
+
+            return UsuarioDTO.fromEntity(usuario);
+        } else {
+            throw new NoSuchElementException("Usuario " + id + " no encontrado");
         }
-        return null; // Manejar el caso donde no se encuentra el usuario
     }
+
 
     @Transactional
     public void eliminarUsuario(Long id) {
-        usuarioRepository.deleteById(id);
+        Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findById(id);
+        if (usuarioExistente.isPresent()) {
+            UsuarioEntity usuario = usuarioExistente.get();
+            usuarioRepository.deleteById(usuario.getId());
+        }else{
+            throw new NoSuchElementException("Usuario " + id + " no encontrado");
+        }
     }
 }
