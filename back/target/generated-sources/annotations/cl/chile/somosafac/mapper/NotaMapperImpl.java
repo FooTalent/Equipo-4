@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-22T18:40:44-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22.0.1 (Oracle Corporation)"
+    date = "2024-09-25T16:11:52-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23 (Oracle Corporation)"
 )
 @Component
 public class NotaMapperImpl implements NotaMapper {
@@ -21,10 +21,6 @@ public class NotaMapperImpl implements NotaMapper {
 
         NotaDTO notaDTO = new NotaDTO();
 
-        notaDTO.setId( nota.getId() );
-        notaDTO.setDescripcion( nota.getDescripcion() );
-        notaDTO.setFechaCreacion( nota.getFechaCreacion() );
-
         return notaDTO;
     }
 
@@ -36,10 +32,6 @@ public class NotaMapperImpl implements NotaMapper {
 
         NotaEntity notaEntity = new NotaEntity();
 
-        notaEntity.setId( notaDTO.getId() );
-        notaEntity.setDescripcion( notaDTO.getDescripcion() );
-        notaEntity.setFechaCreacion( notaDTO.getFechaCreacion() );
-
         return notaEntity;
     }
 
@@ -48,9 +40,5 @@ public class NotaMapperImpl implements NotaMapper {
         if ( notaDTO == null ) {
             return;
         }
-
-        nota.setId( notaDTO.getId() );
-        nota.setDescripcion( notaDTO.getDescripcion() );
-        nota.setFechaCreacion( notaDTO.getFechaCreacion() );
     }
 }
