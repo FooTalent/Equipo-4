@@ -1,5 +1,7 @@
 package cl.chile.somosafac.DTO;
 
+import cl.chile.somosafac.entity.UsuarioEntity;
+import cl.chile.somosafac.security.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -20,7 +22,7 @@ public class UsuarioDTO {
     private String contrasenaHash;
 
     @JsonProperty("tipoUsuario")
-    private String tipoUsuario;
+    private Role tipoUsuario;
 
     @JsonProperty("activo")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "true|false")
@@ -42,4 +44,31 @@ public class UsuarioDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "true|false")
     private Boolean aceptarTerminos;
 
+    public UsuarioEntity toEntity() {
+        UsuarioEntity usuario = new UsuarioEntity();
+        usuario.setId(this.id);
+        usuario.setCorreo(this.correo);
+        usuario.setContrasenaHash(this.contrasenaHash);
+        usuario.setTipoUsuario(this.tipoUsuario);
+        usuario.setActivo(this.activo);
+        usuario.setVerificado(this.verificado);
+        usuario.setFechaRegistro(this.fechaRegistro);
+        usuario.setFechaUltimoAcceso(this.fechaUltimoAcceso);
+        usuario.setAceptarTerminos(this.aceptarTerminos);
+        return usuario;
+    }
+
+    public static UsuarioDTO fromEntity(UsuarioEntity usuario) {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(usuario.getId());
+        usuarioDTO.setCorreo(usuario.getCorreo());
+        usuarioDTO.setContrasenaHash(usuario.getContrasenaHash());
+        usuarioDTO.setTipoUsuario(usuario.getTipoUsuario());
+        usuarioDTO.setActivo(usuario.getActivo());
+        usuarioDTO.setVerificado(usuario.getVerificado());
+        usuarioDTO.setFechaRegistro(usuario.getFechaRegistro());
+        usuarioDTO.setFechaUltimoAcceso(usuario.getFechaUltimoAcceso());
+        usuarioDTO.setAceptarTerminos(usuario.getAceptarTerminos());
+        return usuarioDTO;
+    }
 }
