@@ -7,38 +7,51 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-25T16:11:52-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23 (Oracle Corporation)"
+    date = "2024-09-25T23:10:23-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.9 (Oracle Corporation)"
 )
 @Component
 public class UsuarioMapperImpl implements UsuarioMapper {
 
     @Override
-    public UsuarioDTO usuarioToDto(UsuarioEntity usuario) {
-        if ( usuario == null ) {
+    public UsuarioDTO toDto(UsuarioEntity entity) {
+        if ( entity == null ) {
             return null;
         }
 
         UsuarioDTO usuarioDTO = new UsuarioDTO();
 
+        usuarioDTO.setId( entity.getId() );
+        usuarioDTO.setCorreo( entity.getCorreo() );
+        usuarioDTO.setContrasenaHash( entity.getContrasenaHash() );
+        usuarioDTO.setTipoUsuario( entity.getTipoUsuario() );
+        usuarioDTO.setActivo( entity.getActivo() );
+        usuarioDTO.setVerificado( entity.getVerificado() );
+        usuarioDTO.setFechaRegistro( entity.getFechaRegistro() );
+        usuarioDTO.setFechaUltimoAcceso( entity.getFechaUltimoAcceso() );
+        usuarioDTO.setAceptarTerminos( entity.getAceptarTerminos() );
+
         return usuarioDTO;
     }
 
     @Override
-    public UsuarioEntity usuarioToEntity(UsuarioDTO usuarioDTO) {
-        if ( usuarioDTO == null ) {
+    public UsuarioEntity toEntity(UsuarioDTO dto) {
+        if ( dto == null ) {
             return null;
         }
 
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        UsuarioEntity.UsuarioEntityBuilder usuarioEntity = UsuarioEntity.builder();
 
-        return usuarioEntity;
-    }
+        usuarioEntity.id( dto.getId() );
+        usuarioEntity.correo( dto.getCorreo() );
+        usuarioEntity.contrasenaHash( dto.getContrasenaHash() );
+        usuarioEntity.tipoUsuario( dto.getTipoUsuario() );
+        usuarioEntity.fechaRegistro( dto.getFechaRegistro() );
+        usuarioEntity.activo( dto.getActivo() );
+        usuarioEntity.verificado( dto.getVerificado() );
+        usuarioEntity.fechaUltimoAcceso( dto.getFechaUltimoAcceso() );
+        usuarioEntity.aceptarTerminos( dto.getAceptarTerminos() );
 
-    @Override
-    public void updateUsuarioFromDto(UsuarioDTO usuarioDTO, UsuarioEntity usuario) {
-        if ( usuarioDTO == null ) {
-            return;
-        }
+        return usuarioEntity.build();
     }
 }

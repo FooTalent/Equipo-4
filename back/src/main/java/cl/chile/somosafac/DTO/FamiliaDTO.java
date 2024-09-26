@@ -4,11 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
-@Data
+@Setter
+@Getter
 public class FamiliaDTO {
 
     @NotNull(message = "El ID no puede ser nulo")
@@ -66,7 +71,7 @@ public class FamiliaDTO {
     private Integer cantidadAcogimientos;
 
     @NotNull(message = "La fecha de inicio de acogimiento no puede ser nula")
-    private LocalDate fechaInicioAcogimiento;
+    private LocalDateTime fechaInicioAcogimiento;
 
     @Min(0)
     private Integer edadNna;
@@ -86,8 +91,21 @@ public class FamiliaDTO {
     @DecimalMin(value = "0.00", inclusive = true)
     private BigDecimal ingresoAfac;
 
-    @JsonProperty("fechaUltimoAcceso")
+    @JsonProperty("fechaUltimoContacto")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDate fechaUltimoContacto;
+    private LocalDateTime fechaUltimoContacto;
+
+    private String programaFundacionActual;
+    private String programaFundacionAnterior;
+    private String usuarioCreacion;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime fechaCreacion;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime fechaModificacion;
+
+    private String estadoAcogimiento;
+    private String usuario;
+
 
 }

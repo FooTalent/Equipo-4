@@ -44,7 +44,7 @@ public class UsuarioEntity implements UserDetails {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean activo = true;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    //@Column(/*nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean verificado = false;
 
     @Column(name = "fecha_ultimo_acceso")
