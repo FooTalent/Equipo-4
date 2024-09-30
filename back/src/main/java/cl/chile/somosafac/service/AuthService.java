@@ -9,7 +9,6 @@ import cl.chile.somosafac.security.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,10 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenaHash()));
-        UserDetails usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow();
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow();
+        usuario.setFechaUltimoAcceso(LocalDateTime.now());
+        usuarioRepository.save(usuario);
+
         String token = jwtService.getToken(usuario);
         return AuthResponse.builder()
                 .token(token)
