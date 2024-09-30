@@ -1,13 +1,12 @@
-import './App.css'
-import './index.css'
+import { Link } from 'react-router-dom';
+import './App.css';
+import './index.css';
 
 function App() {
 
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
+    <Link to={'/auth'}>Inicia sesión</Link>
+  );
 }
 
-export default App
+export default App;
