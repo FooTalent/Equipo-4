@@ -1,6 +1,8 @@
 package cl.chile.somosafac.controller;
 
 import cl.chile.somosafac.DTO.NotaDTO;
+import cl.chile.somosafac.entity.FamiliaEntity;
+import cl.chile.somosafac.entity.VoluntarioEntity;
 import cl.chile.somosafac.service.NotaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -48,8 +50,8 @@ public class NotaController {
             @ApiResponse(responseCode = "400", description = "Error en la solicitud de creación")
     })
     @PostMapping
-    public ResponseEntity<NotaDTO> crearNota(@RequestBody NotaDTO notaDTO) {
-        NotaDTO nota = notaService.createNota(notaDTO);
+    public ResponseEntity<NotaDTO> crearNota(@RequestBody NotaDTO notaDTO, @RequestBody FamiliaEntity familia, VoluntarioEntity voluntario) {
+        NotaDTO nota = notaService.createNota(notaDTO, familia, voluntario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nota);
     }
 
@@ -59,19 +61,19 @@ public class NotaController {
             @ApiResponse(responseCode = "404", description = "Nota no encontrada")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<NotaDTO> actualizarNota(@PathVariable Long id, @RequestBody NotaDTO notaDTO) {
-        NotaDTO nota = notaService.updateNota(id, notaDTO);
+    public ResponseEntity<NotaDTO> actualizarNota(@PathVariable Long id, @RequestBody NotaDTO notaDTO, @RequestBody FamiliaEntity familia, @RequestBody VoluntarioEntity voluntario) {
+        NotaDTO nota = notaService.updateNota(id, notaDTO, familia, voluntario);
         return nota != null ? ResponseEntity.ok(nota) : ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Eliminar una nota", description = "Elimina una nota específica por su ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Nota eliminada exitosamente"),
+            @ApiResponse(responseCode = "200", description = "Nota eliminada exitosamente"),
             @ApiResponse(responseCode = "404", description = "Nota no encontrada")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarNota(@PathVariable Long id) {
         notaService.deleteNota(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }
