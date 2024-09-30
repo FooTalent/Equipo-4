@@ -1,6 +1,7 @@
+// eslint-disable-next-line no-undef
 module.exports = {
-    darkMode: ['class'],
-    mode: 'jit',
+  darkMode: ['class'],
+  mode: 'jit',
   content: [
     './src/**/*.{js,jsx,ts,tsx}',
   ],
@@ -55,5 +56,6 @@ module.exports = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
-}
+  // eslint-disable-next-line no-undef
+  plugins: [require('tailwindcss-animate')],
+};
