@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-19T11:40:27-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22.0.1 (Oracle Corporation)"
+    date = "2024-09-27T10:51:25-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23 (Oracle Corporation)"
 )
 @Component
 public class UsuarioMapperImpl implements UsuarioMapper {
 
     @Override
-    public UsuarioDTO usuarioToUsuarioDTO(UsuarioEntity usuario) {
-        if ( usuario == null ) {
+    public UsuarioDTO toDto(UsuarioEntity entity) {
+        if ( entity == null ) {
             return null;
         }
 
@@ -25,8 +25,8 @@ public class UsuarioMapperImpl implements UsuarioMapper {
     }
 
     @Override
-    public UsuarioEntity usuarioDTOToUsuario(UsuarioDTO usuarioDTO) {
-        if ( usuarioDTO == null ) {
+    public UsuarioEntity toEntity(UsuarioDTO dto) {
+        if ( dto == null ) {
             return null;
         }
 

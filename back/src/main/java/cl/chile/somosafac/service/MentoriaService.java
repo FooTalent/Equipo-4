@@ -4,58 +4,59 @@ import cl.chile.somosafac.DTO.MentoriaDTO;
 import cl.chile.somosafac.entity.MentoriaEntity;
 import cl.chile.somosafac.mapper.MentoriaMapper;
 import cl.chile.somosafac.repository.MentoriaRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class MentoriaService {
 
-    private  MentoriaRepository mentoriaRepository;
-    private  MentoriaMapper mentoriaMapper;
+    private final MentoriaRepository mentoriaRepository;
+    private final MentoriaMapper mentoriaMapper;
+
+    public MentoriaService(MentoriaRepository mentoriaRepository, MentoriaMapper mentoriaMapper) {
+        this.mentoriaRepository = mentoriaRepository;
+        this.mentoriaMapper = mentoriaMapper;
+    }
 
     @Transactional(readOnly = true)
-    public List<MentoriaDTO> getAllMentorias() {
+    public List<MentoriaDTO> getMentorias() {
         List<MentoriaEntity> mentorias = mentoriaRepository.findAll();
         return mentorias.stream()
-                .map(mentoriaMapper::toDto)
+                .map(mentoriaMapper::mentoriaToDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public MentoriaDTO getMentoria(Long id) {
-        MentoriaEntity mentoria = mentoriaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mentoria no encontrada"));
-        return mentoriaMapper.toDto(mentoria);
+        Optional<MentoriaEntity> mentoria = mentoriaRepository.findById(id);
+        return mentoria.map(mentoriaMapper::mentoriaToDto).orElse(null);
     }
 
     @Transactional
     public MentoriaDTO createMentoria(MentoriaDTO mentoriaDTO) {
-        MentoriaEntity nuevaMentoria = mentoriaMapper.toEntity(mentoriaDTO);
-        MentoriaEntity mentoriaGuardada = mentoriaRepository.save(nuevaMentoria);
-        return mentoriaMapper.toDto(mentoriaGuardada);
+        MentoriaEntity mentoria = mentoriaMapper.mentoriaToEntity(mentoriaDTO);
+        MentoriaEntity nuevaMentoria = mentoriaRepository.save(mentoria);
+        return mentoriaMapper.mentoriaToDto(nuevaMentoria);
     }
 
     @Transactional
     public MentoriaDTO updateMentoria(Long id, MentoriaDTO mentoriaDTO) {
-        MentoriaEntity mentoriaExistente = mentoriaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mentoria no encontrada"));
-
-        mentoriaMapper.updateMentoriaFromDto(mentoriaDTO, mentoriaExistente);
-        MentoriaEntity mentoriaActualizada = mentoriaRepository.save(mentoriaExistente);
-
-        return mentoriaMapper.toDto(mentoriaActualizada);
+        Optional<MentoriaEntity> mentoriaExistente = mentoriaRepository.findById(id);
+        if (mentoriaExistente.isPresent()) {
+            MentoriaEntity mentoria = mentoriaExistente.get();
+            mentoriaMapper.updateMentoriaFromDto(mentoriaDTO, mentoria);
+            MentoriaEntity mentoriaActualizada = mentoriaRepository.save(mentoria);
+            return mentoriaMapper.mentoriaToDto(mentoriaActualizada);
+        }
+        return null;
     }
 
     @Transactional
     public void deleteMentoria(Long id) {
-        if (!mentoriaRepository.existsById(id)) {
-            throw new RuntimeException("Mentoria no encontrada");
-        }
         mentoriaRepository.deleteById(id);
     }
 }

@@ -12,7 +12,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/voluntarios")
-@RequiredArgsConstructor
 public class VoluntarioController {
+
+
 
 }

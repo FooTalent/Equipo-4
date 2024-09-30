@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-19T11:40:27-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22.0.1 (Oracle Corporation)"
+    date = "2024-09-25T23:07:04-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.9 (Oracle Corporation)"
 )
 @Component
 public class NotificacionMapperImpl implements NotificacionMapper {
 
     @Override
-    public NotificacionDTO toDto(NotificacionEntity notificacion) {
+    public NotificacionDTO notificacionToDto(NotificacionEntity notificacion) {
         if ( notificacion == null ) {
             return null;
         }
@@ -25,7 +25,7 @@ public class NotificacionMapperImpl implements NotificacionMapper {
     }
 
     @Override
-    public NotificacionEntity toEntity(NotificacionDTO notificacionDTO) {
+    public NotificacionEntity notificacionToEntity(NotificacionDTO notificacionDTO) {
         if ( notificacionDTO == null ) {
             return null;
         }
@@ -33,5 +33,12 @@ public class NotificacionMapperImpl implements NotificacionMapper {
         NotificacionEntity notificacionEntity = new NotificacionEntity();
 
         return notificacionEntity;
+    }
+
+    @Override
+    public void updateNotificacionFromDto(NotificacionDTO notificacionDTO, NotificacionEntity notificacion) {
+        if ( notificacionDTO == null ) {
+            return;
+        }
     }
 }

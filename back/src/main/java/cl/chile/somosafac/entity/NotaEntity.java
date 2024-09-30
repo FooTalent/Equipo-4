@@ -1,12 +1,14 @@
 package cl.chile.somosafac.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notas")
-@Data
+@Getter
+@Setter
 public class NotaEntity {
 
     @Id

@@ -1,7 +1,7 @@
 package cl.chile.somosafac.DTO;
 
-import lombok.Data;
 
+import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data

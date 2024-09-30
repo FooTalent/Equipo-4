@@ -1,6 +1,7 @@
 package cl.chile.somosafac.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 

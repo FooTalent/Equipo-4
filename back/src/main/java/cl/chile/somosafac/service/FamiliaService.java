@@ -2,59 +2,59 @@ package cl.chile.somosafac.service;
 
 import cl.chile.somosafac.DTO.FamiliaDTO;
 import cl.chile.somosafac.entity.FamiliaEntity;
-import cl.chile.somosafac.mapper.FamiliaMapper;
+import cl.chile.somosafac.mapper.FamiliaMapperManual;
 import cl.chile.somosafac.repository.FamiliaRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class FamiliaService {
 
-    private  FamiliaRepository familiaRepository;
-    private  FamiliaMapper familiaMapper;
+    private final FamiliaRepository familiaRepository;
+
+    public FamiliaService(FamiliaRepository familiaRepository) {
+        this.familiaRepository = familiaRepository;
+    }
 
     @Transactional(readOnly = true)
-    public List<FamiliaDTO> getFamilia() {
+    public List<FamiliaDTO> getFamilias() {
         List<FamiliaEntity> familias = familiaRepository.findAll();
         return familias.stream()
-                .map(familiaMapper::familiatoDto)
+                .map(FamiliaMapperManual::familiaToDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public FamiliaDTO getFamilia(Long id) {
-        FamiliaEntity familia = familiaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Familia no encontrada"));
-        return familiaMapper.familiatoDto(familia);
+        Optional<FamiliaEntity> familia = familiaRepository.findById(id);
+        return familia.map(FamiliaMapperManual::familiaToDto).orElse(null);
     }
 
     @Transactional
-    public FamiliaEntity createFamilia(FamiliaDTO familiaDTO) {
-        FamiliaEntity familia = familiaMapper.familiatoEntity(familiaDTO);
-        return familiaRepository.save(familia);
+    public FamiliaDTO createFamilia(FamiliaDTO familiaDTO) {
+        FamiliaEntity familia = FamiliaMapperManual.familiaToEntity(familiaDTO);
+        FamiliaEntity nuevaFamilia = familiaRepository.save(familia);
+        return FamiliaMapperManual.familiaToDto(nuevaFamilia);
     }
 
     @Transactional
     public FamiliaDTO updateFamilia(Long id, FamiliaDTO familiaDTO) {
-        FamiliaEntity familiaExistente = familiaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Familia no encontrada"));
-
-        familiaMapper.updateFamiliaFromDto(familiaDTO, familiaExistente);
-        FamiliaEntity familiaActualizada = familiaRepository.save(familiaExistente);
-
-        return familiaMapper.familiatoDto(familiaActualizada);
+        Optional<FamiliaEntity> familiaExistente = familiaRepository.findById(id);
+        if (familiaExistente.isPresent()) {
+            FamiliaEntity familia = familiaExistente.get();
+            FamiliaMapperManual.updateFamiliaFromDto(familiaDTO, familia);
+            FamiliaEntity familiaActualizada = familiaRepository.save(familia);
+            return FamiliaMapperManual.familiaToDto(familiaActualizada);
+        }
+        return null; // Manejar el caso donde no se encuentra la familia
     }
 
     @Transactional
     public void deleteFamilia(Long id) {
-        if (!familiaRepository.existsById(id)) {
-            throw new RuntimeException("Familia no encontrada");
-        }
         familiaRepository.deleteById(id);
     }
 }

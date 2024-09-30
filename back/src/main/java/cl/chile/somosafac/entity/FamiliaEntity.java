@@ -1,16 +1,20 @@
 package cl.chile.somosafac.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Setter
+@Getter
 @Entity
 @Table(name = "familias")
 public class FamiliaEntity {
@@ -81,7 +85,7 @@ public class FamiliaEntity {
     private String estadoAcogimiento;
 
     @Column(name = "fecha_inicio_acogimiento")
-    private LocalDate fechaInicioAcogimiento;
+    private LocalDateTime fechaInicioAcogimiento;
 
     @Column(name = "edad_nna")
     private Integer edadNna;
@@ -102,5 +106,15 @@ public class FamiliaEntity {
     private BigDecimal ingresoAfac;
 
     @Column(name = "fecha_ultimo_contacto")
-    private LocalDate fechaUltimoContacto;
+    private LocalDateTime fechaUltimoContacto;
+
+    @CreatedBy
+    private String usuarioCreacion;
+
+    @CreatedDate
+    private Date fechaCreacion;
+
+    @LastModifiedDate
+    private Date fechaModificacion;
+
 }
