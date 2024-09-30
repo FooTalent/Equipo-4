@@ -3,6 +3,7 @@ package cl.chile.somosafac.DTO;
 import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.security.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class UsuarioDTO {
     @JsonProperty("correo")
     private String correo;
 
+    @JsonIgnore
     @JsonProperty("contrasenaHash")
     private String contrasenaHash;
 
