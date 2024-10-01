@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import useUserStore from './store';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +9,7 @@ import { Button } from '@/components/ui/button';
 
 const PersonalizeCredentials = () => {
   const { register, handleSubmit } = useForm();
-  const { register: registerUser, loading, error } = useUserStore();
+  const { register: registerUser, loading } = useUserStore();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -20,7 +19,7 @@ const PersonalizeCredentials = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <Link className='absolute z-30 top-8 left-4' to={'/auth/administrador'}>
+      <Link className='absolute z-30 top-8 left-4' to={'/auth/admin/ingresar'}>
         <MdArrowBackIosNew />
       </Link>
       <div className="max-w-md w-full space-y-8">
@@ -30,8 +29,8 @@ const PersonalizeCredentials = () => {
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
+          <div className="rounded-md shadow-sm -space-y-px flex flex-col gap-4">
+            <div className='flex flex-col gap-2'>
               <Label htmlFor="username">Usuario</Label>
               <Input
                 id="username"
@@ -41,7 +40,7 @@ const PersonalizeCredentials = () => {
                 {...register('username', { required: true })}
               />
             </div>
-            <div className="mt-4">
+            <div className='flex flex-col gap-2'>
               <Label htmlFor="newPassword">Nueva contraseña</Label>
               <Input
                 id="newPassword"
@@ -51,7 +50,7 @@ const PersonalizeCredentials = () => {
                 {...register('newPassword', { required: true })}
               />
             </div>
-            <div className="mt-4">
+            <div className='flex flex-col gap-2'>
               <Label htmlFor="confirmPassword">Repite contraseña</Label>
               <Input
                 id="confirmPassword"
@@ -63,14 +62,14 @@ const PersonalizeCredentials = () => {
             </div>
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
 
           <div>
             <Button
               type="submit"
               disabled={loading}
               variant="default"
-              className="w-full"
+              className="w-full mt-4 py-6"
             >
               {loading ? 'Cargando...' : 'Iniciar Sesión'}
             </Button>
