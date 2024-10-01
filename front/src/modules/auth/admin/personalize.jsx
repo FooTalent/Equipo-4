@@ -93,8 +93,8 @@ const PersonalizeCredentialsAdmin = () => {
                   } absolute text-gray right-0 top-[36.6px] mr-2 hover:cursor-pointer`}
                 />
                 <Input
-                  id="newPassword"
-                  name="newPassword"
+                  id="passwwrd"
+                  name="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Escribe tu nueva contraseña"
                   {...form.register('password', { required: true })}
