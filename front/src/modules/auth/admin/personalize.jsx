@@ -39,7 +39,6 @@ const PersonalizeCredentials = () => {
                 type="text"
                 placeholder="Escribe tu nombre de usuario"
                 {...register('username', { required: true })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               />
             </div>
             <div className="mt-4">
@@ -50,7 +49,6 @@ const PersonalizeCredentials = () => {
                 type="password"
                 placeholder="Escribe tu nueva contraseña"
                 {...register('newPassword', { required: true })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               />
             </div>
             <div className="mt-4">
@@ -61,7 +59,6 @@ const PersonalizeCredentials = () => {
                 type="password"
                 placeholder="Repite tu nueva contraseña"
                 {...register('confirmPassword', { required: true })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               />
             </div>
           </div>
