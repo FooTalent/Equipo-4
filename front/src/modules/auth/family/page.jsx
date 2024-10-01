@@ -27,7 +27,7 @@ const FamilyLogin = () => {
           </h2>
         </div>
         <form className='mt-8 space-y-6' onSubmit={handleSubmit(onSubmit)}>
-          <div className='rounded-md shadow-sm -space-y-px flex flex-col gap-3'>
+          <div className='rounded-md -space-y-px flex flex-col gap-3'>
             <div className='mb-4 flex flex-col gap-3'>
               <Label htmlFor='username'>
                 Usuario

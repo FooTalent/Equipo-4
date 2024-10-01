@@ -32,20 +32,20 @@ export default function UserType() {
     <main className='relative py-8 h-screen grid items-center px-4 text-center'>
       <Link className='absolute z-30 top-8 left-4' to={'/auth'}><MdArrowBackIosNew/></Link>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='relative grid items-center h-full'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='md:max-w-md md:mx-auto md:w-full space-y-8 relative grid items-center h-full'>
           <FormField
             control={form.control}
             name='type'
             render={({ field }) => (
-              <FormItem className='h-full flex flex-col justify-end gap-4 text-left'>
-                <FormLabel>Selecciona una opción:</FormLabel>
+              <FormItem className='h-full flex flex-col justify-end md:items-center md:text-left gap-4 text-left'>
+                <FormLabel className='text-lg md:text-2xl'>Selecciona una opción:</FormLabel>
                 <FormControl>
-                  <RadioGroup {...field}>
+                  <RadioGroup {...field} className='md:-ml-2'>
                     <FormItem className='flex items-center space-x-2 space-y-0 mb-2'>
                       <FormControl>
                         <RadioGroupItem value='administrador' />
                       </FormControl>
-                      <FormLabel className='font-normal'>
+                      <FormLabel className='text-sm md:font-light md:text-lg'>
                       Administrador
                       </FormLabel>
                     </FormItem>
@@ -53,7 +53,7 @@ export default function UserType() {
                       <FormControl>
                         <RadioGroupItem value='familia' />
                       </FormControl>
-                      <FormLabel className='font-normal'>
+                      <FormLabel className='text-sm md:font-light md:text-lg'>
                       Representante de Familia
                       </FormLabel>
                     </FormItem>
@@ -62,7 +62,7 @@ export default function UserType() {
               </FormItem>
             )}
           />
-          <Button type='submit' className='self-end py-6 text-base'>Continuar</Button>
+          <Button type='submit' className='self-end md:self-start py-6 text-base'>Continuar</Button>
         </form>
       </Form>
     </main>
