@@ -15,12 +15,12 @@ const Admin = () => {
 
   const onSubmit = async (data) => {
     await login(data);
-    navigate('/personalize'); // Redirigir a la siguiente vista
+    navigate('/auth/admin/personalize'); 
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <Link className='absolute z-30 top-8 left-4' to={'/auth'}>
+      <Link className='absolute z-30 top-8 left-4' to={'/auth/usuario'}>
         <MdArrowBackIosNew />
       </Link>
       <div className="max-w-md w-full space-y-8">
