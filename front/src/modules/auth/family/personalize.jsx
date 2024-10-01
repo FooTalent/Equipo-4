@@ -1,19 +1,18 @@
 import { useForm } from 'react-hook-form';
-import useUserStore from './store';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { MdArrowBackIosNew } from 'react-icons/md';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 
-const PersonalizeCredentialsAdmin = () => {
+const PersonalizeCredentialsFamily= () => {
   const { register, handleSubmit } = useForm();
-  const { register: registerUser, loading } = useUserStore();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    await registerUser(data);
+    console.log(data);
     navigate('/dashboard');
   };
 
@@ -64,14 +63,37 @@ const PersonalizeCredentialsAdmin = () => {
 
           {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
 
+          <div className='grid gap-2 '>
+            <div className="items-top flex space-x-2">
+              <Checkbox id="terms1" />
+              <div className="grid gap-1.5 leading-none">
+                <label
+                  htmlFor="terms1"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                Acepto <Link to={'/auth/terminos'} className='underline'>términos y condiciones</Link>
+                </label>
+              </div>
+            </div>
+            <div className="items-top flex space-x-2">
+              <Checkbox id="terms2" />
+              <div className="grid gap-1.5 leading-none">
+                <label
+                  htmlFor="terms1"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                Leí y acepto el <Link to={'/auth/contrato-confidencialidad'} className='underline'>contrato de confidencialidad</Link>
+                </label>
+              </div>
+            </div>
+          </div>
           <div>
             <Button
               type="submit"
-              disabled={loading}
               variant="default"
               className="w-full mt-4 py-6"
             >
-              {loading ? 'Cargando...' : 'Iniciar Sesión'}
+              {'Continuar'}
             </Button>
           </div>
         </form>
@@ -80,4 +102,4 @@ const PersonalizeCredentialsAdmin = () => {
   );
 };
 
-export default PersonalizeCredentialsAdmin;
+export default PersonalizeCredentialsFamily;
