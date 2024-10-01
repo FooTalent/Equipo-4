@@ -23,9 +23,9 @@ export default function UserType() {
   const navigate = useNavigate();
   const onSubmit = (data) => {
     if (data.type  === 'administrador') {
-      navigate('/auth/administrador');
+      navigate('/auth/admin/ingresar');
     } else if (data.type === 'familia') {
-      navigate('/auth/familia');
+      navigate('/auth/familia/ingresar');
     }
   };
   return (

@@ -1,9 +1,8 @@
 import App from '@/App';
-import Admin from '@/modules/auth/admin/page';
+import AdminLogin from '@/modules/auth/admin/page';
 import UserType from '@/modules/auth/components/user-type';
-import Family from '@/modules/auth/family/page';
 import Auth from '@/modules/auth/page';
-import PersonalizeCredentials from '@/modules/auth/admin/personalize'; 
+import PersonalizeCredentials from '@/modules/auth/admin/personalize';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -17,23 +16,19 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    path: '/auth/usuario',
+    path: '/auth/tipo-usuario',
     element: <UserType />
   },
   {
-    path: '/auth/administrador',
-    element: <Admin />
+    path: '/auth/admin/ingresar',
+    element: <AdminLogin />
   },
   {
-    path: '/auth/familia',
-    element: <Family />
-  },
-  {
-    path: '/auth/admin/personalize', 
+    path: '/auth/admin/personalizar',
     element: <PersonalizeCredentials />
   },
   {
-    path: '*', 
+    path: '*',
     element: <h1>Página no encontrada</h1>
   }
 ]);
