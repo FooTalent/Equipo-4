@@ -2,9 +2,10 @@ import App from '@/App';
 import AdminLogin from '@/modules/auth/admin/page';
 import UserType from '@/modules/auth/components/user-type';
 import Auth from '@/modules/auth/page';
-import PersonalizeCredentials from '@/modules/auth/admin/personalize';
-
+import PersonalizeCredentialsAdmin from '@/modules/auth/admin/personalize';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import FamilyLogin from '@/modules/auth/family/page';
+import PersonalizeCredentialsFamily from '@/modules/auth/family/personalize';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/auth/admin/personalizar',
-    element: <PersonalizeCredentials />
+    element: <PersonalizeCredentialsAdmin />
+  },
+  {
+    path: '/auth/familia/ingresar',
+    element: <FamilyLogin />
+  },
+  {
+    path: '/auth/familia/personalizar',
+    element: <PersonalizeCredentialsFamily />
   },
   {
     path: '*',
