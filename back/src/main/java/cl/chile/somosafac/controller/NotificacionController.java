@@ -31,7 +31,7 @@ public class NotificacionController {
     })
     @GetMapping
     public ResponseEntity<List<NotificacionDTO>> obtenerTodasLasNotificaciones() {
-        List<NotificacionDTO> notificaciones = notificacionService.getNotificaciones();
+        List<NotificacionDTO> notificaciones = notificacionService.getAllNotificaciones();
         return ResponseEntity.ok(notificaciones);
     }
 
