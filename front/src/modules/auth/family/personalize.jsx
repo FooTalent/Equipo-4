@@ -13,8 +13,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 
 const PersonalizeCredentialsFamily= () => {
-  const [terms, setTerms] = useState(false);
-  const [contract, setContract] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const schema = yup.object({
@@ -50,11 +48,18 @@ const PersonalizeCredentialsFamily= () => {
       confirmPassword: '',
       terms: false,
       contract: false,
-    },
-    mode: 'onChange'
+    }
   });
   const navigate = useNavigate();
+  const handleTermsChange = () => {
+    const currentValue = form.getValues('terms');
+    form.setValue('terms', !currentValue, { shouldValidate: true });
+  };
 
+  const handleContractChange = () => {
+    const currentValue = form.getValues('contract');
+    form.setValue('contract', !currentValue, { shouldValidate: true });
+  };
   const onSubmit = async (data) => {
     console.log(data);
     navigate('/dashboard');
@@ -134,7 +139,7 @@ const PersonalizeCredentialsFamily= () => {
             </div>
             <div className='grid gap-2 '>
               <div className="items-top flex space-x-2">
-              <Checkbox id="terms" {...form.register('terms')} />
+                <Checkbox id="terms" {...form.register('terms')} onClick={handleTermsChange} />
                 <div className='grid gap-1.5 leading-none'>
                   <label
                     htmlFor='terms'
@@ -145,7 +150,7 @@ const PersonalizeCredentialsFamily= () => {
                 </div>
               </div>
               <div className="items-top flex space-x-2">
-              <Checkbox id="contract" {...form.register('contract')} />
+                <Checkbox id="contract" {...form.register('contract')} onClick={handleContractChange} />
                 <div className="grid gap-1.5 leading-none">
                   <label
                     htmlFor="contract"
@@ -168,7 +173,7 @@ const PersonalizeCredentialsFamily= () => {
                 variant="default"
                 className="w-full mt-4 py-6"
               >
-                {'Continuar'}
+                {'Iniciar Sesión'}
               </Button>
             </div>
           </form>
