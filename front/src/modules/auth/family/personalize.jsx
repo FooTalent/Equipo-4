@@ -48,8 +48,8 @@ const PersonalizeCredentialsFamily= () => {
       username: '',
       password: '',
       confirmPassword: '',
-      terms: true,
-      contract: true,
+      terms: false,
+      contract: false,
     },
     mode: 'onChange'
   });
@@ -134,7 +134,7 @@ const PersonalizeCredentialsFamily= () => {
             </div>
             <div className='grid gap-2 '>
               <div className="items-top flex space-x-2">
-                <Checkbox htmlFor='terms' checked={true} onCheckedChange={() => setTerms(!terms)}/>
+              <Checkbox id="terms" {...form.register('terms')} />
                 <div className='grid gap-1.5 leading-none'>
                   <label
                     htmlFor='terms'
@@ -145,7 +145,7 @@ const PersonalizeCredentialsFamily= () => {
                 </div>
               </div>
               <div className="items-top flex space-x-2">
-                <Checkbox id="contract" checked={true} onCheckedChange={() => setContract(!contract)} />
+              <Checkbox id="contract" {...form.register('contract')} />
                 <div className="grid gap-1.5 leading-none">
                   <label
                     htmlFor="contract"
