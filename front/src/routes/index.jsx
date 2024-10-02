@@ -6,6 +6,8 @@ import PersonalizeCredentialsAdmin from '@/modules/auth/admin/personalize';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FamilyLogin from '@/modules/auth/family/page';
 import PersonalizeCredentialsFamily from '@/modules/auth/family/personalize';
+import Terminos from '@/modules/auth/family/terminos';
+import ContratoConfidencialidad from '@/modules/auth/family/contrato-confidencialidad';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
   {
     path: '/auth/familia/personalizar',
     element: <PersonalizeCredentialsFamily />
+  },
+  {
+    path: '/auth/familia/terminos',
+    element: <Terminos />
+  },
+  {
+    path: '/auth/familia/contrato-confidencialidad',
+    element: <ContratoConfidencialidad />
   },
   {
     path: '*',
