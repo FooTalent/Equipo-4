@@ -140,7 +140,7 @@ const PersonalizeCredentialsFamily= () => {
                     htmlFor='terms'
                     className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                   >
-                Acepto <Link to={'/auth/terminos'} className='underline'>términos y condiciones</Link>
+                Acepto <Link to={'/auth/familia/terminos'} className='underline'>términos y condiciones</Link>
                   </label>
                 </div>
               </div>
@@ -151,7 +151,7 @@ const PersonalizeCredentialsFamily= () => {
                     htmlFor="contract"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                Leí y acepto el <Link to={'/auth/contrato-confidencialidad'} className='underline'>contrato de confidencialidad</Link>
+                Leí y acepto el <Link to={'/auth/familia/contrato-confidencialidad'} className='underline'>contrato de confidencialidad</Link>
                   </label>
                 </div>
               </div>
