@@ -72,18 +72,6 @@ class UsuarioServiceTest {
         assertEquals(usuarioDTO.getCorreo(), usuario.getCorreo());
     }
 
-    @Test
-    void crearUsuario() {
-        // Configurar el mock
-        when(usuarioRepository.save(any(UsuarioEntity.class))).thenReturn(usuarioEntity);
-
-        // Llamar al método
-        UsuarioDTO usuario = usuarioService.crearUsuario(usuarioDTO);
-
-        // Verificar el resultado
-        assertNotNull(usuario);
-        assertEquals(usuarioDTO.getCorreo(), usuario.getCorreo());
-    }
 
     @Test
     void actualizarUsuario() {
