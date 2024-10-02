@@ -37,15 +37,6 @@ public class UsuarioController {
         UsuarioDTO usuario = usuarioService.obtenerPorId(id);
         return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
     }
-
-    @Operation(summary = "Crear un nuevo usuario", description = "Crea un nuevo usuario en el sistema")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario creado exitosamente"), @ApiResponse(responseCode = "400", description = "Error en la solicitud de creación")})
-    @PostMapping
-    public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioDTO nuevoUsuario = usuarioService.crearUsuario(usuarioDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
-    }
-
     @Operation(summary = "Actualizar un usuario", description = "Actualiza un usuario existente por su ID")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"), @ApiResponse(responseCode = "404", description = "Usuario no encontrado")})
     @PutMapping("/{id}")
