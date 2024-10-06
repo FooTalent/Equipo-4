@@ -11,4 +11,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  define: {
+    // eslint-disable-next-line no-undef
+    _APP_ENV__: process.env.VITE_VERCEL_ENV,
+  },
 });
