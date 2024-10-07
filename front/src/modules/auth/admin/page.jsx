@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { MdArrowBackIosNew } from 'react-icons/md';
 import { Input } from '/src/components/ui/input';
@@ -39,7 +39,7 @@ const AdminLogin = () => {
       contrasenaHash: ''
     }
   });
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const mutation = useMutation({
     mutationFn: loginAdminApi,
@@ -47,7 +47,7 @@ const AdminLogin = () => {
       if (data.correo) {
         setUser(data);
         toast.success('Inicio de sesión exitoso');
-        //navigate('/');
+        navigate('/admin/dashboard');
       } else {
         toast.error(data);
       }
