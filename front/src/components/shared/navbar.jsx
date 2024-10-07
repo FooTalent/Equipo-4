@@ -1,5 +1,13 @@
+import useAuthStore from '@/store/user';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+  const onLogout = () => {
+    logout();
+    navigate('/auth');
+  };
   return (
     <nav className='bg-orangeLight '>
       <section className='max-w-6xl mx-auto flex justify-between items-center px-3 py-3'>
@@ -16,10 +24,10 @@ export default function Navbar() {
             <img src='/common/perfil.svg' alt='perfil' className='w-7 mx-auto' />
             <p>Perfil</p>
           </div>
-          <div className='flex flex-col md:gap-1'>
+          <button onClick={onLogout} className='flex flex-col md:gap-1'>
             <img src='/common/logout.svg' alt='cerrar sesion' className='w-6 mx-auto' />
             <p className=''>Cerrar sesión</p>
-          </div>
+          </button>
         </div>
       </section>
     </nav>
