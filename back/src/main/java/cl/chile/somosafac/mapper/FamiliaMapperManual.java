@@ -50,10 +50,10 @@ public class FamiliaMapperManual {
 
         // Manejo de fechas
         if (familia.getFechaCreacion() != null) {
-            dto.setFechaCreacion(familia.getFechaCreacion().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+            dto.setFechaCreacion(familia.getFechaCreacion().atZone(ZoneId.systemDefault()).toLocalDateTime());
         }
         if (familia.getFechaModificacion() != null) {
-            dto.setFechaModificacion(familia.getFechaModificacion().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+            dto.setFechaModificacion(familia.getFechaModificacion().atZone(ZoneId.systemDefault()).toLocalDateTime());
         }
 
         dto.setEstadoAcogimiento(familia.getEstadoAcogimiento());
@@ -74,10 +74,10 @@ public class FamiliaMapperManual {
 
         // Manejo de fechas
         if (familiaDTO.getFechaCreacion() != null) {
-            familia.setFechaCreacion(Date.from(familiaDTO.getFechaCreacion().atZone(ZoneId.systemDefault()).toInstant()));
+            familia.setFechaCreacion(LocalDateTime.from(familiaDTO.getFechaCreacion().atZone(ZoneId.systemDefault()).toInstant()));
         }
         if (familiaDTO.getFechaModificacion() != null) {
-            familia.setFechaModificacion(Date.from(familiaDTO.getFechaModificacion().atZone(ZoneId.systemDefault()).toInstant()));
+            familia.setFechaModificacion(LocalDateTime.from(familiaDTO.getFechaModificacion().atZone(ZoneId.systemDefault()).toInstant()));
         }
 
         familia.setEstadoAcogimiento(familiaDTO.getEstadoAcogimiento());
@@ -152,7 +152,7 @@ public class FamiliaMapperManual {
         familia.setProgramaFundacionAnterior(familiaDTO.getProgramaFundacionAnterior());
 
         // Actualizar fecha de modificación
-        familia.setFechaModificacion(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+        familia.setFechaModificacion(LocalDateTime.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 
         // Actualizar estado de acogimiento
         familia.setEstadoAcogimiento(familiaDTO.getEstadoAcogimiento());

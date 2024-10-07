@@ -70,13 +70,12 @@ public class FamiliaDTO {
     private String comuna;
 
     @NotNull(message = "La dirección no puede ser nula")
-    @Size(min = 10, max = 500, message = "La dirección debe tener entre 10 y 500 caracteres")
+    @Size(min = 5, max = 150, message = "La dirección debe tener entre 10 y 150 caracteres")
     @NotBlank(message = "La dirección no puede estar vacía")
     private String direccion;
 
-    @NotNull(message = "La fecha de ingreso FA no puede ser nula")
+
     @PastOrPresent(message = "La fecha de ingreso FA no puede ser futura")
-    @NotEmpty(message = "La fecha de ingreso FA no puede estar vacía")
     private LocalDate ingresoFa;
 
     @Min(1)
@@ -94,19 +93,16 @@ public class FamiliaDTO {
     @Min(0)
     private Integer edadNna;
 
-    @NotNull(message = "El rango de edad del NNA no puede ser nulo")
+
     @Size(min = 3, max = 50, message = "El rango de edad del NNA debe tener entre 3 y 50 caracteres")
-    @NotBlank(message = "El rango de edad del NNA no puede estar vacío")
     private String rangoEdadNna;
 
-    @NotNull(message = "El sexo del NNA no puede ser nulo")
+
     @Size(min = 3, max = 10, message = "El sexo del NNA debe tener entre 3 y 10 caracteres")
-    @NotBlank(message = "El sexo del NNA no puede estar vacío")
     private String sexoNna;
 
-    @NotNull(message = "La nacionalidad del NNA no puede ser nula")
+
     @Size(min = 3, max = 100, message = "La nacionalidad del NNA debe tener entre 3 y 100 caracteres")
-    @NotBlank(message = "La nacionalidad del NNA no puede estar vacía")
     private String nacionalidadNna;
 
     @Min(1)
