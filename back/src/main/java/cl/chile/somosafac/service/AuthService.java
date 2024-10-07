@@ -1,5 +1,6 @@
 package cl.chile.somosafac.service;
 
+import cl.chile.somosafac.DTO.PasswordDTO;
 import cl.chile.somosafac.DTO.UsuarioDTO;
 import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.repository.UsuarioRepository;
@@ -16,11 +17,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
+    private long tiempoExpiracionResetToken = 86400000; // 1 dia - Consultar con equipo
     private final UsuarioRepository usuarioRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
@@ -31,12 +36,13 @@ public class AuthService {
         UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         usuario.setFechaUltimoAcceso(LocalDateTime.now());
+        usuario.setPrimerIngreso(false);
         usuarioRepository.save(usuario);
 
         String token = jwtService.getToken(usuario);
         // Configuracion de la cookie
         Cookie jwtCookie = new Cookie("token", token);
-        jwtCookie.setHttpOnly(true);  // Evita que la cookie accesible desde JavaScript
+        jwtCookie.setHttpOnly(true);  // Evita que la cookie sea accesible desde JavaScript
         jwtCookie.setPath("/");
         jwtCookie.setSecure(true);
         jwtCookie.setMaxAge(24 * 60 * 60); // Duracion de 1 dia - Consultar con equipo
@@ -59,12 +65,57 @@ public class AuthService {
                 .tipoUsuario(request.getTipoUsuario())
                 .fechaRegistro(LocalDateTime.now())
                 .aceptarTerminos(request.isAceptarTerminos())
-                .activo(true)
                 .build();
 
         usuarioRepository.save(usuario);
 
         UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
         return usuarioDTO;
+    }
+
+    public String cambiarContrasenaPrimerIngreso(Long id, PasswordDTO nuevaContrasena) {
+        UsuarioEntity usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Usuario con id " + id + " no encontrado."));
+
+        try {
+            usuario.setContrasenaHash(passwordEncoder.encode(nuevaContrasena.getPassword()));
+            usuarioRepository.save(usuario);
+
+            return "Contraseña actualizada exitosamente.";
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar contraseña.");
+        }
+    }
+
+    // Recuperar contrasena
+    public String generarResetToken(String email) {
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario con correo: " + email + " no encontrado."));
+
+        String token = UUID.randomUUID().toString();
+        usuario.setResetToken(token);
+        usuario.setFechaExpiracionResetToken(LocalDateTime.now().plusMinutes(tiempoExpiracionResetToken));
+        usuarioRepository.save(usuario);
+
+        return token;
+    }
+
+    public UsuarioEntity validarResetToken(String token) {
+        Optional<UsuarioEntity> usuario = usuarioRepository.findByResetToken(token);
+        if (usuario.isEmpty() || esTokenExpirado(usuario.get().getFechaExpiracionResetToken())) {
+            throw new RuntimeException("El Token no es válido o ha expirado.");
+        }
+        return usuario.get();
+    }
+
+    public Boolean esTokenExpirado(LocalDateTime fechaExpiracionToken) {
+        return fechaExpiracionToken.isBefore(LocalDateTime.now());
+    }
+
+    public void resetContrasena(UsuarioEntity usuario, String nuevaContrasena) {
+        usuario.setContrasenaHash(passwordEncoder.encode(nuevaContrasena));
+        usuario.setResetToken(null);
+        usuario.setFechaExpiracionResetToken(null);
+        usuarioRepository.save(usuario);
     }
 }
