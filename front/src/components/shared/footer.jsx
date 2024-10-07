@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className='bg-[#FFBA69] flex justify-between items-center px-3 py-3'>
+    <footer className='bg-orangeLight flex justify-between items-center px-3 py-3'>
       <div className=' flex flex-col items-center'>
         <img src='/common/home.svg' alt='pagina principal' />
         <p>Inicio</p>

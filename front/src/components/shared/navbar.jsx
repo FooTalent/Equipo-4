@@ -1,7 +1,7 @@
 
 export default function Navbar() {
   return (
-    <nav className='bg-[#FFBA69] flex justify-between items-center px-3 py-3'>
+    <nav className='bg-orangeLight flex justify-between items-center px-3 py-3'>
       <div>
         <img src='/common/logo-inapp.svg' alt='family one' className='w-9' />
       </div>
