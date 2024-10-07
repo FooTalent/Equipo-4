@@ -1,8 +1,9 @@
 import useAuthStore from '@/store/user';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const onLogout = () => {
     logout();
@@ -20,10 +21,10 @@ export default function Navbar() {
             <img src='/dashboard-admin/notification-desktop.svg' alt='notificación' className='w-6 mx-auto' />
             <p>Notificación</p>
           </div>
-          <div className='hidden md:flex flex-col items-center gap-1'>
+          <Link to={`${user.tipoUsuario === 'ADMIN' ? '/admin/perfil' : ''}`} className='hidden md:flex flex-col items-center gap-1'>
             <img src='/common/perfil.svg' alt='perfil' className='w-7 mx-auto' />
             <p>Perfil</p>
-          </div>
+          </Link>
           <button onClick={onLogout} className='flex flex-col md:gap-1'>
             <img src='/common/logout.svg' alt='cerrar sesion' className='w-6 mx-auto' />
             <p className=''>Cerrar sesión</p>
