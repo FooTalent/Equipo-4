@@ -70,7 +70,7 @@ public class FamiliaEntity {
     private String programaFundacionAnterior;
 
     @Column(name = "ingreso_fa", precision = 10, scale = 2)
-    private BigDecimal ingresoFa;
+    private LocalDate ingresoFa;
 
     @Column(name = "duracion_evaluacion")
     private Integer duracionEvaluacion;
@@ -85,7 +85,7 @@ public class FamiliaEntity {
     private String estadoAcogimiento;
 
     @Column(name = "fecha_inicio_acogimiento")
-    private LocalDateTime fechaInicioAcogimiento;
+    private LocalDate fechaInicioAcogimiento;
 
     @Column(name = "edad_nna")
     private Integer edadNna;
@@ -102,8 +102,8 @@ public class FamiliaEntity {
     @Column(name = "tiempo_acogimiento")
     private Integer tiempoAcogimiento;
 
-    @Column(name = "ingreso_afac", precision = 10, scale = 2)
-    private BigDecimal ingresoAfac;
+    @Column(name = "ingreso_afac")
+    private LocalDate  ingresoAfac;
 
     @Column(name = "fecha_ultimo_contacto")
     private LocalDateTime fechaUltimoContacto;
@@ -112,9 +112,9 @@ public class FamiliaEntity {
     private String usuarioCreacion;
 
     @CreatedDate
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @LastModifiedDate
-    private Date fechaModificacion;
+    private LocalDateTime fechaModificacion;
 
 }
