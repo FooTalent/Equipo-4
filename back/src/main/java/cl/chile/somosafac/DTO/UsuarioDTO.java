@@ -46,6 +46,14 @@ public class UsuarioDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "true|false")
     private Boolean aceptarTerminos;
 
+    @JsonProperty("primerIngreso")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "true|false")
+    private Boolean primerIngreso;
+
+    @JsonIgnore
+    @JsonProperty("resetToken")
+    private String resetToken;
+
     public UsuarioEntity toEntity() {
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setId(this.id);
@@ -57,6 +65,7 @@ public class UsuarioDTO {
         usuario.setFechaRegistro(this.fechaRegistro);
         usuario.setFechaUltimoAcceso(this.fechaUltimoAcceso);
         usuario.setAceptarTerminos(this.aceptarTerminos);
+        usuario.setPrimerIngreso(this.primerIngreso);
         return usuario;
     }
 
@@ -71,6 +80,7 @@ public class UsuarioDTO {
         usuarioDTO.setFechaRegistro(usuario.getFechaRegistro());
         usuarioDTO.setFechaUltimoAcceso(usuario.getFechaUltimoAcceso());
         usuarioDTO.setAceptarTerminos(usuario.getAceptarTerminos());
+        usuarioDTO.setPrimerIngreso(usuario.getPrimerIngreso());
         return usuarioDTO;
     }
 }
