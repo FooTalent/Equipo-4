@@ -9,6 +9,7 @@ import PersonalizeCredentialsFamily from '@/modules/auth/family/personalize';
 import Terminos from '@/modules/auth/family/terminos';
 import ContratoConfidencialidad from '@/modules/auth/family/contrato-confidencialidad';
 import AdminDashboard from '@/modules/dashboard/admin/page';
+import AdminProfile from '@/modules/dashboard/admin/pages/profile';
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/dashboard',
     element: <AdminDashboard />
+  },
+  {
+    path: '/admin/perfil',
+    element: <AdminProfile />
   },
   {
     path: '*',
