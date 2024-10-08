@@ -10,6 +10,7 @@ import cl.chile.somosafac.service.EmailService;
 import cl.chile.somosafac.service.UsuarioService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AuthController {
     private final EmailService emailService;
 
     @PostMapping(value = "login")
-    public ResponseEntity<UsuarioDTO> login(@RequestBody LoginRequest request, HttpServletResponse response) {
+    public ResponseEntity<UsuarioDTO> login(@RequestBody @Valid LoginRequest request, HttpServletResponse response) {
         return ResponseEntity.ok(authService.login(request, response));
     }
 

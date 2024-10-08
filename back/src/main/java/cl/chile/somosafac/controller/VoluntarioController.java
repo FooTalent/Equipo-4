@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,7 @@ public class VoluntarioController {
             @ApiResponse(responseCode = "400", description = "Error en la solicitud de creación")
     })
     @PostMapping
-    public ResponseEntity<VoluntarioDTO> crearVoluntario(@RequestBody VoluntarioDTO voluntarioDTO) {
+    public ResponseEntity<VoluntarioDTO> crearVoluntario(@RequestBody @Valid VoluntarioDTO voluntarioDTO) {
         VoluntarioDTO voluntario = voluntarioService.createVoluntario(voluntarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(voluntario);
     }
@@ -60,7 +61,7 @@ public class VoluntarioController {
             @ApiResponse(responseCode = "404", description = "Voluntario no encontrado")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<VoluntarioDTO> actualizarVoluntario(@PathVariable Long id, @RequestBody VoluntarioDTO voluntarioDTO) {
+    public ResponseEntity<VoluntarioDTO> actualizarVoluntario(@PathVariable @Valid Long id, @RequestBody VoluntarioDTO voluntarioDTO) {
         VoluntarioDTO voluntario = voluntarioService.updateVoluntario(id, voluntarioDTO);
         return voluntario != null ? ResponseEntity.ok(voluntario) : ResponseEntity.notFound().build();
     }

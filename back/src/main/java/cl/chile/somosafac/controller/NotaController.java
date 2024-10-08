@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class NotaController {
             @ApiResponse(responseCode = "400", description = "Error en la solicitud de creación")
     })
     @PostMapping
-    public ResponseEntity<NotaDTO> crearNota(@RequestBody NotaDTO notaDTO, @RequestBody FamiliaEntity familia, VoluntarioEntity voluntario) {
+    public ResponseEntity<NotaDTO> crearNota(@RequestBody @Valid NotaDTO notaDTO, @RequestBody FamiliaEntity familia, VoluntarioEntity voluntario) {
         NotaDTO nota = notaService.createNota(notaDTO, familia, voluntario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nota);
     }
@@ -61,7 +62,7 @@ public class NotaController {
             @ApiResponse(responseCode = "404", description = "Nota no encontrada")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<NotaDTO> actualizarNota(@PathVariable Long id, @RequestBody NotaDTO notaDTO, @RequestBody FamiliaEntity familia, @RequestBody VoluntarioEntity voluntario) {
+    public ResponseEntity<NotaDTO> actualizarNota(@PathVariable @Valid Long id, @RequestBody NotaDTO notaDTO, @RequestBody FamiliaEntity familia, @RequestBody VoluntarioEntity voluntario) {
         NotaDTO nota = notaService.updateNota(id, notaDTO, familia, voluntario);
         return nota != null ? ResponseEntity.ok(nota) : ResponseEntity.notFound().build();
     }
