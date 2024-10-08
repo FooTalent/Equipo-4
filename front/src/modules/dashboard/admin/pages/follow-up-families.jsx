@@ -22,7 +22,7 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='actualiza el cargo' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
             </div>
             <div className='relative'>
               <Input
@@ -30,7 +30,7 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='actualiza el cargo' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
             </div>
             <div className='relative'>
               <Input
@@ -38,7 +38,7 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='actualiza el cargo' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
             </div>
             <div className='relative'>
               <Input
@@ -46,7 +46,7 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='actualiza el cargo' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
             </div>
             <div className='relative'>
               <Input
@@ -54,7 +54,7 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='actualiza el cargo' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
             </div>
           </div>
         </div>
