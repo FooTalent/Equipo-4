@@ -2,60 +2,58 @@ package cl.chile.somosafac.service;
 
 import cl.chile.somosafac.DTO.NotificacionDTO;
 import cl.chile.somosafac.entity.NotificacionEntity;
-import cl.chile.somosafac.mapper.NotificacionMapper;
+import cl.chile.somosafac.entity.UsuarioEntity;
+import cl.chile.somosafac.mapper.NotificacionMapperManual;
 import cl.chile.somosafac.repository.NotificacionRepository;
+import cl.chile.somosafac.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class NotificacionService {
 
     private final NotificacionRepository notificacionRepository;
-    private final NotificacionMapper notificacionMapper;
+    private final UsuarioRepository usuarioRepository;
 
-    public NotificacionService(NotificacionRepository notificacionRepository, NotificacionMapper notificacionMapper) {
+    public NotificacionService(NotificacionRepository notificacionRepository, UsuarioRepository usuarioRepository) {
         this.notificacionRepository = notificacionRepository;
-        this.notificacionMapper = notificacionMapper;
+        this.usuarioRepository = usuarioRepository;
     }
 
-    @Transactional(readOnly = true)
-    public List<NotificacionDTO> getNotificaciones() {
+    public NotificacionDTO getNotificacion(Long id) {
+        NotificacionEntity notificacion = notificacionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Notificación no encontrada"));
+        return NotificacionMapperManual.notificacionToDto(notificacion);
+    }
+
+    public List<NotificacionDTO> getAllNotificaciones() {
         List<NotificacionEntity> notificaciones = notificacionRepository.findAll();
         return notificaciones.stream()
-                .map(notificacionMapper::notificacionToDto)
+                .map(NotificacionMapperManual::notificacionToDto)
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public NotificacionDTO getNotificacion(Long id) {
-        Optional<NotificacionEntity> notificacion = notificacionRepository.findById(id);
-        return notificacion.map(notificacionMapper::notificacionToDto).orElse(null);
-    }
-
-    @Transactional
     public NotificacionDTO createNotificacion(NotificacionDTO notificacionDTO) {
-        NotificacionEntity notificacion = notificacionMapper.notificacionToEntity(notificacionDTO);
-        NotificacionEntity nuevaNotificacion = notificacionRepository.save(notificacion);
-        return notificacionMapper.notificacionToDto(nuevaNotificacion);
+        UsuarioEntity usuario = usuarioRepository.findById(notificacionDTO.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        NotificacionEntity notificacion = NotificacionMapperManual.notificacionToEntity(notificacionDTO);
+        notificacion.setUsuario(usuario);
+
+        return NotificacionMapperManual.notificacionToDto(notificacionRepository.save(notificacion));
     }
 
-    @Transactional
     public NotificacionDTO updateNotificacion(Long id, NotificacionDTO notificacionDTO) {
-        Optional<NotificacionEntity> notificacionExistente = notificacionRepository.findById(id);
-        if (notificacionExistente.isPresent()) {
-            NotificacionEntity notificacion = notificacionExistente.get();
-            notificacionMapper.updateNotificacionFromDto(notificacionDTO, notificacion);
-            NotificacionEntity notificacionActualizada = notificacionRepository.save(notificacion);
-            return notificacionMapper.notificacionToDto(notificacionActualizada);
-        }
-        return null; // Manejar el caso donde no se encuentra la notificación
+        NotificacionEntity notificacion = notificacionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Notificación no encontrada"));
+
+        NotificacionMapperManual.updateNotificacionFromDto(notificacionDTO, notificacion);
+
+        return NotificacionMapperManual.notificacionToDto(notificacionRepository.save(notificacion));
     }
 
-    @Transactional
     public void deleteNotificacion(Long id) {
         notificacionRepository.deleteById(id);
     }

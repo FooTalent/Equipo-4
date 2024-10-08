@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/mentorias")
@@ -60,8 +61,8 @@ public class MentoriaController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<MentoriaDTO> actualizarMentoria(@PathVariable Long id, @RequestBody MentoriaDTO mentoriaDTO) {
-        MentoriaDTO mentoria = mentoriaService.updateMentoria(id, mentoriaDTO);
-        return mentoria != null ? ResponseEntity.ok(mentoria) : ResponseEntity.notFound().build();
+        Optional<MentoriaDTO> mentoriaOptional = mentoriaService.updateMentoria(id, mentoriaDTO);
+        return mentoriaOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Eliminar una mentoría", description = "Elimina una mentoría específica por su ID")

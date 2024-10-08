@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/familias")
@@ -59,8 +60,9 @@ public class FamiliaController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<FamiliaDTO> actualizarFamilia(@PathVariable Long id, @RequestBody FamiliaDTO familiaDTO) {
-        FamiliaDTO familiaActualizada = familiaService.updateFamilia(id, familiaDTO);
-        return familiaActualizada != null ? ResponseEntity.ok(familiaActualizada) : ResponseEntity.notFound().build();
+        Optional<FamiliaDTO> familiaActualizada = familiaService.updateFamilia(id, familiaDTO);
+        return familiaActualizada.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Eliminar una familia", description = "Elimina una familia específica por su ID")
