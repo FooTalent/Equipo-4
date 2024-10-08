@@ -15,6 +15,7 @@ import VolunteerFamilies from '@/modules/dashboard/admin/pages/volunteer-familie
 import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families';
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
+import CreateUser from '@/modules/dashboard/admin/components/create-user';
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/email-general',
     element: <GeneralEmail />
+  },
+  {
+    path: '/admin/crear-usuario',
+    element: <CreateUser />
   },
   {
     path: '*',
