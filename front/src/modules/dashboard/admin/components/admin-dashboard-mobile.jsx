@@ -35,10 +35,10 @@ export default function AdminDashboardMobile() {
             <img src='/dashboard-admin/gestion-familia-desktop.svg' alt='Gestión de familias voluntarias' className='self-center' />
             <p className='self-start text-lg'>Gestión de familias voluntarias</p>
           </Link>
-          <div className='p-6 h-44 grid items-center bg-red-100 rounded-lg'>
+          <Link to={'/admin/seguimiento-familias'} className='p-6 h-44 grid items-center bg-red-100 rounded-lg'>
             <img src='/dashboard-admin/seguimiento-familia-desktop.svg' alt='Seguimiento de familias' className='self-center' />
-            <p className='self-start text-lg'>Seguimiento de familiass</p>
-          </div>
+            <p className='self-start text-lg'>Seguimiento de familias</p>
+          </Link>
         </div>
       </div>
       <div className={`${view === 2 ? 'flex' : 'hidden'} md:hidden flex-col gap-6`}>
