@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import CreateUser from './create-user';
 
 export default function AdminDashboardDesktop() {
   return (
@@ -34,10 +35,11 @@ export default function AdminDashboardDesktop() {
               <img src='/dashboard-admin/listado-familia-desktop.svg' alt='Listado de familias' className='self-center' />
               <p className='self-start text-lg'>Listado de familias</p>
             </Link>
-            <div className='p-6 h-56 grid items-center bg-orange-100 rounded-lg'>
+            {/* <div className='p-6 h-56 grid items-center bg-orange-100 rounded-lg'>
               <img src='/dashboard-admin/crear-usuario-desktop.svg' alt='Creare nuevo usuario' className='self-center' />
               <p className='self-start text-lg'>Crear nuevo usuario</p>
-            </div>
+            </div> */}
+            <CreateUser />
             <Link to={'/admin/email-general'} className='p-6 h-56 grid items-center bg-red-100 rounded-lg'>
               <img src='/dashboard-admin/email-general-desktop.svg' alt='email general' className='self-center' />
               <p className='self-start text-lg'>E-mail general</p>
