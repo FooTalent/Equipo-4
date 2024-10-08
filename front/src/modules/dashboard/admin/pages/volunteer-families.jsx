@@ -2,7 +2,7 @@ import { Input } from '@/components/ui';
 import { AppLayout } from '@/layouts/app-layout';
 import { useNavigate } from 'react-router-dom';
 
-export default function RequestMentoring() {
+export default function VolunteerFamilies () {
   const navigate = useNavigate();
   return (
     <AppLayout>
@@ -11,9 +11,9 @@ export default function RequestMentoring() {
           <div className='flex flex-col gap-4'>
             <div className='flex md:flex-col gap-2 md:gap-5'>
               <img onClick={() => navigate('/admin/dashboard')} src='/common/arrow-left.svg' alt='Regresar a la página principal' className='self-start pt-2 md:pt-0 hover:cursor-pointer' />
-              <p className='self-center -mb-2 md:-mb-0 text-2xl md:w-full'>Solicitud de Mentorias</p>
+              <p className='self-center -mb-2 md:-mb-0 text-2xl md:w-full'>Familias Voluntarias</p>
             </div>
-            <p className='px-2 md:px-0 text-lf'>Estas son las familias que esperan por recibir mentorías:</p>
+            <p className='px-2 md:px-0 text-lf'>Estas son las familias disponible para ser voluntarias:</p>
           </div>
           <div className='flex flex-col gap-3'>
             <div>
