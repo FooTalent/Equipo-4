@@ -59,6 +59,9 @@ public class UsuarioEntity implements UserDetails {
     @Column(name = "primer_ingreso", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean primerIngreso;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<ContactoEntity> contactosRealizados;
+
     // TOKEN PARA RECUPERAR CONTRASENA
     private String resetToken;
     private LocalDateTime fechaExpiracionResetToken;
