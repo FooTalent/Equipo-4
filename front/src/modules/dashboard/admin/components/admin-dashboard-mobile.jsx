@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function AdminDashboardMobile() {
   const [view, setView] = useState(0);
@@ -26,10 +27,10 @@ export default function AdminDashboardMobile() {
           <p className='text-2xl'>Voluntariado y <br /> Seguimiento</p>
         </div>
         <div className='grid grid-rows-3 gap-4 px-2'>
-          <div className='p-6 h-44 grid items-center bg-emerald-100 rounded-lg'>
+          <Link to={'/admin/solicitud-mentorias'} className='p-6 h-44 grid items-center bg-emerald-100 rounded-lg'>
             <img src='/dashboard-admin/familia-mentorias-desktop.svg' alt='Familias que solicitan mentorías' className='self-center' />
             <p className='self-start text-lg'>Familias que solicitan mentorías</p>
-          </div>
+          </Link>
           <div className='p-6 h-44 grid items-center bg-orange-100 rounded-lg'>
             <img src='/dashboard-admin/gestion-familia-desktop.svg' alt='Gestión de familias voluntarias' className='self-center' />
             <p className='self-start text-lg'>Gestión de familias voluntarias</p>

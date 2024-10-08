@@ -10,6 +10,7 @@ import Terminos from '@/modules/auth/family/terminos';
 import ContratoConfidencialidad from '@/modules/auth/family/contrato-confidencialidad';
 import AdminDashboard from '@/modules/dashboard/admin/page';
 import AdminProfile from '@/modules/dashboard/admin/pages/profile';
+import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/perfil',
     element: <AdminProfile />
+  },
+  {
+    path: '/admin/solicitud-mentorias',
+    element: <RequestMentoring />
   },
   {
     path: '*',
