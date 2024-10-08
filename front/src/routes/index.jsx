@@ -12,6 +12,7 @@ import AdminDashboard from '@/modules/dashboard/admin/page';
 import AdminProfile from '@/modules/dashboard/admin/pages/profile';
 import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
 import VolunteerFamilies from '@/modules/dashboard/admin/pages/volunteer-families';
+import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families';
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/familias-voluntarias',
     element: <VolunteerFamilies />
+  },
+  {
+    path: '/admin/seguimiento-familias',
+    element: <FollowUpFamilies />
   },
   {
     path: '*',

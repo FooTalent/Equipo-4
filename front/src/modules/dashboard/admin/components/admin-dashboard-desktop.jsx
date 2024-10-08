@@ -18,10 +18,10 @@ export default function AdminDashboardDesktop() {
               <img src='/dashboard-admin/gestion-familia-desktop.svg' alt='Gestión de familias voluntarias' className='self-center' />
               <p className='self-start text-lg'>Gestión de familias voluntarias</p>
             </Link>
-            <div className='p-6 h-56 grid items-center bg-red-100 rounded-lg'>
+            <Link to={'/admin/seguimiento-familias'} className='p-6 h-56 grid items-center bg-red-100 rounded-lg'>
               <img src='/dashboard-admin/seguimiento-familia-desktop.svg' alt='Seguimiento de familias' className='self-center' />
-              <p className='self-start text-lg'>Seguimiento de familiass</p>
-            </div>
+              <p className='self-start text-lg'>Seguimiento de familias</p>
+            </Link>
           </div>
         </div>
         <div className='bg-white rounded-xl m-2 p-4 grid gap-5 h-full'>
