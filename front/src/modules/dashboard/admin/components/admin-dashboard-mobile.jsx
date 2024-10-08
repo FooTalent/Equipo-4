@@ -47,10 +47,10 @@ export default function AdminDashboardMobile() {
           <p className='text-2xl'>Base de Datos General</p>
         </div>
         <div className='grid grid-rows-3 gap-4 px-2'>
-          <div className='p-6 h-44 grid items-center bg-emerald-100 rounded-lg'>
+          <Link to={'/admin/listado-familias'} className='p-6 h-44 grid items-center bg-emerald-100 rounded-lg'>
             <img src='/dashboard-admin/listado-familia-desktop.svg' alt='Listado de familias' className='self-center' />
             <p className='self-start text-lg'>Listado de familias</p>
-          </div>
+          </Link>
           <div className='p-6 h-44 grid items-center bg-orange-100 rounded-lg'>
             <img src='/dashboard-admin/crear-usuario-desktop.svg' alt='Creare nuevo usuario' className='self-center' />
             <p className='self-start text-lg'>Crear nuevo usuario</p>

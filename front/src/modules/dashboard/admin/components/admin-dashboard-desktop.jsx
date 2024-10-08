@@ -30,10 +30,10 @@ export default function AdminDashboardDesktop() {
             <h2 className='pt-2 text-xl'>Base de Datos General</h2>
           </div>
           <div className='grid grid-cols-3 gap-4'>
-            <div className='p-6 h-56 grid items-center bg-emerald-100 rounded-lg'>
+            <Link to={'/admin/listado-familias'} className='p-6 h-56 grid items-center bg-emerald-100 rounded-lg'>
               <img src='/dashboard-admin/listado-familia-desktop.svg' alt='Listado de familias' className='self-center' />
               <p className='self-start text-lg'>Listado de familias</p>
-            </div>
+            </Link>
             <div className='p-6 h-56 grid items-center bg-orange-100 rounded-lg'>
               <img src='/dashboard-admin/crear-usuario-desktop.svg' alt='Creare nuevo usuario' className='self-center' />
               <p className='self-start text-lg'>Crear nuevo usuario</p>
