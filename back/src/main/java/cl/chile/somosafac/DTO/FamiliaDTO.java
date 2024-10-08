@@ -5,10 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -126,4 +125,6 @@ public class FamiliaDTO {
 
     private String estadoAcogimiento;
     private String usuario;
+
+    private List<ContactoDTO> historialContacto;
 }

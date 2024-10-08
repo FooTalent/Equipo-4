@@ -8,7 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 
 @Setter
@@ -114,5 +114,8 @@ public class FamiliaEntity {
 
     @LastModifiedDate
     private LocalDateTime fechaModificacion;
+
+    @OneToMany(mappedBy = "familia")
+    private List<ContactoEntity> historialContacto;
 
 }
