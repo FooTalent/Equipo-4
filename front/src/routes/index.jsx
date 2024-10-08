@@ -14,6 +14,7 @@ import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring'
 import VolunteerFamilies from '@/modules/dashboard/admin/pages/volunteer-families';
 import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families';
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
+import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/listado-familias',
     element: <ListFamilies />
+  },
+  {
+    path: '/admin/email-general',
+    element: <GeneralEmail />
   },
   {
     path: '*',
