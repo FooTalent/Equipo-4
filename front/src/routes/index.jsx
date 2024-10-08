@@ -11,6 +11,7 @@ import ContratoConfidencialidad from '@/modules/auth/family/contrato-confidencia
 import AdminDashboard from '@/modules/dashboard/admin/page';
 import AdminProfile from '@/modules/dashboard/admin/pages/profile';
 import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
+import VolunteerFamilies from '@/modules/dashboard/admin/pages/volunteer-families';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/solicitud-mentorias',
     element: <RequestMentoring />
+  },
+  {
+    path: '/admin/familias-voluntarias',
+    element: <VolunteerFamilies />
   },
   {
     path: '*',
