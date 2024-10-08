@@ -2,7 +2,7 @@ import { Input } from '@/components/ui';
 import { AppLayout } from '@/layouts/app-layout';
 import { useNavigate } from 'react-router-dom';
 
-export default function FollowUpFamilies () {
+export default function ListFamilies () {
   const navigate = useNavigate();
   return (
     <AppLayout>
@@ -11,9 +11,8 @@ export default function FollowUpFamilies () {
           <div className='flex flex-col gap-4'>
             <div className='flex md:flex-col gap-2 md:gap-5'>
               <img onClick={() => navigate('/admin/dashboard')} src='/common/arrow-left.svg' alt='Regresar a la página principal' className='self-start pt-2 md:pt-0 hover:cursor-pointer' />
-              <p className='self-center -mb-2 md:-mb-0 text-2xl md:w-full'>Seguimiento de Familias</p>
+              <p className='self-center -mb-2 md:-mb-0 text-2xl md:w-full'>Listado de Familias</p>
             </div>
-            <p className='px-2 md:px-0 text-lf'>Estas son las familias a las cuales se les debe realizar seguimiento:</p>
           </div>
           <div className='flex flex-col gap-3'>
             <div className='relative'>
@@ -22,7 +21,8 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/delete.svg' alt='borar' className='absolute top-2 right-2' />
+              <img src='/common/edit-input-field.svg' alt='editar' className='absolute top-[9.5px] right-10' />
             </div>
             <div className='relative'>
               <Input
@@ -30,7 +30,8 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/delete.svg' alt='borar' className='absolute top-2 right-2' />
+              <img src='/common/edit-input-field.svg' alt='editar' className='absolute top-[9.5px] right-10' />
             </div>
             <div className='relative'>
               <Input
@@ -38,7 +39,8 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/delete.svg' alt='borar' className='absolute top-2 right-2' />
+              <img src='/common/edit-input-field.svg' alt='editar' className='absolute top-[9.5px] right-10' />
             </div>
             <div className='relative'>
               <Input
@@ -46,7 +48,8 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/delete.svg' alt='borar' className='absolute top-2 right-2' />
+              <img src='/common/edit-input-field.svg' alt='editar' className='absolute top-[9.5px] right-10' />
             </div>
             <div className='relative'>
               <Input
@@ -54,7 +57,8 @@ export default function FollowUpFamilies () {
                 placeholder='Nombre y Apellido'
                 disabled
               />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
+              <img src='/dashboard-admin/delete.svg' alt='borar' className='absolute top-2 right-2' />
+              <img src='/common/edit-input-field.svg' alt='editar' className='absolute top-[9.5px] right-10' />
             </div>
           </div>
         </div>

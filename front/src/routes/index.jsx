@@ -13,6 +13,7 @@ import AdminProfile from '@/modules/dashboard/admin/pages/profile';
 import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
 import VolunteerFamilies from '@/modules/dashboard/admin/pages/volunteer-families';
 import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families';
+import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/seguimiento-familias',
     element: <FollowUpFamilies />
+  },
+  {
+    path: '/admin/listado-familias',
+    element: <ListFamilies />
   },
   {
     path: '*',
