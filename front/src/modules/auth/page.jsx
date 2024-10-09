@@ -1,6 +1,18 @@
+import useAuthStore from '@/store/user';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Auth() {
+  const user = useAuthStore((state) => state.user);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.primerIngreso === 'true')
+    {
+      if (user.tipoUsuario === 'ADMIN') navigate('auth/admin/personalizar');
+      if (user.tipoUsuario !== 'ADMIN') navigate('auth/familia/personalizar');
+    }
+  }, [user, navigate]);
   return (
     <main className='h-screen grid lg:grid-cols-2 px-2 md:px-0 text-center xl:max-w-6xl xl:mx-auto'>
       <section className='h-full flex flex-col md:p-4'>

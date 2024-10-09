@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import useAuthStore from '@/store/user';
 
 const AdminLogin = () => {
+  const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
   const schema = yup.object({
     correo:
@@ -58,9 +59,13 @@ const AdminLogin = () => {
   });
   const onSubmit = async (data) => {
     mutation.mutate(data);
-    // navigate('/auth/admin/personalizar');
   };
-
+  useEffect(() => {
+    if (user) {
+      if (user.tipoUsuario === 'ADMIN') navigate('/admin/dashboard');
+      if (user.tipoUsuario !== 'ADMIN') navigate('/familia/dashboard');
+    }
+  }, [user, navigate]);
   return (
     <div className='relative md:bg-cyan-50 py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4'>
       <Link className='block md:hidden absolute z-30 top-8 left-4' to={'/auth/tipo-usuario'}><MdArrowBackIosNew /></Link>
