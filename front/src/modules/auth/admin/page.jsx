@@ -42,12 +42,34 @@ const AdminLogin = () => {
   });
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  useEffect(() => {
+    if (user) {
+      if (user.tipoUsuario === 'ADMIN') {
+        if (user.primerIngreso === 'true') {
+          navigate('/auth/admin/personalizar');
+        } else {
+          navigate('/admin/dashboard');
+        }
+      } else {
+        navigate('/');
+      }
+    }
+  }, [user, navigate]);
   const mutation = useMutation({
     mutationFn: loginAdminApi,
     onSuccess: (data) => {
       if (data.correo) {
         setUser(data);
         toast.success('Inicio de sesión exitoso');
+        if (data.tipoUsuario === 'ADMIN') {
+          if (data.primerIngreso === 'true') {
+            navigate('/auth/admin/personalizar');
+          } else {
+            navigate('/admin/dashboard');
+          }
+        } else {
+          navigate('/');
+        }
       } else {
         toast.error(data);
       }
@@ -59,12 +81,6 @@ const AdminLogin = () => {
   const onSubmit = async (data) => {
     mutation.mutate(data);
   };
-  useEffect(() => {
-    if (user) {
-      if (user.tipoUsuario === 'ADMIN' && user.primerIngreso === 'false') navigate('auth/admin/personalizar');
-      if (user.tipoUsuario !== 'ADMIN' && user.primerIngreso === 'true') navigate('auth/familia/personalizar');
-    }
-  }, [user, navigate]);
   return (
     <div className='relative md:bg-cyan-50 py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4'>
       <Link className='block md:hidden absolute z-30 top-8 left-4' to={'/auth/tipo-usuario'}><MdArrowBackIosNew /></Link>

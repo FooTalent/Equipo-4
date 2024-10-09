@@ -49,6 +49,17 @@ const PersonalizeCredentialsAdmin = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  useEffect(() => {
+    if (user) {
+      if (user.tipoUsuario === 'ADMIN') {
+        if (user.primerIngreso === 'false') {
+          navigate('/admin/dashboard');
+        }
+      } else {
+        navigate('/');
+      }
+    }
+  }, [user, navigate]);
   const mutation = useMutation({
     mutationFn: personalizeAdminApi,
     onSuccess: (data) => {
@@ -72,9 +83,6 @@ const PersonalizeCredentialsAdmin = () => {
       mutation.mutate({ correo: data?.correo, contrasenaHash: data?.contrasenaHash });
     }
   };
-  useEffect(() => {
-    if (!user) navigate('/auth');
-  }, [user, navigate]);
   return (
     <div className='relative md:bg-cyan-50 py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4'>
       <Link className='block md:hidden absolute z-30 top-8 left-4' to={'/auth/tipo-usuario'}><MdArrowBackIosNew /></Link>
