@@ -48,7 +48,8 @@ const AdminLogin = () => {
       if (data.correo) {
         setUser(data);
         toast.success('Inicio de sesión exitoso');
-        navigate('/admin/dashboard');
+        if (data.primerIngreso === 'false') navigate('/admin/dashboard');
+        if (data.primerIngreso === 'true') navigate('/auth/admin/personalizar');
       } else {
         toast.error(data);
       }
