@@ -7,6 +7,7 @@ import cl.chile.somosafac.repository.UsuarioRepository;
 import cl.chile.somosafac.security.JwtService;
 import cl.chile.somosafac.security.LoginRequest;
 import cl.chile.somosafac.security.RegisterRequest;
+import cl.chile.somosafac.security.Role;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,13 +35,12 @@ public class AuthService {
         UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         usuario.setFechaUltimoAcceso(LocalDateTime.now());
-        usuario.setPrimerIngreso(false);
         usuarioRepository.save(usuario);
 
         String token = jwtService.getToken(usuario);
         // Configuracion de la cookie
         Cookie jwtCookie = new Cookie("token", token);
-        jwtCookie.setHttpOnly(true);  // Evita que la cookie sea accesible desde JavaScript
+        jwtCookie.setHttpOnly(true);  // Evita que la cookie sea accesible desde JavaScript - Consultar con equipo
         jwtCookie.setPath("/");
         jwtCookie.setSecure(true);
         jwtCookie.setMaxAge(24 * 60 * 60); // Duracion de 1 dia - Consultar con equipo
@@ -60,9 +58,11 @@ public class AuthService {
         }
 
         UsuarioEntity usuario = UsuarioEntity.builder()
+                .nombre(request.getNombre())
+                .apellido(request.getApellido())
                 .correo(request.getCorreo())
                 .contrasenaHash(passwordEncoder.encode(request.getContrasenaHash()))
-                .tipoUsuario(request.getTipoUsuario())
+                .tipoUsuario(Role.ADMIN)
                 .fechaRegistro(LocalDateTime.now())
                 .aceptarTerminos(request.isAceptarTerminos())
                 .build();
@@ -73,12 +73,13 @@ public class AuthService {
         return usuarioDTO;
     }
 
-    public String cambiarContrasenaPrimerIngreso(Long id, PasswordDTO nuevaContrasena) {
-        UsuarioEntity usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Usuario con id " + id + " no encontrado."));
+    public String cambiarContrasenaPrimerIngreso(String email, PasswordDTO nuevaContrasena) {
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         try {
-            usuario.setContrasenaHash(passwordEncoder.encode(nuevaContrasena.getPassword()));
+            usuario.setContrasenaHash(passwordEncoder.encode(nuevaContrasena.getContrasenaHash()));
+            usuario.setPrimerIngreso(false);
             usuarioRepository.save(usuario);
 
             return "Contraseña actualizada exitosamente.";
@@ -103,7 +104,7 @@ public class AuthService {
     public UsuarioEntity validarResetToken(String token) {
         Optional<UsuarioEntity> usuario = usuarioRepository.findByResetToken(token);
         if (usuario.isEmpty() || esTokenExpirado(usuario.get().getFechaExpiracionResetToken())) {
-            throw new RuntimeException("El Token no es válido o ha expirado.");
+            throw new RuntimeException("El código que recibiste en el email ya no es válido o ha expirado.");
         }
         return usuario.get();
     }
