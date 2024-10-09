@@ -62,17 +62,18 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen p-4'>
-      <Link className='absolute z-30 top-8 left-4' to={'/auth/tipo-usuario'}>
-        <MdArrowBackIosNew />
+    <div className='relative md:bg-cyan-50 py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4'>
+      <Link className='block md:hidden absolute z-30 top-8 left-4' to={'/auth/tipo-usuario'}><MdArrowBackIosNew /></Link>
+      <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
+        <img src='/common/logo-phrase.svg' alt='family one' className=''/>
       </Link>
-      <div className='max-w-md w-full space-y-8'>
+      <div className='max-w-md w-full space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
         <div>
           <h2 className='mt-6 text-3xl text-gray-900'>
             Ingresa las credenciales suministradas
           </h2>
         </div>
-        <Form {...form} className='border-0 outline-none'>
+        <Form {...form} className='border-0 outline-none '>
           <form className='mt-8 space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
             <div className='-space-y-px flex flex-col gap-3'>
               <div className='mb-4 flex flex-col gap-3'>
