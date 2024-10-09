@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,19 +38,10 @@ public class UsuarioController {
         UsuarioDTO usuario = usuarioService.obtenerPorId(id);
         return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
     }
-
-    @Operation(summary = "Crear un nuevo usuario", description = "Crea un nuevo usuario en el sistema")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario creado exitosamente"), @ApiResponse(responseCode = "400", description = "Error en la solicitud de creación")})
-    @PostMapping
-    public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioDTO nuevoUsuario = usuarioService.crearUsuario(usuarioDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
-    }
-
     @Operation(summary = "Actualizar un usuario", description = "Actualiza un usuario existente por su ID")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"), @ApiResponse(responseCode = "404", description = "Usuario no encontrado")})
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioDTO> actualizarUsuario(@Valid @PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
         UsuarioDTO usuarioActualizado = usuarioService.actualizarUsuario(id, usuarioDTO);
         return usuarioActualizado != null ? ResponseEntity.ok(usuarioActualizado) : ResponseEntity.notFound().build();
     }

@@ -8,6 +8,14 @@ import FamilyLogin from '@/modules/auth/family/page';
 import PersonalizeCredentialsFamily from '@/modules/auth/family/personalize';
 import Terminos from '@/modules/auth/family/terminos';
 import ContratoConfidencialidad from '@/modules/auth/family/contrato-confidencialidad';
+import AdminDashboard from '@/modules/dashboard/admin/page';
+import AdminProfile from '@/modules/dashboard/admin/pages/profile';
+import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
+import VolunteerFamilies from '@/modules/dashboard/admin/pages/volunteer-families';
+import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families';
+import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
+import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
+import CreateUser from '@/modules/dashboard/admin/components/create-user';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +53,38 @@ const router = createBrowserRouter([
   {
     path: '/auth/familia/contrato-confidencialidad',
     element: <ContratoConfidencialidad />
+  },
+  {
+    path: '/admin/dashboard',
+    element: <AdminDashboard />
+  },
+  {
+    path: '/admin/perfil',
+    element: <AdminProfile />
+  },
+  {
+    path: '/admin/solicitud-mentorias',
+    element: <RequestMentoring />
+  },
+  {
+    path: '/admin/familias-voluntarias',
+    element: <VolunteerFamilies />
+  },
+  {
+    path: '/admin/seguimiento-familias',
+    element: <FollowUpFamilies />
+  },
+  {
+    path: '/admin/listado-familias',
+    element: <ListFamilies />
+  },
+  {
+    path: '/admin/email-general',
+    element: <GeneralEmail />
+  },
+  {
+    path: '/admin/crear-usuario',
+    element: <CreateUser />
   },
   {
     path: '*',

@@ -38,13 +38,6 @@ public class UsuarioService {
         return usuario.map(UsuarioDTO::fromEntity).orElse(null);
     }
 
-    @Transactional
-    public UsuarioDTO crearUsuario(UsuarioDTO usuarioDTO) {
-        UsuarioEntity usuario = usuarioDTO.toEntity();
-        usuario.setFechaRegistro(LocalDateTime.now());
-        UsuarioEntity nuevoUsuario = usuarioRepository.save(usuario);
-        return UsuarioDTO.fromEntity(nuevoUsuario);
-    }
 
     @Transactional
     public UsuarioDTO actualizarUsuario(Long id, UsuarioDTO usuarioDTO) {

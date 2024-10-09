@@ -6,11 +6,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/familias")
@@ -47,7 +49,7 @@ public class FamiliaController {
             @ApiResponse(responseCode = "400", description = "Error en la solicitud de creación")
     })
     @PostMapping
-    public ResponseEntity<FamiliaDTO> crearFamilia(@RequestBody FamiliaDTO familiaDTO) {
+    public ResponseEntity<FamiliaDTO> crearFamilia(@RequestBody @Valid FamiliaDTO familiaDTO) {
         FamiliaDTO nuevaFamilia = familiaService.createFamilia(familiaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaFamilia);
     }
@@ -58,9 +60,10 @@ public class FamiliaController {
             @ApiResponse(responseCode = "404", description = "Familia no encontrada")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<FamiliaDTO> actualizarFamilia(@PathVariable Long id, @RequestBody FamiliaDTO familiaDTO) {
-        FamiliaDTO familiaActualizada = familiaService.updateFamilia(id, familiaDTO);
-        return familiaActualizada != null ? ResponseEntity.ok(familiaActualizada) : ResponseEntity.notFound().build();
+    public ResponseEntity<FamiliaDTO> actualizarFamilia(@PathVariable @Valid Long id, @RequestBody FamiliaDTO familiaDTO) {
+        Optional<FamiliaDTO> familiaActualizada = familiaService.updateFamilia(id, familiaDTO);
+        return familiaActualizada.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Eliminar una familia", description = "Elimina una familia específica por su ID")

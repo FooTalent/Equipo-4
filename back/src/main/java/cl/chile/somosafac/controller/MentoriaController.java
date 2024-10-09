@@ -6,11 +6,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/mentorias")
@@ -48,7 +50,7 @@ public class MentoriaController {
             @ApiResponse(responseCode = "400", description = "Error en la solicitud de creación")
     })
     @PostMapping
-    public ResponseEntity<MentoriaDTO> crearMentoria(@RequestBody MentoriaDTO mentoriaDTO) {
+    public ResponseEntity<MentoriaDTO> crearMentoria(@RequestBody @Valid MentoriaDTO mentoriaDTO) {
         MentoriaDTO mentoria = mentoriaService.createMentoria(mentoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(mentoria);
     }
@@ -59,9 +61,9 @@ public class MentoriaController {
             @ApiResponse(responseCode = "404", description = "Mentoría no encontrada")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<MentoriaDTO> actualizarMentoria(@PathVariable Long id, @RequestBody MentoriaDTO mentoriaDTO) {
-        MentoriaDTO mentoria = mentoriaService.updateMentoria(id, mentoriaDTO);
-        return mentoria != null ? ResponseEntity.ok(mentoria) : ResponseEntity.notFound().build();
+    public ResponseEntity<MentoriaDTO> actualizarMentoria(@PathVariable @Valid Long id, @RequestBody MentoriaDTO mentoriaDTO) {
+        Optional<MentoriaDTO> mentoriaOptional = mentoriaService.updateMentoria(id, mentoriaDTO);
+        return mentoriaOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Eliminar una mentoría", description = "Elimina una mentoría específica por su ID")
