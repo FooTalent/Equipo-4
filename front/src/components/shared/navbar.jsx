@@ -21,7 +21,7 @@ export default function Navbar() {
             <img src='/dashboard-admin/notification-desktop.svg' alt='notificación' className='w-6 mx-auto' />
             <p>Notificación</p>
           </div>
-          <Link to={`${user.tipoUsuario === 'ADMIN' ? '/admin/perfil' : ''}`} className='hidden md:flex flex-col items-center gap-1'>
+          <Link to={`${user?.tipoUsuario === 'ADMIN' ? '/admin/perfil' : ''}`} className='hidden md:flex flex-col items-center gap-1'>
             <img src='/common/perfil.svg' alt='perfil' className='w-7 mx-auto' />
             <p>Perfil</p>
           </Link>
