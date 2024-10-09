@@ -61,8 +61,7 @@ const AdminLogin = () => {
   };
   useEffect(() => {
     if (user) {
-      if (user.tipoUsuario === 'ADMIN') navigate('/admin/dashboard');
-      if (user.tipoUsuario !== 'ADMIN') navigate('/familia/dashboard');
+      navigate('/admin/dashboard');
     }
   }, [user, navigate]);
   return (
