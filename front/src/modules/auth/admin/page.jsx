@@ -61,7 +61,8 @@ const AdminLogin = () => {
   };
   useEffect(() => {
     if (user) {
-      navigate('/admin/dashboard');
+      if (user.tipoUsuario === 'ADMIN' && user.primerIngreso === 'false') navigate('auth/admin/personalizar');
+      if (user.tipoUsuario !== 'ADMIN' && user.primerIngreso === 'true') navigate('auth/familia/personalizar');
     }
   }, [user, navigate]);
   return (
