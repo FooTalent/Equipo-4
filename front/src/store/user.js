@@ -6,6 +6,9 @@ const useAuthStore = create(
     (set) => ({
       user: null,
       setUser: (userData) => set({ user: userData }),
+      setFirstLogin: (value) => set((state) => ({
+        user: state.user ? { ...state.user, primerIngreso: value } : null
+      })),
       logout: () => set({ user: null }),
     }),
     {
