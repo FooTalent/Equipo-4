@@ -59,6 +59,7 @@ const PersonalizeCredentialsAdmin = () => {
         navigate('/');
       }
     }
+    if (!user) navigate('/auth');
   }, [user, navigate]);
   const mutation = useMutation({
     mutationFn: personalizeAdminApi,
