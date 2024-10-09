@@ -31,10 +31,10 @@ export default function UserType() {
   };
 
   return (
-    <main className='relative md:bg-cyan-50 py-8 h-screen grid items-center px-4 text-center'>
+    <main className='relative md:bg-cyan-50 py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4 text-center'>
       <Link className='block md:hidden absolute z-30 top-8 left-4' to={'/auth'}><MdArrowBackIosNew /></Link>
-      <Link to={'/auth'} className='hidden md:block absolute top-16 left-16'>
-        <img src='/common/logo-phrase.svg' alt='family one' className=' w-44'/>
+      <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
+        <img src='/common/logo-phrase.svg' alt='family one' className=''/>
       </Link>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='md:max-w-md md:h-3/4 md:shadow-lg bg-white md:mx-auto md:w-full space-y-8 md:p-5 md:rounded-xl relative grid gap-10 items-center h-full'>
