@@ -146,7 +146,7 @@ const PersonalizeCredentialsAdmin = () => {
                   {...form.register('repiteContrasena', { required: true })}
                 />
                 {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.repiteContrasena?.message}</p>}
-                <button onClick={() => logout()} className='text-sm text-orange-500 font-semibold text-right'>¿Cerrar sesión?</button>
+                <button onClick={() => logout()} className='text-sm text-gray-400 font-semibold text-right'>¿Cerrar sesión?</button>
               </div>
             </div>
             <div>
@@ -154,7 +154,7 @@ const PersonalizeCredentialsAdmin = () => {
                 type="submit"
                 disabled={mutation.isPending}
                 variant="default"
-                className="w-full mt-4 py-6"
+                className="w-full mt-4 py-6 bg-orange-400 hover:bg-orange-500"
               >
                 {mutation.isPending ? <Spinner /> : 'Iniciar Sesión'}
               </Button>
