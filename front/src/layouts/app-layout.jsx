@@ -10,8 +10,8 @@ export const AppLayout = ({ children }) => {
   useEffect(() => {
     if (!user) navigate('/auth');
     if (user && user.primerIngreso === 'true') {
-      if (user.tipoUsuario === 'ADMIN') navigate('/auth/admin/personalizar');
-      if (user.tipoUsuario !== 'ADMIN') navigate('/auth/familia/personalizar');
+      if (user?.tipoUsuario === 'ADMIN') navigate('/auth/admin/personalizar');
+      if (user?.tipoUsuario !== 'ADMIN') navigate('/auth/familia/personalizar');
     }
   }, [user, navigate]);
   return (
