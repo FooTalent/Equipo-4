@@ -67,10 +67,13 @@ const PersonalizeCredentialsFamily= () => {
 
   return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-custom">
-        <Link className='absolute z-30 top-8 left-4' to={'/auth/admin/ingresar'}>
+        <Link className='absolute z-30 top-8 bg-white md:p-4 md:shadow-md md:rounded-xl left-8' to={'/auth/admin/ingresar'}>
           <MdArrowBackIosNew />
         </Link>
-        <div className="max-w-xl w-full h-auto space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-16 md:pb-28 md:pt-28 md:rounded-xl">
+        <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
+          <img src='/common/logo-phrase.svg' alt='family one' className='ml-20'/>
+        </Link>
+        <div className="max-w-xl w-full h-auto space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-16 md:pb-20 md:pt-14 md:rounded-xl">
           <div>
             <h2 className="mt-2 text-center mb-16 text-3xl text-gray-900">
               Ahora, personaliza tus credenciales
