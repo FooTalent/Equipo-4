@@ -1,5 +1,6 @@
 package cl.chile.somosafac.service;
 
+import cl.chile.somosafac.DTO.RequestActualizarUsuarioDTO;
 import cl.chile.somosafac.DTO.UsuarioDTO;
 import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.mapper.UsuarioMapper;
@@ -40,17 +41,21 @@ public class UsuarioService {
 
 
     @Transactional
-    public UsuarioDTO actualizarUsuario(Long id, UsuarioDTO usuarioDTO) {
+    public UsuarioDTO actualizarUsuario(Long id, RequestActualizarUsuarioDTO usuarioActualizados) {
         Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findById(id);
 
         if (usuarioExistente.isPresent()) {
             UsuarioEntity usuario = usuarioExistente.get();
-            usuario.setCorreo(usuarioDTO.getCorreo());
-//            usuario.setContrasenaHash(usuarioDTO.getContrasenaHash());
-            usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
-            usuario.setActivo(usuarioDTO.getActivo());
-            usuario.setVerificado(usuarioDTO.getVerificado());
-            usuario.setAceptarTerminos(usuarioDTO.getAceptarTerminos());
+
+            if (usuarioActualizados.getNombre() != null) {
+                usuario.setNombre(usuarioActualizados.getNombre());
+            }
+            if (usuarioActualizados.getApellido() != null) {
+                usuario.setApellido(usuarioActualizados.getApellido());
+            }
+            if (usuarioActualizados.getCorreo() != null) {
+                usuario.setCorreo(usuarioActualizados.getCorreo());
+            }
 
             usuario = usuarioRepository.save(usuario);
 
