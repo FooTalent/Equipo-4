@@ -16,11 +16,16 @@ import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 import CreateUser from '@/modules/dashboard/admin/components/create-user';
+import HomeFamilies from '@/modules/auth/family/HomeFamilies';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />
+  },,
+  {
+    path: '/home-families',//ACORDARSE DE RECOLOCAR PATH DENTRO DE AUTH
+    element: <HomeFamilies />
   },
   {
     path: '/auth',
