@@ -6,9 +6,14 @@ import { Button, Form, Input } from '@/components/ui';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schemaAdminProfile } from '../schemas/schemaAdminProfile';
+import { useMutation } from '@tanstack/react-query';
+import { adminProfileApi } from '../api';
+import { toast } from 'react-toastify';
+import Spinner from '@/components/ui/spinner';
 
 export default function AdminProfile() {
   const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
   const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [editFields, setEditFields] = useState({
@@ -46,8 +51,38 @@ export default function AdminProfile() {
       correo: false,
     });
   };
+  const mutation = useMutation({
+    mutationFn: adminProfileApi,
+    onSuccess: (data) => {
+      if (data) {
+        setUser(data);
+        toast.success('Perfil actualizado exitosamente');
+        setEditFields({
+          nombre: false,
+          apellido: false,
+          correo: false
+        });
+        form.reset({
+          nombre: data.nombre,
+          apellido: data.apellido,
+          correo: data.correo
+        });
+      } else {
+        toast.error(data);
+      }
+    },
+    onError: () => {
+      toast.error('Ha ocurrido un error');
+    },
+  });
   const onSubmit = async (data) => {
-    console.log(data);
+    const newData = {
+      id: user.id,
+      nombre: data.nombre,
+      apellido: data.apellido,
+      corre: data.correo
+    };
+    mutation.mutate(newData);
   };
   const watchedFields = form.watch();
   useEffect(() => {
@@ -111,8 +146,8 @@ export default function AdminProfile() {
                 </div>
               </div>
               <div className='h-full md:mt-0 flex flex-col justify-end gap-2'>
-                <Button type='submit' disabled={!error} className='disabled:bg-gray-400 disabled:text-black bg-green-600 hover:bg-green-700  text-white'>Guardar Cambios</Button>
-                <Button type='button' onClick={() => handleCancle()} disabled={!error} className='disabled:bg-gray-400 disabled:text-black disabled:border-gray-400 bg-white hover:bg-orange-400 text-orange-400 hover:text-white border-2 border-orange-400'>Cancelar</Button>
+                <Button type='submit' disabled={!error} className='disabled:bg-gray-400 disabled:text-black bg-green-600 hover:bg-green-700  text-white'>{mutation.isPending ? <Spinner /> : 'Guardar Cambios'}</Button>
+                <Button type='button' onClick={() => handleCancle()} disabled={!error} className={`${mutation.isPending ? 'hidden' : ''} disabled:bg-gray-400 disabled:text-black disabled:border-gray-400 bg-white hover:bg-orange-400 text-orange-400 hover:text-white border-2 border-orange-400`}>Cancelar</Button>
               </div>
             </form>
           </Form>
