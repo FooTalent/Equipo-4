@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +77,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "Contraseña actualizada exitosamente")
     })
     @PutMapping("/password")
-    public ResponseEntity<String> cambiarContrasenaPrimerIngreso(@RequestParam String email, @RequestBody PasswordDTO nuevaContrasena) {
+    public ResponseEntity<String> cambiarContrasenaPrimerIngreso(@RequestParam String email,@Valid @RequestBody PasswordDTO nuevaContrasena) {
         authService.cambiarContrasenaPrimerIngreso(email, nuevaContrasena);
         return ResponseEntity.ok("Contraseña actualizada exitosamente.");
     }
@@ -105,7 +106,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Código de recuperación inválido o expirado")
     })
     @PostMapping("/reset-password/{resetToken}")
-    public ResponseEntity<String> recuperarContrasena(@PathVariable String resetToken, @RequestBody PasswordDTO nuevaContrasena) {
+    public ResponseEntity<String> recuperarContrasena(@PathVariable String resetToken,@Valid @RequestBody PasswordDTO nuevaContrasena) {
         UsuarioEntity usuario = authService.validarResetToken(resetToken);
 
         authService.resetContrasena(usuario, nuevaContrasena.getContrasenaHash());
