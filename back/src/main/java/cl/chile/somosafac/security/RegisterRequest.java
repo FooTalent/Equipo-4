@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterRequest {
+    String nombre;
+    String apellido;
     String correo;
     String contrasenaHash;
     Role tipoUsuario;
