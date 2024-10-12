@@ -1,5 +1,6 @@
 package cl.chile.somosafac.controller;
 
+import cl.chile.somosafac.DTO.RequestActualizarUsuarioDTO;
 import cl.chile.somosafac.DTO.UsuarioDTO;
 import cl.chile.somosafac.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,11 +39,12 @@ public class UsuarioController {
         UsuarioDTO usuario = usuarioService.obtenerPorId(id);
         return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
     }
+
     @Operation(summary = "Actualizar un usuario", description = "Actualiza un usuario existente por su ID")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"), @ApiResponse(responseCode = "404", description = "Usuario no encontrado")})
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> actualizarUsuario(@Valid @PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioDTO usuarioActualizado = usuarioService.actualizarUsuario(id, usuarioDTO);
+    public ResponseEntity<UsuarioDTO> actualizarUsuario(@Valid @PathVariable Long id,@Valid @RequestBody RequestActualizarUsuarioDTO usuarioActualizados) {
+        UsuarioDTO usuarioActualizado = usuarioService.actualizarUsuario(id, usuarioActualizados);
         return usuarioActualizado != null ? ResponseEntity.ok(usuarioActualizado) : ResponseEntity.notFound().build();
     }
 

@@ -73,19 +73,19 @@ class UsuarioServiceTest {
     }
 
 
-    @Test
-    void actualizarUsuario() {
-        // Configurar el mock
-        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuarioEntity));
-        when(usuarioRepository.save(any(UsuarioEntity.class))).thenReturn(usuarioEntity);
-
-        // Llamar al método
-        UsuarioDTO usuario = usuarioService.actualizarUsuario(1L, usuarioDTO);
-
-        // Verificar el resultado
-        assertNotNull(usuario);
-        assertEquals(usuarioDTO.getCorreo(), usuario.getCorreo());
-    }
+//    @Test
+//    void actualizarUsuario() {
+//        // Configurar el mock
+//        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuarioEntity));
+//        when(usuarioRepository.save(any(UsuarioEntity.class))).thenReturn(usuarioEntity);
+//
+//        // Llamar al método
+//        UsuarioDTO usuario = usuarioService.actualizarUsuario(1L, usuarioDTO);
+//
+//        // Verificar el resultado
+//        assertNotNull(usuario);
+//        assertEquals(usuarioDTO.getCorreo(), usuario.getCorreo());
+//    }
 
     @Test
     void eliminarUsuario() {

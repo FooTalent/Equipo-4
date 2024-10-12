@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .titulo {
+            color: #007bff;
+            text-align: center;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .email-header {
+            background: url("cid:portada.png") no-repeat center center;
+            background-size: cover;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .email-header img {
+            max-width: 100%;
+            height: auto;
+            margin: auto;
+        }
+        .email-body {
+            padding: 25px 20px 1px 20px;
+            text-align: left;
+        }
+        .credentials {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: left;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777777;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <h1 class="titulo">¡Bienvenido a nuestra comunidad!</h1>
+
+    <div class="email-header">
+        <img src="cid:portada.png" alt="Somos AFAC">
+    </div>
+    <div class="email-body">
+        <p>Nos alegra enormemente que te hayas unido a nuestra comunidad, donde juntos trabajamos por el bienestar de niños, niñas y adolescentes en cuidado alternativo.</p>
+        <p>Tu cuenta ha sido creada con éxito! Estas son las credenciales para acceder a la plataforma:</p>
+        <div class="credentials">
+            <strong>Correo electrónico:</strong> {{email}}<br>
+            <strong>Contraseña:</strong> {{passwordHash}}
+        </div>
+        <p>Recuerda que debes cambiar tu contraseña al iniciar sesión por primera vez.</p>
+    </div>
+    <footer class="footer">
+        <p style="color: #007bff;">Diseñado por <strong>FamilyOne</strong>.</p>
+    </footer>
+</div>
+</body>
+</html>
