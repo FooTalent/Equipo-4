@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 
 export const schemaCreateUser = yup.object({
+  tipoUsuario: yup.string('Selecciona una opción').required('Selecciona una opción'),
   nombre: yup
     .string()
     .required('Introduce un nombre valido')
