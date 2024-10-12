@@ -46,7 +46,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Error en el registro del usuario")
     })
     @PostMapping(value = "register")
-    public ResponseEntity<UsuarioDTO> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<UsuarioDTO> register(@Valid @RequestBody RegisterRequest request) {
         UsuarioDTO usuarioRegistrado = authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRegistrado);
     }
