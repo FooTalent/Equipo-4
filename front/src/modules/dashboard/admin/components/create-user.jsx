@@ -10,7 +10,16 @@ import {
   Input,
   Button,
   DialogClose,
-  Form
+  Form,
+  FormItem,
+  FormControl,
+  FormMessage,
+  FormField,
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue
 } from '@/components/ui';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -18,6 +27,7 @@ import { schemaCreateUser } from '../schemas/schemaCreateUser';
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import { createUserApi, sendUserDataApi } from '../api';
+import Spinner from '@/components/ui/spinner';
 
 export default function CreateUser() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +35,7 @@ export default function CreateUser() {
   const form = useForm({
     resolver: yupResolver(schemaCreateUser),
     defaultValues: {
+      tipoUsuario: '',
       nombre: '',
       apellido: '',
       correo: '',
@@ -102,7 +113,29 @@ export default function CreateUser() {
             </DialogHeader>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className={`${confirmed ? 'hidden' : 'block'}`}>
-                <div className="grid gap-3 py-2">
+                <div className='grid gap-3 py-2'>
+                  <FormField
+                    control={form.control}
+                    name='tipoUsuario'
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label>Tipo de usuario</Label>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue className='placeholder:text-gray-400' />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value='USUARIO'>Usuario</SelectItem>
+                            <SelectItem value='FAMILIA'>Familia</SelectItem>
+                            <SelectItem value='ADMIN'>Administrador</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <div className='flex flex-col gap-3'>
                     <Label htmlFor="nombre">
               Nombre
@@ -157,8 +190,8 @@ export default function CreateUser() {
                   </div>
                 </div>
                 <DialogFooter className='flex flex-row gap-2 mt-4'>
-                  <DialogClose className='bg-transparent text-red-500 border border-red-500 hover:bg-red-500 hover:text-white text-lg font-light w-full rounded-md'>Cancelar</DialogClose>
-                  <Button type='submit' className='bg-emerald-500 hover:bg-white hover:border hover:border-emerald-500 hover:text-emerald-500 text-lg font-light w-full'>Confirmar</Button>
+                  <DialogClose className={` ${mutationCreateUser.isPending ? 'hidden' : ''} bg-transparent text-red-500 border border-red-500 hover:bg-red-500 hover:text-white text-lg font-light w-full rounded-md`}>Cancelar</DialogClose>
+                  <Button type='submit' className='bg-emerald-500 hover:bg-white hover:border hover:border-emerald-500 hover:text-emerald-500 text-lg font-light w-full'>{mutationCreateUser.isPending ? <Spinner /> : 'Confirmar'}</Button>
                 </DialogFooter>
               </form>
             </Form>
@@ -188,7 +221,7 @@ export default function CreateUser() {
                 </div>
 
                 <Button type='button' onClick={sendEmail} className='mt-4 mb-2 bg-transparent text-black font-base bg-orange-400 hover:bg-orange-400 text-lg w-full rounded-md'>
-                  Enviar vía email
+                  {mutationSendData.isPending ? <Spinner /> : 'Enviar vía email'}
                 </Button>
                 <Button type='button' onClick={copyToClipboard} className='bg-emerald-500 hover:bg-emerald-500 hover:border hover:border-emerald-500 text-lg font-light w-full'>Copiar en portapapeles</Button>
 
