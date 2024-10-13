@@ -22,9 +22,9 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />
-  },,
+  },
   {
-    path: '/home-families',//ACORDARSE DE RECOLOCAR PATH DENTRO DE AUTH
+    path: '/home-families', //ACORDARSE DE RECOLOCAR PATH DENTRO DE AUTH
     element: <HomeFamilies />
   },
   {

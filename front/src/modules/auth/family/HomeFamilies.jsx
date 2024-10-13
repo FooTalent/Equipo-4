@@ -1,8 +1,10 @@
-import Footer from "@/components/shared/footer";
-import Navbar from "@/components/shared/navbar";
-import { Button, Input, RadioGroup, RadioGroupItem } from "@/components/ui";
-import React from "react";
+import Footer from '@/components/shared/footer';
+import Navbar from '@/components/shared/navbar';
+import comunas from '../../../../public/common/data/territoriochile.json';
+
+import { Button, Input, RadioGroup, RadioGroupItem} from '@/components/ui';
 export default function HomeFamilies() {
+
   return (
     <>
       {/*RECORDAR DE BORRAR*/}
@@ -58,7 +60,11 @@ export default function HomeFamilies() {
                   <Input label="email" placeholder="Email" type="text" />
                   <Input label="Pais" placeholder="Pais" type="text" />
                   <Input label="region" placeholder="Ciudad" type="text" />
-                  <Input label="comuna" placeholder="Comuna" type="text" />
+                  <select>
+                    {comunas.map((comuna, index) => (
+                      <option key={index} value={comuna}>{JSON.stringify(comuna.nombre)}</option>
+                    ))}
+                  </select>
                   <Input
                     label="direccion"
                     placeholder="Dirección"
@@ -113,7 +119,7 @@ export default function HomeFamilies() {
                     </div>
                     <Input label="duracionEvaluacion" type="text" />
                   </section>
-                  <section>
+                  <section className='flex flex-col gap-5'>
                     <div>
                       <h2>Tiempo para acoger una vez idóneos</h2>
                     </div>
@@ -149,7 +155,7 @@ export default function HomeFamilies() {
                       </div>
                     </RadioGroup>
                   </section>
-                  <section>
+                  <section className='flex flex-col gap-5'>
                     <div>
                       <h2>Fecha de inicio de Acogimeinto</h2>
                     </div>
@@ -231,9 +237,9 @@ export default function HomeFamilies() {
                 <div className="flex justify-center">
                   <Button
                     type="submit"
-                    className="w-full py-3 text-base text-center text-black bg-orange-400 rounded-md md:w-3/4 hover:bg-orange-500 hover:opacity-80"
+                    className="w-full py-3 text-base font-bold text-center text-black bg-orange-400 rounded-md md:w-3/4 hover:bg-orange-500 hover:opacity-80"
                   >
-                    Enviar
+                    Guardar Cambios
                   </Button>
                 </div>
               </form>
