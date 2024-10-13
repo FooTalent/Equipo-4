@@ -1,9 +1,29 @@
+import { useState } from 'react';
 import Footer from '@/components/shared/footer';
 import Navbar from '@/components/shared/navbar';
 import comunas from '../../../../public/common/data/territoriochile.json';
 
 import { Button, Input, RadioGroup, RadioGroupItem} from '@/components/ui';
 export default function HomeFamilies() {
+  const [familiesData, setFamiliesData] = useState([
+    {
+      nombreFaUno: '',
+      rutFaUno: '',
+      estadoCivilFaUno: '',
+      telefono: '',
+      email: '',
+      pais: '',
+      region: '',
+      direccion: '',
+      ingresoAfa: '',
+      fechaUltimoContacto: '',
+      nacionalidadNna: '',
+      programaFundacionActual: '',
+      hijosBiologicos: '',
+      duracionEvaluacion: '',
+      edadNna: '',
+    },
+  ]);
 
   return (
     <>
@@ -58,7 +78,7 @@ export default function HomeFamilies() {
                   />
                   <Input label="telefono" placeholder="Teléfono" type="text" />
                   <Input label="email" placeholder="Email" type="text" />
-                  <Input label="Pais" placeholder="Pais" type="text" />
+                  <Input label="pais" placeholder="Pais" type="text" />
                   <Input label="region" placeholder="Ciudad" type="text" />
                   <select>
                     {comunas.map((comuna, index) => (
