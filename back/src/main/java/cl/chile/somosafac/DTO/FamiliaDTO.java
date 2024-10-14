@@ -16,6 +16,8 @@ public class FamiliaDTO {
     @NotNull(message = "El ID no puede ser nulo")
     private Long id;
 
+    private Long usuario;
+
     @NotNull(message = "El nombre del padre/madre 1 no puede ser nulo")
     @Size(min = 3, max = 255, message = "El nombre del padre/madre 1 debe tener entre 3 y 255 caracteres")
     @NotBlank(message = "El nombre del padre/madre 1 no puede estar vacío")
@@ -119,7 +121,7 @@ public class FamiliaDTO {
     private LocalDateTime fechaModificacion;
 
     private String estadoAcogimiento;
-    private String usuario;
+
 
     private List<ContactoDTO> historialContacto;
 }
