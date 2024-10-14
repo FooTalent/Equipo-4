@@ -2,9 +2,12 @@ import { useState } from 'react';
 import Footer from '@/components/shared/footer';
 import Navbar from '@/components/shared/navbar';
 import comunas from '../../../../public/common/data/territoriochile.json';
+import { useForm } from 'react-hook-form';
 
-import { Button, Input, RadioGroup, RadioGroupItem} from '@/components/ui';
+import { Button, Input, RadioGroup, RadioGroupItem } from '@/components/ui';
 export default function HomeFamilies() {
+  const { register, handleSubmit } = useForm();
+  const [twoMembers, setTwoMembers] = useState(null);
   const [familiesData, setFamiliesData] = useState([
     {
       nombreFaUno: '',
@@ -24,6 +27,9 @@ export default function HomeFamilies() {
       edadNna: '',
     },
   ]);
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -50,27 +56,50 @@ export default function HomeFamilies() {
                 id="home-families-form-title"
                 className="flex-col w-full"
               >
-                <h1>Bienvenidos</h1>
+                <h1 className='font-[400] text-2xl'>Bienvenidos</h1>
               </section>
               <form
                 id="home-families-form"
                 className="flex flex-col w-full gap-10"
+                onSubmit={handleSubmit(onSubmit)}
               >
                 <section className="flex flex-col gap-5">
                   <div>
-                    <h2>Datos Personales</h2>
+                    <h2 className='font-[500] text-1xl'>Datos personales del representante de familia</h2>
+                  </div>
+                  <div className="w-full">
+                    <label className='font-[500] text-1xl'>Cantidad de miembros representantes</label>
+                    <select
+                      className="w-full"
+                      value={twoMembers ? '2' : '1'}
+                      onChange={(e) => setTwoMembers(e.target.value === '2')}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                    </select>
                   </div>
                   <Input
                     label="nombreFaUno"
-                    placeholder="Nombre y Apellido"
+                    placeholder="Nombre y Apellido Representante"
+                    type="text"
+                    {...register('nombreFaUno', {
+                      required: true,
+                      maxLength: 255,
+                    })}
+                  />
+                  <Input
+                    label="rutFaUno"
+                    placeholder="RUT Representante"
                     type="text"
                   />
-                  <Input label="rutFaUno" placeholder="RUT" type="text" />
-                  <Input
-                    label="fechaNacimientoFaUno"
-                    placeholder="Fecha de Nacimiento"
-                    type="date"
-                  />
+                  <div>
+                    <label className='font-[500] text-1xl'>Fecha de Nacimiento Familiar</label>
+                    <Input
+                      label="fechaNacimientoFaUno"
+                      placeholder="Fecha de Nacimiento"
+                      type="date"
+                    />
+                  </div>
                   <Input
                     label="estadoCivil"
                     placeholder="Estado Civil"
@@ -82,7 +111,9 @@ export default function HomeFamilies() {
                   <Input label="region" placeholder="Ciudad" type="text" />
                   <select>
                     {comunas.map((comuna, index) => (
-                      <option key={index} value={comuna}>{JSON.stringify(comuna.nombre)}</option>
+                      <option key={index} value={comuna}>
+                        {JSON.stringify(comuna.nombre)}
+                      </option>
                     ))}
                   </select>
                   <Input
@@ -91,25 +122,83 @@ export default function HomeFamilies() {
                     type="text"
                   />
                 </section>
+                {/*Miembro dos*/}
+                {twoMembers && (
+                  <section className="flex flex-col gap-5">
+                    <h2 className='font-[500] text-1xl'>Segundo Representante</h2>
+                    <Input
+                      label="nombreFaUno"
+                      placeholder="Nombre y Apellido Representante"
+                      type="text"
+                      {...register('nombreFaDos', {
+                        required: true,
+                        maxLength: 255,
+                      })}
+                    />
+                    <Input
+                      label="rutFaDos"
+                      placeholder="RUT Representante"
+                      type="text"
+                    />
+                    <div>
+                      <label className='font-[500] text-1xl'>Fecha de Nacimiento Familiar</label>
+                      <Input
+                        label="fechaNacimientoFaDos"
+                        placeholder="Fecha de Nacimiento"
+                        type="date"
+                      />
+                    </div>
+                    <Input
+                      label="estadoCivil"
+                      placeholder="Estado Civil"
+                      type="text"
+                    />
+                    <Input
+                      label="telefono"
+                      placeholder="Teléfono"
+                      type="text"
+                    />
+                    <Input label="email" placeholder="Email" type="text" />
+                    <Input label="pais" placeholder="Pais" type="text" />
+                    <Input label="region" placeholder="Ciudad" type="text" />
+                    <select>
+                      {comunas.map((comuna, index) => (
+                        <option key={index} value={comuna}>
+                          {JSON.stringify(comuna.nombre)}
+                        </option>
+                      ))}
+                    </select>
+                    <Input
+                      label="direccion"
+                      placeholder="Dirección"
+                      type="text"
+                    />
+                  </section>
+                )}
+                {/*Miembro dos*/}
                 <div className="flex flex-col gap-5">
                   <div>
-                    <h2>Datos de familia de Acogimiento</h2>
+                    <h2 className='font-[500] text-1xl'>
+                      Datos de familia de Acogimiento (completar los siguientes
+                      datos junto a un asesor de AFAC en su próxima llamada de
+                      seguimiento)
+                    </h2>
                   </div>
                   <section>
                     <div>
-                      <h2>Fecha de ingreso a AFAC</h2>
+                      <h2 className='font-[500] text-1xl'>Fecha de ingreso a AFAC</h2>
                     </div>
                     <Input label="ingresoAfac" type="date" />
                   </section>
                   <section>
                     <div>
-                      <h2>Fecha de ingreso como FA</h2>
+                      <h2 className='font-[500] text-1xl'>Fecha de ingreso a un programa como FA</h2>
                     </div>
                     <Input label="ingresoFa" type="date" />
                   </section>
                   <section className="flex flex-col gap-5">
                     <div>
-                      <h2>Fecha de último contacto</h2>
+                      <h2 className='font-[500] text-1xl'>Fecha de última llamada de seguimiento</h2>
                     </div>
                     <Input label="fechaUltimoContacto" type="date" />
                     <Input
@@ -125,7 +214,7 @@ export default function HomeFamilies() {
                   </section>
                   <section>
                     <div>
-                      <h2>Hijos Biológicos</h2>
+                      <h2 className='font-[500] text-1xl'>Hijos Biológicos</h2>
                     </div>
                     <Input
                       label="hijosBiologicos"
@@ -135,13 +224,13 @@ export default function HomeFamilies() {
                   </section>
                   <section>
                     <div>
-                      <h2>¿Cuánto duró el período de evaluación?</h2>
+                      <h2 className='font-[500] text-1xl'>¿Cuánto duró el período de evaluación?</h2>
                     </div>
                     <Input label="duracionEvaluacion" type="text" />
                   </section>
-                  <section className='flex flex-col gap-5'>
+                  <section className="flex flex-col gap-5">
                     <div>
-                      <h2>Tiempo para acoger una vez idóneos</h2>
+                      <h2 className='font-[500] text-1xl'>Tiempo para acoger una vez idóneos</h2>
                     </div>
                     <Input label="tiempoParaAcoger" type="text" />
                     <Input
@@ -152,7 +241,7 @@ export default function HomeFamilies() {
                   </section>
                   <section>
                     <div>
-                      <h2>Estado acogimiento</h2>
+                      <h2 className='font-[500] text-1xl'>Estado acogimiento</h2>
                     </div>
                     <RadioGroup>
                       <div className="flex items-center gap-2">
@@ -175,9 +264,9 @@ export default function HomeFamilies() {
                       </div>
                     </RadioGroup>
                   </section>
-                  <section className='flex flex-col gap-5'>
+                  <section className="flex flex-col gap-5">
                     <div>
-                      <h2>Fecha de inicio de Acogimeinto</h2>
+                      <h2 className='font-[500] text-1xl'>Fecha de inicio de Acogimeinto</h2>
                     </div>
                     <Input label="fechaInicioAcogimiento" type="date" />
                     <Input
@@ -208,7 +297,7 @@ export default function HomeFamilies() {
                   </section>
                   <section>
                     <div>
-                      <h2>
+                      <h2 className='font-[500] text-1xl'>
                         ¿Ya tienes asignado algún rol como familia voluntaria en
                         AFAC? Si es así, ¿nos podrías indicar cuál es?
                       </h2>
@@ -221,7 +310,7 @@ export default function HomeFamilies() {
                   </section>
                   <section>
                     <div>
-                      <h2>
+                      <h2 className='font-[500] text-1xl'>
                         Según la experiencia como familia de acogimiento,
                         considerarías:
                       </h2>
