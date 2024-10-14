@@ -40,7 +40,7 @@ public class FamiliaEntity {
     @Column(name = "fecha_nacimiento_fa_uno", nullable = false)
     private LocalDate fechaNacimientoFaUno;
 
-    @Column(name = "fecha_nacimiento_fa_dos", nullable = false)
+    @Column(name = "fecha_nacimiento_fa_dos")
     private LocalDate fechaNacimientoFaDos;
 
     @Column(name = "estado_civil", length = 50)
