@@ -3,28 +3,44 @@ import Footer from '@/components/shared/footer';
 import Navbar from '@/components/shared/navbar';
 import comunas from '../../../../public/common/data/territoriochile.json';
 import { useForm } from 'react-hook-form';
-
 import { Button, Input, RadioGroup, RadioGroupItem } from '@/components/ui';
 export default function HomeFamilies() {
   const { register, handleSubmit } = useForm();
   const [twoMembers, setTwoMembers] = useState(null);
   const [familiesData, setFamiliesData] = useState([
     {
+      id: 0,
       nombreFaUno: '',
+      nombreFaDos: '',
       rutFaUno: '',
-      estadoCivilFaUno: '',
+      rutFaDos: '',
+      fechaNacimientoFaUno: '',
+      fechaNacimientoFaDos: '',
+      estadoCivil: '',
       telefono: '',
       email: '',
-      pais: '',
       region: '',
+      comuna: '',
       direccion: '',
-      ingresoAfa: '',
-      fechaUltimoContacto: '',
+      ingresoFa: '',
+      duracionEvaluacion: 0,
+      tiempoParaAcoger: 0,
+      cantidadAcogimientos: 0,
+      fechaInicioAcogimiento: '',
+      edadNna: 0,
+      rangoEdadNna: '',
+      sexoNna: '',
       nacionalidadNna: '',
+      tiempoAcogimiento: 0,
+      ingresoAfac: '',
       programaFundacionActual: '',
-      hijosBiologicos: '',
-      duracionEvaluacion: '',
-      edadNna: '',
+      programaFundacionAnterior: '',
+      usuarioCreacion: '',
+      fechaCreacion: '',
+      fechaModificacion: '',
+      estadoAcogimiento: '',
+      usuario: '',
+      fechaUltimoContacto: '',
     },
   ]);
   const onSubmit = (data) => {
@@ -61,7 +77,10 @@ export default function HomeFamilies() {
               <form
                 id="home-families-form"
                 className="flex flex-col w-full gap-10"
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit(onSubmit);
+                }}
               >
                 <section className="flex flex-col gap-5">
                   <div>
