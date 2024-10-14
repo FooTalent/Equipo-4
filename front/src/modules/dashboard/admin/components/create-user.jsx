@@ -123,11 +123,10 @@ export default function CreateUser() {
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue className='placeholder:text-gray-400' />
+                              <SelectValue placeholder='' className='text-gray-200 text-opacity-25' />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value='USUARIO'>Usuario</SelectItem>
                             <SelectItem value='FAMILIA'>Familia</SelectItem>
                             <SelectItem value='ADMIN'>Administrador</SelectItem>
                           </SelectContent>
