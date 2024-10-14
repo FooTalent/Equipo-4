@@ -22,7 +22,7 @@ public class FamiliaEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id")
     private UsuarioEntity usuario;
 
     @Column(name = "nombre_fa_uno", nullable = false, length = 255)
