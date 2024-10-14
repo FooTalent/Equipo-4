@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { MdArrowBackIosNew } from 'react-icons/md';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -11,46 +10,84 @@ import { Form } from '@/components/ui';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import useAuthStore from "@/store/user.js";
+import { personalizeFamilyApi } from "@/modules/auth/family/api/familyAuthApi.js";
 
-const PersonalizeCredentialsFamily= () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const PersonalizeCredentialsFamily = () => {
   const schema = yup.object({
-    username:
-    yup.string('Introduce nombre de usuario valido')
-      .required('Introduce nombre de usuario valido')
-      .min(3, 'El nombre de usuario no puede tener menos de 3 caracteres')
-      .max(25, 'El nombre de usuario no puede tener más que 25 caracteres')
-      .matches(
-        /^(?=.*[a-zA-Z])[a-zA-Z0-9_-]+$/,
-        'El nombre de usuario debe contener al menos una letra y solo puede incluir letras, números, _ y -'
-      ),
-    password:
-    yup.string('Introduce contraseña valida')
-      .required('Introduce contraseña valida')
-      .min(8, 'Una contraseña tiene que tener un minimo de 8 caracteres')
-      .max(35, 'Una contraseña no puede tener que tener más que 35 caracteres')
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-        'La contraseña debe contener al menos una letra, un número y un carácter especial'),
-    confirmPassword: yup
-      .string('Introduce tu contraseña de nuevo')
-      .required('Tienes que introducir tu contraseña de nuevo')
-      .oneOf([yup.ref('password')], 'La contraseña y la confirmación deben ser las mismas'),
-    terms: yup.bool().oneOf([true], 'Debes aceptar los términos y condiciones'),
-    contract: yup.bool().oneOf([true], 'Debes aceptar el contrato de confidencialidad')
+    correo:
+        yup.string('Introduce un correo valido')
+            .required('Introduce un correo valido')
+            .email('Introduce un correo valido'),
+    contrasenaHash:
+        yup.string('Introduce contraseña valida')
+            .required('Introduce contraseña valida')
+            .min(8, 'Una contraseña tiene que tener un minimo de 8 caracteres')
+            .max(35, 'Una contraseña no puede tener que tener más que 35 caracteres')
+            .matches(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/,
+                'La contraseña debe contener al menos una letra, un número y un carácter especial'),
+    repiteContrasena: yup
+        .string('Introduce tu contraseña de nuevo')
+        .required('Tienes que introducer tu contraseña de nuevo')
+        .oneOf([yup.ref('contrasenaHash')], 'La contraseña y la confirmación deben ser las mismas'),
   });
+
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      username: '',
-      password: '',
-      confirmPassword: '',
-      terms: false,
-      contract: false,
+      correo: '',
+      contrasenaHash: '',
+      repiteContrasena: ''
     }
   });
+
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const setFirstLogin = useAuthStore((state) => state.setFirstLogin);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  useEffect(() => {
+    if (user) {
+      if (user.tipoUsuario === 'FAMILIA') {
+        if (user.primerIngreso === 'false') {
+          navigate('/familia/dashboard');
+        }
+      } else {
+        navigate('/');
+      }
+    }
+    if (!user) navigate('/auth');
+  }, [user, navigate]);
+
+  const mutation = useMutation({
+    mutationFn: personalizeFamilyApi,
+    onSuccess: (data) => {
+      if (data === 'Contraseña actualizada exitosamente.') {
+        setFirstLogin('false');
+        toast.success(data);
+        navigate('/familia/dashboard');
+      } else {
+        toast.error(data);
+      }
+    },
+    onError: () => {
+      toast.error('Ha ocurrido un error');
+    },
+  });
+
+  const onSubmit = async (data) => {
+    if (user.correo !== data.correo)
+    {
+      toast.error('Usa tu correo electrónico registrado');
+    } else {
+      mutation.mutate({ correo: data?.correo, contrasenaHash: data?.contrasenaHash });
+    }
+  };
+
   const handleTermsChange = () => {
     const currentValue = form.getValues('terms');
     form.setValue('terms', !currentValue, { shouldValidate: true });
@@ -60,37 +97,32 @@ const PersonalizeCredentialsFamily= () => {
     const currentValue = form.getValues('contract');
     form.setValue('contract', !currentValue, { shouldValidate: true });
   };
-  const onSubmit = async (data) => {
-    console.log(data);
-    navigate('/dashboard');
-  };
 
   return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-custom">
-        <Link className='absolute z-30 top-8 bg-white md:p-4 md:shadow-md md:rounded-xl left-8' to={'/auth/admin/ingresar'}>
-          <MdArrowBackIosNew />
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 md:bg-green">
+        <Link className='absolute z-30 top-8 left-4 sm:top-8 sm:left-8 bg-white md:p-4 md:shadow-md md:rounded-xl left-8' to={'/auth/familia/ingresar'}>
+          <MdArrowBackIosNew className="text-2xl" />
         </Link>
-        <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
-          <img src='/common/logo-phrase.svg' alt='family one' className='ml-20'/>
+        <Link to={'/auth'} className='hidden md:block left-4 md:bg-orange-500 w-[300px]'>
+          <img src='/common/logo-phrase.svg' alt='family one' className='absolute top-30 sm:left-20 ml-20'/>
         </Link>
-        <div className="max-w-xl w-full h-auto space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-16 md:pb-20 md:pt-14 md:rounded-xl">
+        <div className='max-w-[450px] z-30 w-full h-auto space-y-2 md:bg-white md:h-3/4 md:shadow-lg md:mx-auto md:w-full md:p-12 md:pb-12 md:pt-12 md:rounded-xl'>
           <div>
-            <h2 className="mt-2 text-center mb-16 text-3xl text-gray-900">
+            <h2 className="text-center mb-10 font-bold text-3xl text-gray-900">
               Ahora, personaliza tus credenciales
             </h2>
           </div>
           <Form {...form}>
-            <form className="mt-8 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="rounded-md -space-y-px flex flex-col gap-4">
-
-                <div className='flex flex-col gap-4 relative'>
-                  <Label htmlFor="password">Nueva contraseña</Label>
+            <form className="mt-2 space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="rounded-md -space-y-px flex flex-col gap-2">
+                <div className='flex flex-col gap-2 relative'>
+                  <Label htmlFor="contrasenaHash">Nueva contraseña</Label>
                   <Input
-                      id="password"
-                      name="password"
+                      id="contrasenaHash"
+                      name="contrasenaHash"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Escribe tu nueva contraseña"
-                      {...form.register('password')}
+                      {...form.register('contrasenaHash')}
                   />
                   <button
                       type="button"
@@ -103,18 +135,18 @@ const PersonalizeCredentialsFamily= () => {
                         <IoIosEye className="text-gray-400" />
                     )}
                   </button>
-                  {form.formState.errors.password && (
-                      <p className="text-red-500 text-sm">{form.formState.errors.password.message}</p>
+                  {form.formState.errors.contrasenaHash && (
+                      <p className="text-red-500 text-sm">{form.formState.errors.contrasenaHash.message}</p>
                   )}
                 </div>
-                <div className='flex flex-col gap-4 relative'>
-                  <Label htmlFor="confirmPassword" className="mt-4"  >Repetir contraseña</Label>
+                <div className='flex flex-col gap-2 relative'>
+                  <Label htmlFor="confirmPassword" className="mt-4">Repetir contraseña</Label>
                   <Input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type={showConfirmPassword ? 'text' : 'password'}
+                      id='repiteContrasena'
+                      name='repiteContrasena'
+                      type={showConfirmPassword ? 'text': 'password'}
                       placeholder="Repite tu nueva contraseña"
-                      {...form.register('confirmPassword')}
+                      {...form.register('repiteContrasena', { required: true })}
                   />
                   <button
                       type="button"
@@ -127,13 +159,11 @@ const PersonalizeCredentialsFamily= () => {
                         <IoIosEye className="text-gray-400" />
                     )}
                   </button>
-                  {form.formState.errors.confirmPassword && (
-                      <p className="text-red-500 text-sm">{form.formState.errors.confirmPassword.message}</p>
-                  )}
+                  {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.repiteContrasena?.message}</p>}
                 </div>
               </div>
               <div className='grid gap-2'>
-                <div className="items-top mt-8 flex space-x-2">
+                <div className="items-top mt-2 flex space-x-2">
                   <Checkbox id="terms" {...form.register('terms')} onClick={handleTermsChange} />
                   <div className='grid gap-1.5 leading-none'>
                     <label

@@ -42,7 +42,7 @@ const FamilyLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
     if (user) {
-      if (user.tipoUsuario === 'ADMIN') {
+      if (user.tipoUsuario === 'FAMILIA') {
         if (user.primerIngreso === 'true') {
           navigate('/auth/familia/personalizar');
         } else {
