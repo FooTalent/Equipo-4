@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Footer from '@/components/shared/footer';
 import Navbar from '@/components/shared/navbar';
 import comunas from '../../../../public/common/data/territoriochile.json';
 import { useForm } from 'react-hook-form';
 import { Button, Input, RadioGroup, RadioGroupItem } from '@/components/ui';
+import useAuthStore from '@/store/user';
 export default function HomeFamilies() {
-  const { register, handleSubmit } = useForm();
+  const user = useAuthStore((state) => state.user);
+  const { register, handleSubmit, setValue } = useForm();
   const [twoMembers, setTwoMembers] = useState(null);
-  const [familiesData, setFamiliesData] = useState([
+  const [userData, setUserData] = useState(null);
+  /*   const [familiesData, setFamiliesData] = useState([
     {
       id: 0,
       nombreFaUno: '',
@@ -42,10 +45,22 @@ export default function HomeFamilies() {
       usuario: '',
       fechaUltimoContacto: '',
     },
-  ]);
+  ]); */
   const onSubmit = (data) => {
-    console.log(data);
+    const dataToSend = { usuario: userData, ...data };
+    console.log(dataToSend);
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValue(name, value);
+  };
+
+  useEffect(() => {
+    if (user) {
+      setUserData(user);
+    }
+  }, [user]);
 
   return (
     <>
@@ -72,22 +87,23 @@ export default function HomeFamilies() {
                 id="home-families-form-title"
                 className="flex-col w-full"
               >
-                <h1 className='font-[400] text-2xl'>Bienvenidos</h1>
+                <h1 className="font-[400] text-2xl">Bienvenidos</h1>
               </section>
               <form
                 id="home-families-form"
                 className="flex flex-col w-full gap-10"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSubmit(onSubmit);
-                }}
+                onSubmit={handleSubmit(onSubmit)}
               >
                 <section className="flex flex-col gap-5">
                   <div>
-                    <h2 className='font-[500] text-1xl'>Datos personales del representante de familia</h2>
+                    <h2 className="font-[500] text-1xl">
+                      Datos personales del representante de familia
+                    </h2>
                   </div>
                   <div className="w-full">
-                    <label className='font-[500] text-1xl'>Cantidad de miembros representantes</label>
+                    <label className="font-[500] text-1xl">
+                      Cantidad de miembros representantes
+                    </label>
                     <select
                       className="w-full"
                       value={twoMembers ? '2' : '1'}
@@ -98,9 +114,11 @@ export default function HomeFamilies() {
                     </select>
                   </div>
                   <Input
+                    name="nombreFaUno"
                     label="nombreFaUno"
                     placeholder="Nombre y Apellido Representante"
                     type="text"
+                    onChange={handleInputChange}
                     {...register('nombreFaUno', {
                       required: true,
                       maxLength: 255,
@@ -110,45 +128,36 @@ export default function HomeFamilies() {
                     label="rutFaUno"
                     placeholder="RUT Representante"
                     type="text"
+                    onChange={handleInputChange}
+                    {...register('rutFaUno', {
+                      required: true,
+                      maxLength: 12,
+                    })}
                   />
                   <div>
-                    <label className='font-[500] text-1xl'>Fecha de Nacimiento Familiar</label>
+                    <label className="font-[500] text-1xl">
+                      Fecha de Nacimiento Familiar
+                    </label>
                     <Input
                       label="fechaNacimientoFaUno"
                       placeholder="Fecha de Nacimiento"
                       type="date"
+                      onChange={handleInputChange}
+                      {...register('fechaNacimientoFaUno')}
                     />
                   </div>
-                  <Input
-                    label="estadoCivil"
-                    placeholder="Estado Civil"
-                    type="text"
-                  />
-                  <Input label="telefono" placeholder="Teléfono" type="text" />
-                  <Input label="email" placeholder="Email" type="text" />
-                  <Input label="pais" placeholder="Pais" type="text" />
-                  <Input label="region" placeholder="Ciudad" type="text" />
-                  <select>
-                    {comunas.map((comuna, index) => (
-                      <option key={index} value={comuna}>
-                        {JSON.stringify(comuna.nombre)}
-                      </option>
-                    ))}
-                  </select>
-                  <Input
-                    label="direccion"
-                    placeholder="Dirección"
-                    type="text"
-                  />
                 </section>
                 {/*Miembro dos*/}
                 {twoMembers && (
                   <section className="flex flex-col gap-5">
-                    <h2 className='font-[500] text-1xl'>Segundo Representante</h2>
+                    <h2 className="font-[500] text-1xl">
+                      Segundo Representante
+                    </h2>
                     <Input
                       label="nombreFaUno"
                       placeholder="Nombre y Apellido Representante"
                       type="text"
+                      onChange={handleInputChange}
                       {...register('nombreFaDos', {
                         required: true,
                         maxLength: 255,
@@ -158,31 +167,67 @@ export default function HomeFamilies() {
                       label="rutFaDos"
                       placeholder="RUT Representante"
                       type="text"
+                      onChange={handleInputChange}
+                      {...register('rutFaDos', {
+                        required: true,
+                        maxLength: 12,
+                      })}
                     />
                     <div>
-                      <label className='font-[500] text-1xl'>Fecha de Nacimiento Familiar</label>
+                      <label className="font-[500] text-1xl">
+                        Fecha de Nacimiento Familiar
+                      </label>
                       <Input
                         label="fechaNacimientoFaDos"
                         placeholder="Fecha de Nacimiento"
                         type="date"
+                        onChange={handleInputChange}
+                        {...register('fechaNacimientoFaDos')}
                       />
                     </div>
                     <Input
                       label="estadoCivil"
                       placeholder="Estado Civil"
                       type="text"
+                      onChange={handleInputChange}
+                      {...register('estadoCivil')}
                     />
                     <Input
                       label="telefono"
                       placeholder="Teléfono"
                       type="text"
+                      onChange={handleInputChange}
+                      {...register('telefono')}
                     />
-                    <Input label="email" placeholder="Email" type="text" />
-                    <Input label="pais" placeholder="Pais" type="text" />
-                    <Input label="region" placeholder="Ciudad" type="text" />
+                    <Input
+                      label="email"
+                      placeholder="Email"
+                      type="text"
+                      onChange={handleInputChange}
+                      {...register('email')}
+                    />
+                    <Input
+                      label="pais"
+                      placeholder="Pais"
+                      type="text"
+                      onChange={handleInputChange}
+                      {...register('pais')}
+                    />
+                    <Input
+                      label="region"
+                      placeholder="Ciudad"
+                      type="text"
+                      onChange={handleInputChange}
+                      {...register('region')}
+                    />
                     <select>
                       {comunas.map((comuna, index) => (
-                        <option key={index} value={comuna}>
+                        <option
+                          key={index}
+                          value={comuna}
+                          onChange={handleInputChange}
+                          {...register('comuna')}
+                        >
                           {JSON.stringify(comuna.nombre)}
                         </option>
                       ))}
@@ -191,13 +236,15 @@ export default function HomeFamilies() {
                       label="direccion"
                       placeholder="Dirección"
                       type="text"
+                      onChange={handleInputChange}
+                      {...register('direccion')}
                     />
                   </section>
                 )}
                 {/*Miembro dos*/}
                 <div className="flex flex-col gap-5">
                   <div>
-                    <h2 className='font-[500] text-1xl'>
+                    <h2 className="font-[500] text-1xl">
                       Datos de familia de Acogimiento (completar los siguientes
                       datos junto a un asesor de AFAC en su próxima llamada de
                       seguimiento)
@@ -205,79 +252,139 @@ export default function HomeFamilies() {
                   </div>
                   <section>
                     <div>
-                      <h2 className='font-[500] text-1xl'>Fecha de ingreso a AFAC</h2>
+                      <h2 className="font-[500] text-1xl">
+                        Fecha de ingreso a AFAC
+                      </h2>
                     </div>
-                    <Input label="ingresoAfac" type="date" />
+                    <Input
+                      label="ingresoAfac"
+                      type="date"
+                      onChange={handleInputChange}
+                      {...register('ingresoAfac')}
+                    />
                   </section>
                   <section>
                     <div>
-                      <h2 className='font-[500] text-1xl'>Fecha de ingreso a un programa como FA</h2>
+                      <h2 className="font-[500] text-1xl">
+                        Fecha de ingreso a un programa como FA
+                      </h2>
                     </div>
-                    <Input label="ingresoFa" type="date" />
+                    <Input
+                      label="ingresoFa"
+                      type="date"
+                      onChange={handleInputChange}
+                      {...register('ingresoFa')}
+                    />
                   </section>
                   <section className="flex flex-col gap-5">
                     <div>
-                      <h2 className='font-[500] text-1xl'>Fecha de última llamada de seguimiento</h2>
+                      <h2 className="font-[500] text-1xl">
+                        Fecha de última llamada de seguimiento
+                      </h2>
                     </div>
-                    <Input label="fechaUltimoContacto" type="date" />
+                    <Input
+                      label="fechaUltimoContacto"
+                      type="date"
+                      onChange={handleInputChange}
+                      {...register('fechaUltimoContacto')}
+                    />
                     <Input
                       label="nacionalidadNna"
                       type="text"
                       placeholder="Nacionalidad"
+                      onChange={handleInputChange}
+                      {...register('nacionalidadNna')}
                     />
                     <Input
                       label="programaFundacionActual"
                       type="text"
                       placeholder="Programa/Fundación Actual"
+                      onChange={handleInputChange}
+                      {...register('programaFundacionActual')}
                     />
                   </section>
                   <section>
                     <div>
-                      <h2 className='font-[500] text-1xl'>Hijos Biológicos</h2>
+                      <h2 className="font-[500] text-1xl">Hijos Biológicos</h2>
                     </div>
                     <Input
                       label="hijosBiologicos"
                       type="text"
                       placeholder="Nombres/s y (Edad/es)"
+                      onChange={handleInputChange}
+                      {...register('hijosBiologicos')}
                     />
                   </section>
                   <section>
                     <div>
-                      <h2 className='font-[500] text-1xl'>¿Cuánto duró el período de evaluación?</h2>
+                      <h2 className="font-[500] text-1xl">
+                        ¿Cuánto duró el período de evaluación?
+                      </h2>
                     </div>
-                    <Input label="duracionEvaluacion" type="text" />
+                    <Input
+                      label="duracionEvaluacion"
+                      type="text"
+                      onChange={handleInputChange}
+                      {...register('duracionEvaluacion')}
+                    />
                   </section>
                   <section className="flex flex-col gap-5">
                     <div>
-                      <h2 className='font-[500] text-1xl'>Tiempo para acoger una vez idóneos</h2>
+                      <h2 className="font-[500] text-1xl">
+                        Tiempo para acoger una vez idóneos
+                      </h2>
                     </div>
-                    <Input label="tiempoParaAcoger" type="text" />
+                    <Input
+                      label="tiempoParaAcoger"
+                      type="text"
+                      onChange={handleInputChange}
+                      {...register('tiempoParaAcoger')}
+                    />
                     <Input
                       label="cantidadAcogimientos"
                       type="text"
                       placeholder="Cantidad de Acogimientos"
+                      onChange={handleInputChange}
+                      {...register('cantidadAcogimientos')}
                     />
                   </section>
                   <section>
                     <div>
-                      <h2 className='font-[500] text-1xl'>Estado acogimiento</h2>
+                      <h2 className="font-[500] text-1xl">
+                        Estado acogimiento
+                      </h2>
                     </div>
                     <RadioGroup>
                       <div className="flex items-center gap-2">
                         <RadioGroupItem value="acogiendo" />
-                        <label value="estadoAcogimiento" className="text-sm">
+                        <label
+                          value="estadoAcogimiento"
+                          className="text-sm"
+                          onChange={handleInputChange}
+                          {...register('acogiendo')}
+                        >
                           Acogiendo
                         </label>
                       </div>
                       <div className="flex items-center gap-2">
                         <RadioGroupItem value="sinAcogimiento" />
-                        <label value="estadoAcogimiento" className="text-sm">
+                        <label
+                          value="estadoAcogimiento"
+                          className="text-sm"
+                          onChange={handleInputChange}
+                          {...register('sinAcogimiento')}
+                        >
                           Sin Acogimiento
                         </label>
                       </div>
                       <div className="flex items-center gap-2">
                         <RadioGroupItem value="acogidaPermanente" />
-                        <label value="estadoAcogimiento" className="text-sm">
+                        <label
+                          value="estadoAcogimiento"
+                          className="text-sm"
+                          onChange={handleInputChange}
+                          {...register('acogidaPermanente')}
+                        >
                           Acogida Permanente
                         </label>
                       </div>
@@ -285,38 +392,55 @@ export default function HomeFamilies() {
                   </section>
                   <section className="flex flex-col gap-5">
                     <div>
-                      <h2 className='font-[500] text-1xl'>Fecha de inicio de Acogimeinto</h2>
+                      <h2 className="font-[500] text-1xl">
+                        Fecha de inicio de Acogimeinto
+                      </h2>
                     </div>
-                    <Input label="fechaInicioAcogimiento" type="date" />
+                    <Input
+                      label="fechaInicioAcogimiento"
+                      type="date"
+                      onChange={handleInputChange}
+                      {...register('fechaInicioAcogimiento')}
+                    />
                     <Input
                       label="edadNna"
                       type="text"
                       placeholder="Edad del NNA"
+                      onChange={handleInputChange}
+                      {...register('edadNna')}
                     />
                     <Input
                       label="rangoEdadNna"
                       type="text"
                       placeholder="Rango de edad"
+                      onChange={handleInputChange}
+                      {...register('rangoEdadNna')}
                     />
                     <Input
                       label="sexoNna"
                       type="text"
                       placeholder="Sexo del NNA"
+                      onChange={handleInputChange}
+                      {...register('sexoNna')}
                     />
                     <Input
                       label="nacionalidadNna"
                       type="text"
                       placeholder="Nacionalidad o pueblo del NNA"
+                      onChange={handleInputChange}
+                      {...register('nacionalidadNna')}
                     />
                     <Input
                       label="tiempoAcogimiento"
                       type="text"
                       placeholder="Tiempo de Acogimiento"
+                      onChange={handleInputChange}
+                      {...register('tiempoAcogimiento')}
                     />
                   </section>
                   <section>
                     <div>
-                      <h2 className='font-[500] text-1xl'>
+                      <h2 className="font-[500] text-1xl">
                         ¿Ya tienes asignado algún rol como familia voluntaria en
                         AFAC? Si es así, ¿nos podrías indicar cuál es?
                       </h2>
@@ -325,11 +449,13 @@ export default function HomeFamilies() {
                       label="RolAfac"
                       type="text"
                       placeholder="Rol como voluntario en AFAC"
+                      onChange={handleInputChange}
+                      {...register('RolAfac')}
                     />
                   </section>
                   <section>
                     <div>
-                      <h2 className='font-[500] text-1xl'>
+                      <h2 className="font-[500] text-1xl">
                         Según la experiencia como familia de acogimiento,
                         considerarías:
                       </h2>
@@ -337,7 +463,12 @@ export default function HomeFamilies() {
                     <RadioGroup>
                       <div className="flex items-center gap-2">
                         <RadioGroupItem value="experenciaAcogimiento" />
-                        <label value="estadoAcogimiento" className="text-sm">
+                        <label
+                          value="estadoAcogimiento"
+                          className="text-sm"
+                          onChange={handleInputChange}
+                          {...register('experenciaAcogimiento')}
+                        >
                           Solicitar mentoría
                         </label>
                       </div>
@@ -346,6 +477,8 @@ export default function HomeFamilies() {
                         <label
                           value="experenciaAcogimiento"
                           className="text-sm"
+                          onChange={handleInputChange}
+                          {...register('experenciaAcogimiento')}
                         >
                           Postular como familia voluntaria
                         </label>
@@ -355,6 +488,8 @@ export default function HomeFamilies() {
                         <label
                           value="experenciaAcogimiento"
                           className="text-sm"
+                          onChange={handleInputChange}
+                          {...register('experenciaAcogimiento')}
                         >
                           Por el mokmento ninguna de las anteriores
                         </label>
