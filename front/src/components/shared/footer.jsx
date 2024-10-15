@@ -13,10 +13,10 @@ export default function Footer() {
         <img src='/common/email.svg' alt='correos' />
         <p>E-Mail</p>
       </div>
-      <div className=' flex flex-col items-center'>
+      <Link to={`${user?.tipoUsuario === 'ADMIN' ? '/admin/notificacion' : ''}`} className=' flex flex-col items-center'>
         <img src='/common/email.svg' alt='notificación' />
         <p>Notificación</p>
-      </div>
+      </Link>
       <Link to={`${user?.tipoUsuario === 'ADMIN' ? '/admin/perfil' : ''}`} className=' flex flex-col items-center'>
         <img src='/common/perfil.svg' alt='perfil' />
         <p>Perfil</p>
