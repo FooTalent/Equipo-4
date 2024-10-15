@@ -39,3 +39,18 @@ export const sendUserDataApi = async (values) => {
       : 'Un error ha ocurrido';
   }
 };
+
+export const getAllFamiliesApi = async () => {
+  try {
+    const response = await AxiosBase.get(
+      '/familias'
+    );
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) &&
+      error.status >= 400 &&
+      error.status < 500
+      ? 'No se pudo acceder al listado de familia'
+      : 'Un error ha ocurrido';
+  }
+};
