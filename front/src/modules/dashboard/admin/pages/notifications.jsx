@@ -33,6 +33,11 @@ export default function AdminNotifications() {
             </div>
           </div>
           <div className='flex flex-col gap-3'>
+            {isLoading && (
+              <div className='grid justify-center items-center mt-12'>
+                <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-400'></div>
+              </div>
+            )}
             {!isLoading && data && <Notification message={data?.mensaje} read={data?.visto} />}
           </div>
         </div>
