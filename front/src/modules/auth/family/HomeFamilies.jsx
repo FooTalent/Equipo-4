@@ -5,6 +5,7 @@ import comunas from '../../../../public/common/data/territoriochile.json';
 import { useForm } from 'react-hook-form';
 import { Button, Input, RadioGroup, RadioGroupItem } from '@/components/ui';
 import useAuthStore from '@/store/user';
+import { createFamily } from './api/createFamily';
 export default function HomeFamilies() {
   const user = useAuthStore((state) => state.user);
   const { register, handleSubmit, setValue } = useForm();
@@ -47,8 +48,19 @@ export default function HomeFamilies() {
     },
   ]); */
   const onSubmit = (data) => {
-    const dataToSend = { usuario: userData, ...data };
-    console.log(dataToSend);
+    const mappedData = {
+      ...data,
+      usuario: userData,
+      fechaNacimientoFaUno: new Date(data.fechaNacimientoFaUno).toISOString(),
+      fechaNacimientoFaDos: data.fechaNacimientoFaDos
+        ? new Date(data.fechaNacimientoFaDos).toISOString()
+        : null,
+      ingresoFa: new Date(data.ingresoFa).toISOString(),
+      ingresoAfac: new Date(data.ingresoAfac).toISOString(),
+      fechaUltimoContacto: new Date(data.fechaUltimoContacto).toISOString(),
+    };
+    console.log(mappedData);
+    createFamily(mappedData);
   };
 
   const handleInputChange = (e) => {
@@ -57,10 +69,10 @@ export default function HomeFamilies() {
   };
 
   useEffect(() => {
-    if (user) {
-      setUserData(user);
-    }
-  }, [user]);
+    //if (user) {
+    setUserData(48);
+    //}
+  }, []);
 
   return (
     <>
@@ -69,15 +81,15 @@ export default function HomeFamilies() {
       {/*RECORDAR DE BORRAR*/}
       <div
         id="home-families-container"
-        className="w-full min-h-screen bg-[#e6e6e6]"
+        className="w-[100%] min-h-screen bg-[#e6e6e6]"
       >
         <div
           id="home-families"
-          className="flex items-center justify-center w-full h-full"
+          className="flex items-center justify-center h-full"
         >
           <div
             id="home-families-content"
-            className="pt-[25px] pr-[20px] pb-[25px] pl-[20px]"
+            className="pt-[25px] pr-[20px] pb-[25px] pl-[20px] w-[95%] flex justify-center"
           >
             <div
               id="home-families-form"
@@ -323,7 +335,7 @@ export default function HomeFamilies() {
                     </div>
                     <Input
                       label="duracionEvaluacion"
-                      type="text"
+                      type="number"
                       onChange={handleInputChange}
                       {...register('duracionEvaluacion')}
                     />
@@ -336,13 +348,13 @@ export default function HomeFamilies() {
                     </div>
                     <Input
                       label="tiempoParaAcoger"
-                      type="text"
+                      type="number"
                       onChange={handleInputChange}
                       {...register('tiempoParaAcoger')}
                     />
                     <Input
                       label="cantidadAcogimientos"
-                      type="text"
+                      type="number"
                       placeholder="Cantidad de Acogimientos"
                       onChange={handleInputChange}
                       {...register('cantidadAcogimientos')}
@@ -404,7 +416,7 @@ export default function HomeFamilies() {
                     />
                     <Input
                       label="edadNna"
-                      type="text"
+                      type="number"
                       placeholder="Edad del NNA"
                       onChange={handleInputChange}
                       {...register('edadNna')}
@@ -432,7 +444,7 @@ export default function HomeFamilies() {
                     />
                     <Input
                       label="tiempoAcogimiento"
-                      type="text"
+                      type="number"
                       placeholder="Tiempo de Acogimiento"
                       onChange={handleInputChange}
                       {...register('tiempoAcogimiento')}
