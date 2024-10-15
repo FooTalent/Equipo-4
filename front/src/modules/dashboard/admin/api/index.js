@@ -54,3 +54,16 @@ export const getAllFamiliesApi = async () => {
       : 'Un error ha ocurrido';
   }
 };
+
+export const getAdminNotification = async (user_id) => {
+  try {
+    const response = await AxiosBase.get(`/notificaciones/${user_id}`);
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) &&
+      error.status >= 400 &&
+      error.status < 500
+      ? 'No se pudo leer las notificaciones'
+      : 'Un error ha ocurrido';
+  }
+};

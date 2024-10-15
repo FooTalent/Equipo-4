@@ -16,6 +16,7 @@ import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 import CreateUser from '@/modules/dashboard/admin/components/create-user';
+import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/perfil',
     element: <AdminProfile />
+  },
+  {
+    path: '/admin/notificacion',
+    element: <AdminNotifications />
   },
   {
     path: '/admin/solicitud-mentorias',
