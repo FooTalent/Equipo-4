@@ -67,3 +67,33 @@ export const getAdminNotification = async (user_id) => {
       : 'Un error ha ocurrido';
   }
 };
+
+export const getAllMentoringApi = async () => {
+  try {
+    const response = await AxiosBase.get(
+      '/mentorias'
+    );
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) &&
+      error.status >= 400 &&
+      error.status < 500
+      ? 'No se pudo acceder al listado de mentorias'
+      : 'Un error ha ocurrido';
+  };
+};
+
+export const getFamilyByIdApi = async (id) => {
+  try {
+    const response = await AxiosBase.get(
+      `/familias/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) &&
+      error.status >= 400 &&
+      error.status < 500
+      ? 'No se pudo acceder al listado de familia'
+      : 'Un error ha ocurrido';
+  }
+};

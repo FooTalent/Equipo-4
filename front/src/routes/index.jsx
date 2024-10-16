@@ -17,6 +17,7 @@ import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 import CreateUser from '@/modules/dashboard/admin/components/create-user';
 import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
+import MentoringRequest from '@/modules/dashboard/admin/pages/mentoringRequest/MentoringRequest';
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/email-general',
     element: <GeneralEmail />
+  },
+  {
+    path: '/admin/solicitud-mentorias',
+    element: <MentoringRequest />
   },
   {
     path: '/admin/crear-usuario',
