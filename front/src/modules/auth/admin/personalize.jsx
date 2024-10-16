@@ -92,13 +92,13 @@ const PersonalizeCredentialsAdmin = () => {
       </Link>
       <div className='max-w-md w-full space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
         <div>
-          <h2 className="mt-6 text-center text-3xl text-gray-900">
+          <h2 className='mt-6 text-center text-3xl text-gray-900'>
             Ahora, personaliza tus credenciales
           </h2>
         </div>
         <Form {...form}>
-          <form className="mt-8 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="rounded-md -space-y-px flex flex-col gap-4">
+          <form className='mt-8 space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
+            <div className='rounded-md -space-y-px flex flex-col gap-4'>
               <div className='flex flex-col gap-2'>
                 <Label htmlFor='correo'>Correo</Label>
                 <Input
@@ -108,7 +108,7 @@ const PersonalizeCredentialsAdmin = () => {
                   placeholder='Escribe tu correo electrónico'
                   {...form.register('correo', { required: true })}
                 />
-                {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.correo?.message}</p>}
+                {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.correo?.message}</p>}
               </div>
               <div className='flex flex-col gap-2 relative'>
                 <Label htmlFor='contrasenaHash'>Nueva contraseña</Label>
@@ -128,13 +128,13 @@ const PersonalizeCredentialsAdmin = () => {
                   id='contrasenaHash'
                   name='contrasenaHash'
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Escribe tu nueva contraseña"
+                  placeholder='Escribe tu nueva contraseña'
                   {...form.register('contrasenaHash', { required: true })}
                 />
-                {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.contrasenaHash?.message}</p>}
+                {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.contrasenaHash?.message}</p>}
               </div>
               <div className='flex flex-col gap-2 relative'>
-                <Label htmlFor="confirmPassword">Repite contraseña</Label>
+                <Label htmlFor='confirmPassword'>Repite contraseña</Label>
                 <IoIosEyeOff
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className={`${
@@ -151,19 +151,19 @@ const PersonalizeCredentialsAdmin = () => {
                   id='repiteContrasena'
                   name='repiteContrasena'
                   type={showConfirmPassword ? 'text': 'password'}
-                  placeholder="Repite tu nueva contraseña"
+                  placeholder='Repite tu nueva contraseña'
                   {...form.register('repiteContrasena', { required: true })}
                 />
-                {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.repiteContrasena?.message}</p>}
+                {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.repiteContrasena?.message}</p>}
                 <button onClick={() => logout()} className='text-sm text-gray-400 font-semibold text-right'>¿Cerrar sesión?</button>
               </div>
             </div>
             <div>
               <Button
-                type="submit"
+                type='submit'
                 disabled={mutation.isPending}
-                variant="default"
-                className="w-full mt-4 py-6 bg-orange-400 hover:bg-orange-500"
+                variant='default'
+                className='w-full mt-4 py-6 bg-orange-400 hover:bg-orange-500'
               >
                 {mutation.isPending ? <Spinner /> : 'Iniciar Sesión'}
               </Button>

@@ -110,7 +110,7 @@ const AdminLogin = () => {
                   placeholder='Escribe tu correo electrónico'
                   {...form.register('correo', { required: true })}
                 />
-                {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.correo?.message}</p>}
+                {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.correo?.message}</p>}
               </div>
               <div className='mt-4 flex flex-col gap-3 relative'>
                 <Label htmlFor='contrasenaHash'>Contraseña</Label>
@@ -133,7 +133,7 @@ const AdminLogin = () => {
                   placeholder='Escribe tu contraseña'
                   {...form.register('contrasenaHash', { required: true })}
                 />
-                {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.contrasenaHash?.message}</p>}
+                {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.contrasenaHash?.message}</p>}
               </div>
             </div>
             <div className='text-center text-sm'>

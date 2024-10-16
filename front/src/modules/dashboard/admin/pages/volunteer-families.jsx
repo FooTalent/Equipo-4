@@ -44,7 +44,7 @@ export default function VolunteerFamilies () {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[100px]">Nombre</TableHead>
+                  <TableHead className='w-[100px]'>Nombre</TableHead>
                   <TableHead>Estado Voluntario</TableHead>
                 </TableRow>
               </TableHeader>
