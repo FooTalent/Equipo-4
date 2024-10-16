@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     element: <FamilyLogin />
   },
   {
-    path: '/auth/familia/olvidar-contrasena',
+    path: '/auth/olvidar-contrasena',
     element: <FamilyForgotPassword />,
   },
   {

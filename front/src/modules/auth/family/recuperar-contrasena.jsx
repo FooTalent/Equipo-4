@@ -56,8 +56,9 @@ const FamilyResetPassword = () => {
   const mutation = useMutation({
     mutationFn: resetPasswordFamilyApi,
     onSuccess: (data) => {
-      if (data) {
+      if (data === 'Contraseña reestablecida exitosamente.') {
         toast.success(data);
+        navigate('/auth/ingresar');
       } else {
         toast.error(data);
       }
@@ -139,7 +140,7 @@ const FamilyResetPassword = () => {
                 variant="default"
                 className="w-full mt-4 py-6 bg-orange-400 hover:bg-orange-500"
               >
-                {mutation.isPending ? <Spinner /> : 'Iniciar Sesión'}
+                {mutation.isPending ? <Spinner /> : 'Guardard'}
               </Button>
             </div>
           </form>
