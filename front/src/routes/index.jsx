@@ -16,6 +16,8 @@ import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 import CreateUser from '@/modules/dashboard/admin/components/create-user';
+import FamilyForgotPassword from "@/modules/auth/family/olvidar-contrasena.jsx";
+import FamilyResetPassword from "@/modules/auth/family/recuperar-contrasena.jsx";
 import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
 import MentoringRequest from '@/modules/dashboard/admin/pages/mentoringRequest/MentoringRequest';
 
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
   {
     path: '/auth/familia/ingresar',
     element: <FamilyLogin />
+  },
+  {
+    path: '/auth/familia/olvidar-contrasena',
+    element: <FamilyForgotPassword />,
+  },
+  {
+    path: '/auth/familia/recuperar-contrasena',
+    element: <FamilyResetPassword />,
   },
   {
     path: '/auth/familia/personalizar',

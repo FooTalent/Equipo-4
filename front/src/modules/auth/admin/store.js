@@ -11,23 +11,29 @@ const useUserStore = create((set) => ({
   login: async (credentials) => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, credentials);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, credentials);
       const { token, ...userData } = response.data;
       set({ user: userData, token, loading: false });
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      return userData;
     } catch (error) {
-      set({ error: error.response?.data?.message || 'Error en la autenticación', loading: false });
+        const errorMessage = error.response?.data?.message || 'Error en la autenticación';
+        set({ error: errorMessage, loading: false });
+        throw new Error(errorMessage);
     }
   },
 
   register: async (data) => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/register`, data);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, data);
       set({ user: response.data, loading: false });
+      return response.data;
     } catch (error) {
-      set({ error: error.response?.data?.message || 'Error en el registro', loading: false });
+        const errorMessage = error.response?.data?.message || 'Error en el registro';
+        set({ error: errorMessage, loading: false });
+        throw new Error(errorMessage);
     }
   },
 
