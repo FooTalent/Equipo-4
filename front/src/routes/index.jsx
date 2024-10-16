@@ -24,10 +24,6 @@ const router = createBrowserRouter([
     element: <App />
   },
   {
-    path: '/home-families', //ACORDARSE DE RECOLOCAR PATH DENTRO DE AUTH
-    element: <HomeFamilies />
-  },
-  {
     path: '/auth',
     element: <Auth />
   },
@@ -58,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: '/auth/familia/contrato-confidencialidad',
     element: <ContratoConfidencialidad />
+  },
+  {
+    path: '/auth/familia/home-families',
+    element: <HomeFamilies />
   },
   {
     path: '/admin/dashboard',
