@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Data
 public class MentoriaDTO {
@@ -13,13 +14,11 @@ public class MentoriaDTO {
     @NotNull(message = "El ID no puede ser nulo")
     private Long id;
 
-    @JsonProperty("familiaMentoraId")
-    @NotNull(message = "La familia mentora ID no puede ser nula")
-    private Long familiaMentoraId;
+    @JsonProperty("familiaMentora")
+    private Map<String, Object> familiaMentora;
 
-    @JsonProperty("familiaMentoradaId")
-    @NotNull(message = "La familia mentorada ID no puede ser nula")
-    private Long familiaMentoradaId;
+    @JsonProperty("familiaMentorada")
+    private Map<String, Object> familiaMentorada;
 
     @JsonProperty("fechaAsignacion")
     @NotNull(message = "La fecha de asignación no puede ser nula")
