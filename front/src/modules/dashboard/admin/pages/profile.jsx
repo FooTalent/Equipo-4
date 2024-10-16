@@ -97,7 +97,7 @@ export default function AdminProfile() {
   }, [form.formState.defaultValues.apellido, form.formState.defaultValues.correo, form.formState.defaultValues.nombre, watchedFields]);
   return (
     <AppLayout>
-      <section className='h-full md:bg-gray-100 md:grid md:items-center'>
+      <section className='h-full md:bg-grayDefault md:grid md:items-center'>
         <div className='p-0 h-full flex flex-col md:flex-col gap-16 md:gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:h-3/4 md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto'>
           <div className='flex h-fit py-1 gap-2 md:gap-5'>
             <img onClick={() => navigate('/admin/dashboard')} src='/common/arrow-left.svg' alt='Regresar a la página principal' className='self-start pt-2 md:pt-0 hover:cursor-pointer' />

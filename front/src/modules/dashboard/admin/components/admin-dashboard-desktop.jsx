@@ -11,11 +11,11 @@ export default function AdminDashboardDesktop() {
             <h2 className='pt-2 text-xl'>Voluntariado y Seguimiento</h2>
           </div>
           <div className='grid grid-cols-3 gap-4'>
-            <Link to={'/admin/solicitud-mentorias'} className='p-6 h-56 grid items-center bg-emerald-100 rounded-lg'>
+            <Link to={'/admin/solicitud-mentorias'} className='p-6 h-56 grid items-center bg-greenDefault rounded-lg'>
               <img src='/dashboard-admin/familia-mentorias-desktop.svg' alt='Familias que solicitan mentorías' className='self-center' />
               <p className='self-start text-lg'>Familias que solicitan mentorías</p>
             </Link>
-            <Link to={'/admin/familias-voluntarias'} className='p-6 h-56 grid items-center bg-orange-100 rounded-lg'>
+            <Link to={'/admin/familias-voluntarias'} className='p-6 h-56 grid items-center bg-orangeDefault rounded-lg'>
               <img src='/dashboard-admin/gestion-familia-desktop.svg' alt='Gestión de familias voluntarias' className='self-center' />
               <p className='self-start text-lg'>Gestión de familias voluntarias</p>
             </Link>
@@ -31,14 +31,10 @@ export default function AdminDashboardDesktop() {
             <h2 className='pt-2 text-xl'>Base de Datos General</h2>
           </div>
           <div className='grid grid-cols-3 gap-4'>
-            <Link to={'/admin/listado-familias'} className='p-6 h-56 grid items-center bg-emerald-100 rounded-lg'>
+            <Link to={'/admin/listado-familias'} className='p-6 h-56 grid items-center bg-greenDefault rounded-lg'>
               <img src='/dashboard-admin/listado-familia-desktop.svg' alt='Listado de familias' className='self-center' />
               <p className='self-start text-lg'>Listado de familias</p>
             </Link>
-            {/* <div className='p-6 h-56 grid items-center bg-orange-100 rounded-lg'>
-              <img src='/dashboard-admin/crear-usuario-desktop.svg' alt='Creare nuevo usuario' className='self-center' />
-              <p className='self-start text-lg'>Crear nuevo usuario</p>
-            </div> */}
             <CreateUser />
             <Link to={'/admin/email-general'} className='p-6 h-56 grid items-center bg-red-100 rounded-lg'>
               <img src='/dashboard-admin/email-general-desktop.svg' alt='email general' className='self-center' />

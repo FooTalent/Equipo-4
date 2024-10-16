@@ -91,8 +91,8 @@ const Login = () => {
     mutation.mutate(data);
   };
   return (
-    <div className='relative md:bg-cyan-50 py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4'>
-      <Link className='block md:hidden absolute z-30 top-8 left-4' to={'/auth/tipo-usuario'}><MdArrowBackIosNew /></Link>
+    <div className='relative md:bg-grayDefault py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4'>
+      <Link className='block md:hidden absolute z-30 top-8 left-4' to={'/auth'}><MdArrowBackIosNew /></Link>
       <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
         <img src='/common/logo-phrase.svg' alt='family one' className=''/>
       </Link>
