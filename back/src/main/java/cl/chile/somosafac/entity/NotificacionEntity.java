@@ -27,6 +27,8 @@ public class NotificacionEntity {
     @Column(name = "mensaje", nullable = false)
     private String mensaje;
 
+    private String tipoNotificacion;
+
     @NotNull(message = "La fecha de envío no puede ser nula")
     @PastOrPresent(message = "La fecha de envío no puede ser futura")
     @Column(name = "fecha_envio", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

@@ -18,6 +18,8 @@ public class NotificacionDTO {
     @Size(min = 10, max = 500, message = "El mensaje debe tener entre 10 y 500 caracteres")
     private String mensaje;
 
+    private String tipoNotificacion;
+
     @NotNull(message = "La fecha de envío no puede ser nula")
     @PastOrPresent(message = "La fecha de envío no puede ser futura")
     private LocalDateTime fechaEnvio;
