@@ -78,7 +78,6 @@ const FamilyLogin = () => {
     },
   });
   const onSubmit = async (data) => {
-    console.log('Datos enviados al login API:', data);
     mutation.mutate(data);
   };
 
