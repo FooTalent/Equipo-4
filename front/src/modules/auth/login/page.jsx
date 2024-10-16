@@ -12,7 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import Spinner from '@/components/ui/spinner';
 import { useMutation } from '@tanstack/react-query';
-import { loginAdminApi } from './api';
+import { loginApi } from './api';
 import { toast } from 'react-toastify';
 import useAuthStore from '@/store/user';
 
@@ -63,7 +63,7 @@ const Login = () => {
     }
   }, [user, navigate]);
   const mutation = useMutation({
-    mutationFn: loginAdminApi,
+    mutationFn: loginApi,
     onSuccess: (data) => {
       if (data.correo) {
         setUser(data);
