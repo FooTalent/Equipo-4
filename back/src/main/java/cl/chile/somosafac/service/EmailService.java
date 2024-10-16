@@ -5,6 +5,7 @@ import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.repository.FamiliaRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;
+import cl.chile.somosafac.security.Role;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -72,10 +73,15 @@ public class EmailService {
     }
 
     public void enviarEmailDestinatarios(EmailDTO emailDTO) {
+        if (emailDTO == null || emailDTO.getDestinatario() == null) {
+            throw new IllegalArgumentException("El Email o el destinatario no pueden ser nulos.");
+        }
+
         List<String> destinatarios = new ArrayList<>();
 
         if (emailDTO.getDestinatario().equals("Listado General")) {
-            List<UsuarioEntity> usuarios = usuarioRepository.findAll();
+            List<UsuarioEntity> usuarios = usuarioRepository.findByTipoUsuario(Role.ADMIN);
+            System.out.println(usuarios);
 
             destinatarios = usuarios.stream()
                     .map(UsuarioEntity::getCorreo)
