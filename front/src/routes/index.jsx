@@ -18,6 +18,7 @@ import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 import CreateUser from '@/modules/dashboard/admin/components/create-user';
 import FamilyForgotPassword from "@/modules/auth/family/olvidar-contrasena.jsx";
 import FamilyResetPassword from "@/modules/auth/family/recuperar-contrasena.jsx";
+import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/perfil',
     element: <AdminProfile />
+  },
+  {
+    path: '/admin/notificacion',
+    element: <AdminNotifications />
   },
   {
     path: '/admin/solicitud-mentorias',

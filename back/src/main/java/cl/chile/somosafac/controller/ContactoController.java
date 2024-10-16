@@ -75,17 +75,6 @@ public class ContactoController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Eliminar contacto", description = "Elimina un contacto")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Contacto eliminado exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Contacto no encontrado")
-    })
-    @DeleteMapping("/{contactoId}")
-    public ResponseEntity<Void> eliminarContacto(@PathVariable Long contactoId) {
-        contactoService.eliminarContacto(contactoId);
-        return ResponseEntity.noContent().build();
-    }
-
     @Operation(summary = "Actualizar contacto", description = "Actualiza un contacto")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Contacto actualizado exitosamente"), @ApiResponse(responseCode = "404", description = "Contacto no encontrado"), @ApiResponse(responseCode = "200", description = "Contacto actualizado exitosamente"), @ApiResponse(responseCode = "404", description = "Contacto no encontrado")})
     @PutMapping("/{contactoId}")

@@ -16,6 +16,12 @@ public class UsuarioDTO {
     @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("nombre")
+    private String nombre;
+
+    @JsonProperty("apellido")
+    private String apellido;
+
     @JsonProperty("correo")
     private String correo;
 
@@ -57,6 +63,8 @@ public class UsuarioDTO {
     public UsuarioEntity toEntity() {
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setId(this.id);
+        usuario.setNombre(this.nombre);
+        usuario.setNombre(this.apellido);
         usuario.setCorreo(this.correo);
         usuario.setContrasenaHash(this.contrasenaHash);
         usuario.setTipoUsuario(this.tipoUsuario);
@@ -72,6 +80,8 @@ public class UsuarioDTO {
     public static UsuarioDTO fromEntity(UsuarioEntity usuario) {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(usuario.getId());
+        usuarioDTO.setNombre(usuario.getNombre());
+        usuarioDTO.setApellido(usuario.getApellido());
         usuarioDTO.setCorreo(usuario.getCorreo());
         usuarioDTO.setContrasenaHash(usuario.getContrasenaHash());
         usuarioDTO.setTipoUsuario(usuario.getTipoUsuario());

@@ -54,6 +54,18 @@ public class FamiliaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaFamilia);
     }
 
+    @Operation(summary = "Buscar familias", description = "Busca familias por nombre, ciudad y región")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Familias encontradas exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Familias no encontradas")
+    })
+    @GetMapping("/familias/buscar")
+    public List<FamiliaDTO> searchFamilias(@RequestParam(required = false) String nombre,
+                                           @RequestParam(required = false) String ciudad,
+                                           @RequestParam(required = false) String region) {
+        return familiaService.searchFamilias(nombre, ciudad, region);
+    }
+
     @Operation(summary = "Actualizar una familia", description = "Actualiza una familia existente por su ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Familia actualizada exitosamente"),

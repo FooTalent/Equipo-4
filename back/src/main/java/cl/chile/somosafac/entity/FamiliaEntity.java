@@ -22,25 +22,25 @@ public class FamiliaEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id")
     private UsuarioEntity usuario;
 
     @Column(name = "nombre_fa_uno", nullable = false, length = 255)
     private String nombreFaUno;
 
-    @Column(name = "nombre_fa_dos", nullable = false, length = 255)
+    @Column(name = "nombre_fa_dos", length = 255)
     private String nombreFaDos;
 
-    @Column(name = "rut_fa_uno", unique = true, nullable = false, length = 12)
+    @Column(name = "rut_fa_uno", unique = true, length = 12)
     private String rutFaUno;
 
-    @Column(name = "rut_fa_dos", unique = true, nullable = false, length = 12)
+    @Column(name = "rut_fa_dos", unique = true, length = 12)
     private String rutFaDos;
 
     @Column(name = "fecha_nacimiento_fa_uno", nullable = false)
     private LocalDate fechaNacimientoFaUno;
 
-    @Column(name = "fecha_nacimiento_fa_dos", nullable = false)
+    @Column(name = "fecha_nacimiento_fa_dos")
     private LocalDate fechaNacimientoFaDos;
 
     @Column(name = "estado_civil", length = 50)
