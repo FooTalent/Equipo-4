@@ -1,0 +1,41 @@
+{
+    "familias": {
+      "estadoAcogimiento": [
+        {
+          "codigo": "A",
+          "descripcion": "Acogiendo"
+        },
+        {
+          "codigo": "SA",
+          "descripcion": "Sin acogimiento"
+        },
+        {
+          "codigo": "AP",
+          "descripcion": "Acogida Permanente"
+        }
+      ],
+      "pueblosOriginariosNNA": [
+        "Aymara",
+        "Quechua",
+        "Atacameño",
+        "Colla",
+        "Chango",
+        "Diaguita",
+        "Mapuche",
+        "Rapa Nui",
+        "Kawésqar",
+        "Yagán",
+        "Selk'nam",
+        "Ninguno"
+      ],
+      "estadoCivil": [
+        "Soltero/a",
+        "Casado/a",
+        "Divorciado/a",
+        "Viudo/a",
+        "En pareja",
+        "Separado/a"
+      ]
+    }
+  }
+  
