@@ -58,7 +58,7 @@ public class ContactoController {
 
     @Operation(summary = "Obtener notificaciones pendientes", description = "Obtiene las notificaciones pendientes")
     @ApiResponse(responseCode = "200", description = "Notificaciones obtenidas exitosamente")
-    @GetMapping("/notificaciones")
+    @GetMapping("/notificaciones/pendientes")
     public ResponseEntity<List<NotificacionDTO>> obtenerNotificacionesPendientes() {
         List<NotificacionDTO> notificaciones = contactoService.obtenerNotificacionesPendientes();
         return ResponseEntity.ok(notificaciones);

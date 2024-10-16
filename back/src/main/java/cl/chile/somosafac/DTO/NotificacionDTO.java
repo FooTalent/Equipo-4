@@ -22,9 +22,5 @@ public class NotificacionDTO {
     @PastOrPresent(message = "La fecha de envío no puede ser futura")
     private LocalDateTime fechaEnvio;
 
-    @NotBlank(message = "El tipo de notificación no puede estar vacío")
-    @Size(min = 3, max = 50, message = "El tipo de notificación debe tener entre 3 y 50 caracteres")
-    private String tipoNotificacion;
-
     private boolean visto;
 }

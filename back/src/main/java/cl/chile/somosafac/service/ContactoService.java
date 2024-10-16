@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,15 +63,26 @@ public class ContactoService {
      */
     @Transactional
     public ContactoDTO programarContacto(ContactoDTO contactoDTO) {
-        Optional<FamiliaEntity> familia = familiaRepository.findById(contactoDTO.getFamiliaId());
-        if (familia.isPresent()) {
-            ContactoEntity contacto = ContactoMapperManual.dtoToContacto(contactoDTO);
-            contacto.setFamilia(familia.get());
-            contacto = contactoRepository.save(contacto);
-            return ContactoMapperManual.contactoToDto(contacto);
-        } else {
-            return null;
+        ContactoEntity contacto = new ContactoEntity();
+        contacto.setFamilia(contactoDTO.getFamiliaId());
+        contacto.setUsuario(contactoDTO.getUsuarioId());
+        contacto.setFechaContacto(contactoDTO.getFechaContacto());
+        contacto.setDescripcionContacto(contactoDTO.getDescripcionContacto());
+        contactoRepository.save(contacto);
+
+        // Programar recordatorios cada 3 meses
+        List<NotificacionEntity> recordatorios = new ArrayList<>();
+        for (int i = 1; i <= 4; i++) {
+            NotificacionEntity notificacion = new NotificacionEntity();
+            notificacion.setUsuario(contactoDTO.getUsuarioId());
+            notificacion.setMensaje("Recordatorio de contacto programado.");
+            notificacion.setFechaEnvio(contactoDTO.getFechaContacto().plusMonths(3 * i));
+            notificacion.setVisto(false);
+            recordatorios.add(notificacion);
         }
+        notificacionRepository.saveAll(recordatorios);
+
+        return ContactoDTO.fromEntity(contacto);
     }
 
     /**

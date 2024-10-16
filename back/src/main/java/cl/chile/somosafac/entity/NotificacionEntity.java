@@ -32,10 +32,5 @@ public class NotificacionEntity {
     @Column(name = "fecha_envio", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechaEnvio;
 
-    @NotBlank(message = "El tipo de notificación no puede estar vacío")
-    @Size(min = 3, max = 50, message = "El tipo de notificación debe tener entre 3 y 50 caracteres")
-    @Column(name = "tipo_notificacion", nullable = false)
-    private String tipoNotificacion;
-
     private boolean visto;
 }

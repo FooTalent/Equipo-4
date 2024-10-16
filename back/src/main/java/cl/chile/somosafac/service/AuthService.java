@@ -4,9 +4,11 @@ import cl.chile.somosafac.DTO.FamiliaDTO;
 import cl.chile.somosafac.DTO.PasswordDTO;
 import cl.chile.somosafac.DTO.UsuarioDTO;
 import cl.chile.somosafac.entity.FamiliaEntity;
+import cl.chile.somosafac.entity.NotificacionEntity;
 import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.mapper.FamiliaMapperManual;
 import cl.chile.somosafac.repository.FamiliaRepository;
+import cl.chile.somosafac.repository.NotificacionRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import cl.chile.somosafac.security.JwtService;
 import cl.chile.somosafac.security.LoginRequest;
@@ -31,6 +33,7 @@ public class AuthService {
     private long tiempoExpiracionResetToken = 86400000; // 1 dia - Consultar con equipo
     private final UsuarioRepository usuarioRepository;
     private final FamiliaRepository familiaRepository;
+    private final NotificacionRepository notificacionRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -55,8 +58,15 @@ public class AuthService {
         System.out.println("Cookie logout: " + jwtCookie.getName());
         System.out.println(jwtCookie.getValue());
 
+        // Redireccionar según el tipo de usuario
         if (usuario.getTipoUsuario().equals(Role.FAMILIA)) {
             response.setHeader("Location", "/familia/" + usuario.getId());
+            response.setStatus(HttpServletResponse.SC_FOUND);
+        }
+
+        // Redireccionar para cambiar la contraseña en el primer ingreso
+        if (usuario.isPrimerIngreso()) {
+            response.setHeader("Location", "/cambiar-contrasena");
             response.setStatus(HttpServletResponse.SC_FOUND);
         }
 
@@ -90,11 +100,22 @@ public class AuthService {
             FamiliaEntity familia = FamiliaMapperManual.familiaToEntity(familiaDTO);
             familiaRepository.save(familia);
         }
+
+        // Crear notificacion para el usuario con rol de familia
+        if (request.getTipoUsuario().equals(Role.FAMILIA)) {
+            NotificacionEntity notificacion = new NotificacionEntity();
+            notificacion.setUsuario(usuario);
+            notificacion.setMensaje("Se ha creado un nuevo usuario con el rol de familia.");
+            notificacion.setFechaEnvio(LocalDateTime.now());
+            notificacion.setVisto(false);
+            notificacionRepository.save(notificacion);
+        }
+
         UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
         return usuarioDTO;
     }
 
-    public String cambiarContrasenaPrimerIngreso(String email, PasswordDTO nuevaContrasena) {
+    public UsuarioDTO cambiarContrasenaPrimerIngreso(String email, PasswordDTO nuevaContrasena) {
         UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
@@ -103,7 +124,7 @@ public class AuthService {
             usuario.setPrimerIngreso(false);
             usuarioRepository.save(usuario);
 
-            return "Contraseña actualizada exitosamente.";
+            return UsuarioDTO.fromEntity(usuario);
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar contraseña.");
         }
