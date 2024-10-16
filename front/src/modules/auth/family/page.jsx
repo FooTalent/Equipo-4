@@ -137,7 +137,7 @@ const FamilyLogin = () => {
               </div>
               <div className='flex items-center justify-center'>
                 <div className='text-sm'>
-                  <Link to='/auth/familia/olvidar-contrasena' className='font-medium text-gray-700 hover:text-orange-600 text-center justify-center'>
+                  <Link to='/auth/olvidar-contrasena' className='font-medium text-gray-700 hover:text-orange-600 text-center justify-center'>
                             ¿Olvidaste tu contraseña?
                   </Link>
                 </div>

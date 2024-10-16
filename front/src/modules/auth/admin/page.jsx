@@ -137,7 +137,7 @@ const AdminLogin = () => {
               </div>
             </div>
             <div className='text-center text-sm'>
-              <Link to={'/auth/familia/olvidar-contrasena'}
+              <Link to={'/auth/olvidar-contrasena'}
                 className=''>
                 ¿Necesitas recuperar la contraseña?
               </Link>
