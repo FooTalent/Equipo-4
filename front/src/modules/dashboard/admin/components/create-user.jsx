@@ -102,7 +102,7 @@ export default function CreateUser() {
       <div className='md:grid w-full'>
         <Dialog open={isOpen} onOpenChange={handleDialogChange}>
           <DialogTrigger asChild>
-            <Button className='p-6 h-44 md:h-56 grid justify-start w-full bg-orange-100 hover:bg-orange-100 rounded-lg'>
+            <Button className='p-6 h-44 md:h-56 grid justify-start w-full bg-orangeDefault text-black hover:bg-orangeDefault rounded-lg'>
               <img src='/dashboard-admin/crear-usuario-desktop.svg' alt='Creare nuevo usuario' className='self-center' />
               <p className='self-start text-lg'>Crear nuevo usuario</p>
             </Button>
