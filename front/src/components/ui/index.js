@@ -8,3 +8,4 @@ export * from './label';
 export * from './select';
 export * from './textarea';
 export * from './pagination';
+export * from './table';
