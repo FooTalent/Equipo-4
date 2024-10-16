@@ -47,7 +47,7 @@ const router = createBrowserRouter([
     element: <FamilyForgotPassword />,
   },
   {
-    path: '/auth/familia/recuperar-contrasena',
+    path: '/reset-password/:token',
     element: <FamilyResetPassword />,
   },
   {
