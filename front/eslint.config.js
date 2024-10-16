@@ -37,6 +37,7 @@ export default [
       ],
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
+      'jsx-quotes': ['error', 'prefer-single'],
       indent: ['error', 2],
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
       'object-curly-spacing': ['error', 'always'],

@@ -136,7 +136,7 @@ export default function CreateUser() {
                     )}
                   />
                   <div className='flex flex-col gap-3'>
-                    <Label htmlFor="nombre">
+                    <Label htmlFor='nombre'>
               Nombre
                     </Label>
                     <Input
@@ -146,10 +146,10 @@ export default function CreateUser() {
                       className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0'
                       {...form.register('nombre', { required: true })}
                     />
-                    {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.nombre?.message}</p>}
+                    {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.nombre?.message}</p>}
                   </div>
                   <div className='flex flex-col gap-3'>
-                    <Label htmlFor="apellido">
+                    <Label htmlFor='apellido'>
               Apellido
                     </Label>
                     <Input
@@ -159,10 +159,10 @@ export default function CreateUser() {
                       className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0'
                       {...form.register('apellido', { required: true })}
                     />
-                    {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.apellido?.message}</p>}
+                    {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.apellido?.message}</p>}
                   </div>
                   <div className='flex flex-col gap-3'>
-                    <Label htmlFor="correo">
+                    <Label htmlFor='correo'>
               Correo
                     </Label>
                     <Input
@@ -172,10 +172,10 @@ export default function CreateUser() {
                       className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0'
                       {...form.register('correo', { required: true })}
                     />
-                    {form.formState.errors && <p className="text-red-500 text-sm -mt-1">{form?.formState?.errors?.correo?.message}</p>}
+                    {form.formState.errors && <p className='text-red-500 text-sm -mt-1'>{form?.formState?.errors?.correo?.message}</p>}
                   </div>
                   <div className='flex flex-col gap-3'>
-                    <Label htmlFor="contrasena">
+                    <Label htmlFor='contrasena'>
               Contraseña
                     </Label>
                     <Input
@@ -185,7 +185,7 @@ export default function CreateUser() {
                       className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0'
                       {...form.register('contrasenaHash', { required: true })}
                     />
-                    {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.contrasenaHash?.message}</p>}
+                    {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.contrasenaHash?.message}</p>}
                   </div>
                 </div>
                 <DialogFooter className='flex flex-row gap-2 mt-4'>
@@ -196,9 +196,9 @@ export default function CreateUser() {
             </Form>
             <Form>
               <form className={`${confirmed ? 'block relative' : 'hidden'}`}>
-                <div className="grid gap-3 py-2">
+                <div className='grid gap-3 py-2'>
                   <div className='flex flex-col gap-3'>
-                    <Label htmlFor="correo">
+                    <Label htmlFor='correo'>
               Correo
                     </Label>
                     <Input

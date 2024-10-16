@@ -82,7 +82,7 @@ const FamilyForgotPassword = () => {
                   placeholder='Escribe tu Email'
                   {...form.register('email', { required: true })}
                 />
-                {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.email?.message}</p>}
+                {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.email?.message}</p>}
               </div>
 
             </div>

@@ -13,7 +13,7 @@ function MentoringRequest() {
       try {
         const response = await getAllMentoringApi();
         setMentoringRequest(response);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch mentoring requests');
       } finally {
         setLoading(false);
@@ -33,14 +33,14 @@ function MentoringRequest() {
 
   return (
     <div
-      id="mentoringRequest-container"
-      className="w-full min-h-screen bg-[#e6e6e6] flex justify-center items-center"
+      id='mentoringRequest-container'
+      className='w-full min-h-screen bg-[#e6e6e6] flex justify-center items-center'
     >
       <div
-        id="mentoringRequest"
-        className="w-[668px] p-[25px] bg-white rounded-2xl"
+        id='mentoringRequest'
+        className='w-[668px] p-[25px] bg-white rounded-2xl'
       >
-        <div className="flex flex-col gap-5">
+        <div className='flex flex-col gap-5'>
           <Header />
           {mentoringRequest.length > 0 ? (
             mentoringRequest.map((mentoring) => (
