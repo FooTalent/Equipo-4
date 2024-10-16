@@ -14,7 +14,8 @@ public class ContactoMapperManual {
         ContactoDTO contactoDTO = new ContactoDTO();
         contactoDTO.setId(contacto.getId());
         contactoDTO.setFechaContacto(contacto.getFechaContacto());
-        contactoDTO.setFamiliaId(contacto.getFamilia().getId());
+//        contactoDTO.setFamiliaId(contacto.getFamilia().getId());
+        contactoDTO.setFamiliaId(contacto.getFamilia()); // se quitó .getId()
         return contactoDTO;
     }
 
