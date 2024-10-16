@@ -6,6 +6,7 @@ import { getAllFamiliesApi } from '../api';
 import { toast } from 'react-toastify';
 import Familia from '../components/familia';
 import {
+  Input,
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -82,6 +83,16 @@ export default function ListFamilies() {
                 Listado de Familias
               </p>
             </div>
+            {!isLoading && data?.length !== 0 && (<>
+              <div className='relative my-3'>
+                <Input
+                  placeholder='Busca por apellido, región, estado de acogimiento'
+                  className='rounded-3xl bg-neutral-200 placeholder:text-emerald-500 py-4 px-12 focus-visible:ring-0 focus-visible:ring-offset-0'
+                />
+                <img src='/common/search.svg' alt='buscar familia' className=' absolute top-2 left-4'/>
+                <img src='/common/close-circle.svg' alt='borrar el buscador' className=' absolute top-2 right-4' />
+              </div>
+            </>)}
           </div>
           {isLoading && (
             <div className='grid justify-center items-center mt-12'>
@@ -125,6 +136,11 @@ export default function ListFamilies() {
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
+          )}
+          {!isLoading && data?.length === 0 && (
+            <>
+              <p>No hay familias registradas</p>
+            </>
           )}
         </div>
       </section>

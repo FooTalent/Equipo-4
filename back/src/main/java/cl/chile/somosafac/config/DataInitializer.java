@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Configuration
 public class DataInitializer {
-
+    //TODO Agregar campos faltantes para familia para antes del 11/14/2024 by israel RECORDATORIO
     private final FamiliaRepository familiaRepository;
     private final UsuarioRepository usuarioRepository;
     private final VoluntarioRepository voluntarioRepository;

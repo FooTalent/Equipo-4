@@ -11,7 +11,7 @@ export default function Familia({ id, usuario, nombreFaUno }) {
             placeholder={`${nombreFaUno ? nombreFaUno : 'Nombre y Apellido'}`}
             disabled
           />
-          <img src='/common/delete.svg' alt='borar' className='absolute top-2 right-2' />
+          <img src='/common/desactivar.svg' alt='borar' className='absolute top-2 right-2' />
           <img src='/common/edit-input-field.svg' alt='editar' className='absolute top-[9.5px] right-10' />
         </div>
 

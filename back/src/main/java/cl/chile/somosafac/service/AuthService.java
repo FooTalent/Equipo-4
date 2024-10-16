@@ -1,8 +1,12 @@
 package cl.chile.somosafac.service;
 
+import cl.chile.somosafac.DTO.FamiliaDTO;
 import cl.chile.somosafac.DTO.PasswordDTO;
 import cl.chile.somosafac.DTO.UsuarioDTO;
+import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.entity.UsuarioEntity;
+import cl.chile.somosafac.mapper.FamiliaMapperManual;
+import cl.chile.somosafac.repository.FamiliaRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import cl.chile.somosafac.security.JwtService;
 import cl.chile.somosafac.security.LoginRequest;
@@ -26,6 +30,7 @@ import java.util.UUID;
 public class AuthService {
     private long tiempoExpiracionResetToken = 86400000; // 1 dia - Consultar con equipo
     private final UsuarioRepository usuarioRepository;
+    private final FamiliaRepository familiaRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -49,6 +54,12 @@ public class AuthService {
         UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
         System.out.println("Cookie logout: " + jwtCookie.getName());
         System.out.println(jwtCookie.getValue());
+
+        if (usuario.getTipoUsuario().equals(Role.FAMILIA)) {
+            response.setHeader("Location", "/familia/" + usuario.getId());
+            response.setStatus(HttpServletResponse.SC_FOUND);
+        }
+
         return usuarioDTO;
     }
 
@@ -69,6 +80,16 @@ public class AuthService {
 
         usuarioRepository.save(usuario);
 
+        // Verificar si el rol del usuario es "familia"
+        if (request.getTipoUsuario().equals(Role.FAMILIA)) {
+            FamiliaDTO familiaDTO = new FamiliaDTO();
+            // Configurar los datos necesarios para la familia
+            familiaDTO.setNombreFaUno(usuario.getNombre());
+            familiaDTO.setEmail(usuario.getCorreo());
+            familiaDTO.setUsuario(usuario.getId());
+            FamiliaEntity familia = FamiliaMapperManual.familiaToEntity(familiaDTO);
+            familiaRepository.save(familia);
+        }
         UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
         return usuarioDTO;
     }
