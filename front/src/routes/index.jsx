@@ -1,6 +1,5 @@
 import App from '@/App';
 import AdminLogin from '@/modules/auth/admin/page';
-import UserType from '@/modules/auth/components/user-type';
 import Auth from '@/modules/auth/page';
 import PersonalizeCredentialsAdmin from '@/modules/auth/admin/personalize';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -16,10 +15,11 @@ import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 import CreateUser from '@/modules/dashboard/admin/components/create-user';
-import FamilyForgotPassword from "@/modules/auth/family/olvidar-contrasena.jsx";
-import FamilyResetPassword from "@/modules/auth/family/recuperar-contrasena.jsx";
+import FamilyForgotPassword from '@/modules/auth/family/olvidar-contrasena.jsx';
+import FamilyResetPassword from '@/modules/auth/family/recuperar-contrasena.jsx';
 import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
 import MentoringRequest from '@/modules/dashboard/admin/pages/mentoringRequest/MentoringRequest';
+import HomeFamilies from '@/modules/auth/family/HomeFamilies';
 
 const router = createBrowserRouter([
   {
@@ -31,11 +31,7 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    path: '/auth/tipo-usuario',
-    element: <UserType />
-  },
-  {
-    path: '/auth/admin/ingresar',
+    path: '/auth/ingresar',
     element: <AdminLogin />
   },
   {
@@ -65,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: '/auth/familia/contrato-confidencialidad',
     element: <ContratoConfidencialidad />
+  },
+  {
+    path: '/auth/familia/home-families',
+    element: <HomeFamilies />
   },
   {
     path: '/admin/dashboard',
