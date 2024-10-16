@@ -23,7 +23,7 @@ export default function Auth() {
           <h1 className='text-4xl md:text-5xl font-extralight'>
         Bienvenido al <br /> Sistema de Gestión <br /> de Datos de <span className='font-bold'>AFAC</span>
           </h1>
-          <Link to={'/auth/ingresar'} className="w-full md:w-3/4 bg-orange-400 hover:bg-orange-500 text-base hover:opacity-80 py-3 text-center rounded-md">Continuar</Link>
+          <Link to={'/auth/ingresar'} className='w-full md:w-3/4 bg-orange-400 hover:bg-orange-500 text-base hover:opacity-80 py-3 text-center rounded-md'>Continuar</Link>
         </div>
       </section>
       <section className='hidden lg:block'>

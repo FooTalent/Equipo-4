@@ -13,7 +13,6 @@ module.exports = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-			green: '#ecf8f3',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -42,13 +41,13 @@ module.exports = {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
-            button: {
-                DEFAULT: 'hsl(var(--button))',
-                foreground: 'hsl(var(--button-foreground))'
-            },
-            orangeLight: {
-                DEFAULT: '#FFBA69',
-            },
+        button: {
+          DEFAULT: 'hsl(var(--button))',
+          foreground: 'hsl(var(--button-foreground))'
+        },
+        orangeLight: {
+          DEFAULT: '#FFBA69',
+        },
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',

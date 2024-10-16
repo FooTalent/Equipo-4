@@ -1,5 +1,4 @@
 import App from '@/App';
-import AdminLogin from '@/modules/auth/admin/page';
 import Auth from '@/modules/auth/page';
 import PersonalizeCredentialsAdmin from '@/modules/auth/admin/personalize';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -20,6 +19,7 @@ import FamilyResetPassword from '@/modules/auth/family/recuperar-contrasena.jsx'
 import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
 import MentoringRequest from '@/modules/dashboard/admin/pages/mentoringRequest/MentoringRequest';
 import HomeFamilies from '@/modules/auth/family/HomeFamilies';
+import Login from '@/modules/auth/login/page';
 
 const router = createBrowserRouter([
   {
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/auth/ingresar',
-    element: <AdminLogin />
+    element: <Login />
   },
   {
     path: '/auth/admin/personalizar',
@@ -43,11 +43,11 @@ const router = createBrowserRouter([
     element: <FamilyLogin />
   },
   {
-    path: '/auth/familia/olvidar-contrasena',
+    path: '/auth/olvidar-contrasena',
     element: <FamilyForgotPassword />,
   },
   {
-    path: '/auth/familia/recuperar-contrasena',
+    path: '/reset-password/:token',
     element: <FamilyResetPassword />,
   },
   {

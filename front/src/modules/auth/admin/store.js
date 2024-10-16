@@ -18,9 +18,9 @@ const useUserStore = create((set) => ({
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       return userData;
     } catch (error) {
-        const errorMessage = error.response?.data?.message || 'Error en la autenticación';
-        set({ error: errorMessage, loading: false });
-        throw new Error(errorMessage);
+      const errorMessage = error.response?.data?.message || 'Error en la autenticación';
+      set({ error: errorMessage, loading: false });
+      throw new Error(errorMessage);
     }
   },
 
@@ -31,9 +31,9 @@ const useUserStore = create((set) => ({
       set({ user: response.data, loading: false });
       return response.data;
     } catch (error) {
-        const errorMessage = error.response?.data?.message || 'Error en el registro';
-        set({ error: errorMessage, loading: false });
-        throw new Error(errorMessage);
+      const errorMessage = error.response?.data?.message || 'Error en el registro';
+      set({ error: errorMessage, loading: false });
+      throw new Error(errorMessage);
     }
   },
 
