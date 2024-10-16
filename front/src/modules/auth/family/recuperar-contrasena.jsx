@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import { MdArrowBackIosNew } from 'react-icons/md';
 import { Input } from '/src/components/ui/input';
 import { Label } from '/src/components/ui/label';
@@ -61,7 +61,10 @@ const FamilyResetPassword = () => {
 
     return (
         <div className='flex flex-col items-center justify-center min-h-screen p-4 md:bg-green'>
-            <div className='max-w-[450px] w-full h-auto space-y-8 md:bg-white md:shadow-lg md:mx-auto md:w-full md:p-20 md:pb-20 md:pt-14 md:rounded-xl'>
+            <Link to={'/auth'} className='hidden md:block left-2 md:bg-orange-500 w-[300px]'>
+                <img src='/common/logo-phrase.svg' alt='family one' className='absolute top-30 sm:left-6 ml-12'/>
+            </Link>
+            <div className='max-w-[450px] z-10 w-full h-auto space-y-8 md:bg-white md:shadow-lg md:mx-auto md:w-full md:p-20 md:pb-20 md:pt-14 md:rounded-xl'>
                 <div>
                     <h2 className='mt-6 text-2xl sm:text-3xl font-bold text-center text-gray-900'>
                         Restablecer contraseña
@@ -122,7 +125,7 @@ const FamilyResetPassword = () => {
                             <Button
                                 type='submit'
                                 variant='default'
-                                className='w-full mt-4 py-6'
+                                className='w-full mt-4 py-6 bg-orange-400  hover:border-orange-500 hover:border-2 hover:bg-white text-black hover:text-black'
                             >
                                 {'Restablecer contraseña'}
                             </Button>

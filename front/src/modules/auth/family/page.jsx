@@ -84,13 +84,13 @@ const FamilyLogin = () => {
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen p-4 md:bg-green'>
-      <Link className='absolute z-30 top-8 left-4 sm:top-8 sm:left-8 bg-white md:p-4 md:shadow-md md:rounded-xl left-8' to={'/auth/tipo-usuario'}>
+      <Link className='absolute top-8 left-4 sm:top-8 sm:left-8 bg-white md:p-4 md:shadow-md md:rounded-xl left-8' to={'/auth/tipo-usuario'}>
         <MdArrowBackIosNew className="text-2xl" />
       </Link>
       <Link to={'/auth'} className='hidden md:block left-4 w-full'>
         <img src='/common/logo-phrase.svg' alt='family one' className='absolute top-30 sm:left-20 ml-20 mb-20'/>
       </Link>
-      <div className='max-w-[450px] w-full h-auto space-y-8 md:bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-20 md:pb-20 md:pt-14 md:rounded-xl'>
+      <div className='max-w-[450px] z-30 w-full h-auto space-y-8 md:bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-20 md:pb-20 md:pt-14 md:rounded-xl'>
         <div>
           <h2 className='mt-6 text-2xl sm:text-3xl font-bold text-center text-gray-900'>
             Ingresa tus credenciales
@@ -149,7 +149,7 @@ const FamilyLogin = () => {
               <Button
                 type='submit'
                 variant='default'
-                className='w-full mt-4 py-6 bg-orange-400  hover:border-orange-500 hover:border-2 hover:bg-white text-white hover:text-orange-500'
+                className='w-full mt-4 py-6 bg-orange-400  hover:border-orange-500 hover:border-2 hover:bg-white text-black hover:text-black'
               >
                 {'Continuar'}
               </Button>

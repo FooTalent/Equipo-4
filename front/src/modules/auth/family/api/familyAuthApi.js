@@ -41,7 +41,7 @@ export const forgotPasswordFamilyApi = async(values) => {
 export const resetPasswordFamilyApi = async(values) => {
     const { contrasenaHash, resetToken } = values;
     try {
-        const response = await AxiosBase.post(`/api/auth/reset-password/${resetToken}`, { contrasenaHash });
+        const response = await AxiosBase.post(`/auth/reset-password/${resetToken}`, { contrasenaHash });
         return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -52,3 +52,4 @@ export const resetPasswordFamilyApi = async(values) => {
         return 'Un error ha ocurrido';
     }
 };
+

@@ -84,7 +84,7 @@ const FamilyForgotPassword = () => {
                             <Button
                                 type='submit'
                                 variant='default'
-                                className='w-full mt-4 py-6 bg-orange-400  hover:border-orange-500 hover:border-2 hover:bg-white text-white hover:text-orange-500'
+                                className='w-full mt-4 py-6 bg-orange-400  hover:border-orange-500 hover:border-2 hover:bg-white text-black hover:text-black'
                             >
                                 {'Enviar instrucciones'}
                             </Button>
