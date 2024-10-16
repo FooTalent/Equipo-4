@@ -24,10 +24,6 @@ const router = createBrowserRouter([
     element: <App />
   },
   {
-    path: '/solicitud-mentorias',
-    element: <MentoringRequest />
-  },
-  {
     path: '/auth',
     element: <Auth />
   },
@@ -86,6 +82,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/email-general',
     element: <GeneralEmail />
+  },
+  {
+    path: '/admin/solicitud-mentorias',
+    element: <MentoringRequest />
   },
   {
     path: '/admin/crear-usuario',
