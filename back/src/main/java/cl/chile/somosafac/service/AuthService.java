@@ -58,18 +58,6 @@ public class AuthService {
         System.out.println("Cookie logout: " + jwtCookie.getName());
         System.out.println(jwtCookie.getValue());
 
-        // Redireccionar según el tipo de usuario
-        if (usuario.getTipoUsuario().equals(Role.FAMILIA)) {
-            response.setHeader("Location", "/familia/" + usuario.getId());
-            response.setStatus(HttpServletResponse.SC_FOUND);
-        }
-
-        // Redireccionar para cambiar la contraseña en el primer ingreso
-        if (usuario.isPrimerIngreso()) {
-            response.setHeader("Location", "/cambiar-contrasena");
-            response.setStatus(HttpServletResponse.SC_FOUND);
-        }
-
         return usuarioDTO;
     }
 
