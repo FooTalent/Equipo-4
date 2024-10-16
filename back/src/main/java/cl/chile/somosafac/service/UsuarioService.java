@@ -3,12 +3,10 @@ package cl.chile.somosafac.service;
 import cl.chile.somosafac.DTO.RequestActualizarUsuarioDTO;
 import cl.chile.somosafac.DTO.UsuarioDTO;
 import cl.chile.somosafac.entity.UsuarioEntity;
-import cl.chile.somosafac.mapper.UsuarioMapper;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
