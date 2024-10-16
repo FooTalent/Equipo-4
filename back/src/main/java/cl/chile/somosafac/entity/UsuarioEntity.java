@@ -43,6 +43,9 @@ public class UsuarioEntity implements UserDetails {
     @Column(name = "contrasena_hash", nullable = false)
     private String contrasenaHash;
 
+    @Column(name = "cargo")
+    private String cargo;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_usuario", nullable = false)
     private Role tipoUsuario;

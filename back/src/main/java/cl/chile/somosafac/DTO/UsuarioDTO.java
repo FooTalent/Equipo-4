@@ -29,6 +29,9 @@ public class UsuarioDTO {
     @JsonProperty("contrasenaHash")
     private String contrasenaHash;
 
+    @JsonProperty("cargo")
+    private String cargo;
+
     @JsonProperty("tipoUsuario")
     private Role tipoUsuario;
 
@@ -67,6 +70,7 @@ public class UsuarioDTO {
         usuario.setNombre(this.apellido);
         usuario.setCorreo(this.correo);
         usuario.setContrasenaHash(this.contrasenaHash);
+        usuario.setCargo(this.cargo);
         usuario.setTipoUsuario(this.tipoUsuario);
         usuario.setActivo(this.activo);
         usuario.setVerificado(this.verificado);
@@ -84,6 +88,7 @@ public class UsuarioDTO {
         usuarioDTO.setApellido(usuario.getApellido());
         usuarioDTO.setCorreo(usuario.getCorreo());
         usuarioDTO.setContrasenaHash(usuario.getContrasenaHash());
+        usuarioDTO.setCargo(usuario.getCargo());
         usuarioDTO.setTipoUsuario(usuario.getTipoUsuario());
         usuarioDTO.setActivo(usuario.getActivo());
         usuarioDTO.setVerificado(usuario.getVerificado());

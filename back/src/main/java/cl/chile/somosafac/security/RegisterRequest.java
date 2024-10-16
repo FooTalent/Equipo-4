@@ -16,15 +16,15 @@ public class RegisterRequest {
     @NotNull(message = "El nombre no puede ser nulo.")
     @NotBlank(message = "El nombre no puede estar vacío.")
     @Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres")
-    String nombre;
+    private String nombre;
 
     @NotNull(message = "El apellido no puede ser nulo.")
     @NotBlank(message = "El apellido no puede estar vacío.")
     @Size(min = 3, max = 50, message = "El apellido debe tener entre 3 y 50 caracteres")
-    String apellido;
+    private String apellido;
 
     @Email(message = "Debe ser un correo válido.")
-    String correo;
+    private String correo;
 
     @NotNull(message = "La contraseña no puede ser nula")
     @NotBlank(message = "La contraseña no puede estar vacía")
@@ -33,18 +33,20 @@ public class RegisterRequest {
             regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$",
             message = "La contraseña debe tener al menos una letra, un número y un símbolo especial"
     )
-    String contrasenaHash;
+    private String contrasenaHash;
+
+    private String cargo;
 
     @NotNull(message = "El tipo de Usuario debe ser ADMIN, FAMILIA o USUARIO")
-    Role tipoUsuario;
+    private Role tipoUsuario;
 
-    boolean activo = true;
+    private boolean activo = true;
 
-    boolean verificado = false;
+    private boolean verificado = false;
 
-    LocalDateTime fechaUltimoAcceso;
+    private LocalDateTime fechaUltimoAcceso;
 
-    boolean aceptarTerminos;
+    private boolean aceptarTerminos;
 
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = Role.valueOf(tipoUsuario.toUpperCase());
