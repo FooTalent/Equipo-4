@@ -48,6 +48,9 @@ module.exports = {
         orangeLight: {
           DEFAULT: '#FFBA69',
         },
+        grayDefault: {
+		  DEFAULT: '#BFBFBF',
+        },
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
