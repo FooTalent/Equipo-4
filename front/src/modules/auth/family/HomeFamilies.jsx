@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import Footer from '@/components/shared/footer';
-import Navbar from '@/components/shared/navbar';
 import comunas from '../../../../public/common/data/territoriochile.json';
 import { useForm } from 'react-hook-form';
 import { Button, Input, RadioGroup, RadioGroupItem } from '@/components/ui';
@@ -69,16 +67,13 @@ export default function HomeFamilies() {
   };
 
   useEffect(() => {
-    //if (user) {
-    setUserData(48);
-    //}
+    if (user) {
+      setUserData(user.id);
+    }
   }, []);
 
   return (
     <>
-      {/*RECORDAR DE BORRAR*/}
-      <Navbar />
-      {/*RECORDAR DE BORRAR*/}
       <div
         id="home-families-container"
         className="w-[100%] min-h-screen bg-[#e6e6e6]"
@@ -158,6 +153,60 @@ export default function HomeFamilies() {
                       {...register('fechaNacimientoFaUno')}
                     />
                   </div>
+                  <Input
+                    label="estadoCivil"
+                    placeholder="Estado Civil"
+                    type="text"
+                    onChange={handleInputChange}
+                    {...register('estadoCivil')}
+                  />
+                  <Input
+                    label="telefono"
+                    placeholder="Teléfono"
+                    type="text"
+                    onChange={handleInputChange}
+                    {...register('telefono')}
+                  />
+                  <Input
+                    label="email"
+                    placeholder="Email"
+                    type="text"
+                    onChange={handleInputChange}
+                    {...register('email')}
+                  />
+                  <Input
+                    label="pais"
+                    placeholder="Pais"
+                    type="text"
+                    onChange={handleInputChange}
+                    {...register('pais')}
+                  />
+                  <Input
+                    label="region"
+                    placeholder="Ciudad"
+                    type="text"
+                    onChange={handleInputChange}
+                    {...register('region')}
+                  />
+                  <select>
+                    {comunas.map((comuna, index) => (
+                      <option
+                        key={index}
+                        value={comuna}
+                        onChange={handleInputChange}
+                        {...register('comuna')}
+                      >
+                        {JSON.stringify(comuna.nombre)}
+                      </option>
+                    ))}
+                  </select>
+                  <Input
+                    label="direccion"
+                    placeholder="Dirección"
+                    type="text"
+                    onChange={handleInputChange}
+                    {...register('direccion')}
+                  />
                 </section>
                 {/*Miembro dos*/}
                 {twoMembers && (
@@ -197,169 +246,10 @@ export default function HomeFamilies() {
                         {...register('fechaNacimientoFaDos')}
                       />
                     </div>
-                    <Input
-                      label="estadoCivil"
-                      placeholder="Estado Civil"
-                      type="text"
-                      onChange={handleInputChange}
-                      {...register('estadoCivil')}
-                    />
-                    <Input
-                      label="telefono"
-                      placeholder="Teléfono"
-                      type="text"
-                      onChange={handleInputChange}
-                      {...register('telefono')}
-                    />
-                    <Input
-                      label="email"
-                      placeholder="Email"
-                      type="text"
-                      onChange={handleInputChange}
-                      {...register('email')}
-                    />
-                    <Input
-                      label="pais"
-                      placeholder="Pais"
-                      type="text"
-                      onChange={handleInputChange}
-                      {...register('pais')}
-                    />
-                    <Input
-                      label="region"
-                      placeholder="Ciudad"
-                      type="text"
-                      onChange={handleInputChange}
-                      {...register('region')}
-                    />
-                    <select>
-                      {comunas.map((comuna, index) => (
-                        <option
-                          key={index}
-                          value={comuna}
-                          onChange={handleInputChange}
-                          {...register('comuna')}
-                        >
-                          {JSON.stringify(comuna.nombre)}
-                        </option>
-                      ))}
-                    </select>
-                    <Input
-                      label="direccion"
-                      placeholder="Dirección"
-                      type="text"
-                      onChange={handleInputChange}
-                      {...register('direccion')}
-                    />
                   </section>
                 )}
                 {/*Miembro dos*/}
                 <div className="flex flex-col gap-5">
-                  <div>
-                    <h2 className="font-[500] text-1xl">
-                      Datos de familia de Acogimiento (completar los siguientes
-                      datos junto a un asesor de AFAC en su próxima llamada de
-                      seguimiento)
-                    </h2>
-                  </div>
-                  <section>
-                    <div>
-                      <h2 className="font-[500] text-1xl">
-                        Fecha de ingreso a AFAC
-                      </h2>
-                    </div>
-                    <Input
-                      label="ingresoAfac"
-                      type="date"
-                      onChange={handleInputChange}
-                      {...register('ingresoAfac')}
-                    />
-                  </section>
-                  <section>
-                    <div>
-                      <h2 className="font-[500] text-1xl">
-                        Fecha de ingreso a un programa como FA
-                      </h2>
-                    </div>
-                    <Input
-                      label="ingresoFa"
-                      type="date"
-                      onChange={handleInputChange}
-                      {...register('ingresoFa')}
-                    />
-                  </section>
-                  <section className="flex flex-col gap-5">
-                    <div>
-                      <h2 className="font-[500] text-1xl">
-                        Fecha de última llamada de seguimiento
-                      </h2>
-                    </div>
-                    <Input
-                      label="fechaUltimoContacto"
-                      type="date"
-                      onChange={handleInputChange}
-                      {...register('fechaUltimoContacto')}
-                    />
-                    <Input
-                      label="nacionalidadNna"
-                      type="text"
-                      placeholder="Nacionalidad"
-                      onChange={handleInputChange}
-                      {...register('nacionalidadNna')}
-                    />
-                    <Input
-                      label="programaFundacionActual"
-                      type="text"
-                      placeholder="Programa/Fundación Actual"
-                      onChange={handleInputChange}
-                      {...register('programaFundacionActual')}
-                    />
-                  </section>
-                  <section>
-                    <div>
-                      <h2 className="font-[500] text-1xl">Hijos Biológicos</h2>
-                    </div>
-                    <Input
-                      label="hijosBiologicos"
-                      type="text"
-                      placeholder="Nombres/s y (Edad/es)"
-                      onChange={handleInputChange}
-                      {...register('hijosBiologicos')}
-                    />
-                  </section>
-                  <section>
-                    <div>
-                      <h2 className="font-[500] text-1xl">
-                        ¿Cuánto duró el período de evaluación?
-                      </h2>
-                    </div>
-                    <Input
-                      label="duracionEvaluacion"
-                      type="number"
-                      onChange={handleInputChange}
-                      {...register('duracionEvaluacion')}
-                    />
-                  </section>
-                  <section className="flex flex-col gap-5">
-                    <div>
-                      <h2 className="font-[500] text-1xl">
-                        Tiempo para acoger una vez idóneos
-                      </h2>
-                    </div>
-                    <Input
-                      label="tiempoParaAcoger"
-                      type="number"
-                      onChange={handleInputChange}
-                      {...register('tiempoParaAcoger')}
-                    />
-                    <Input
-                      label="cantidadAcogimientos"
-                      type="number"
-                      placeholder="Cantidad de Acogimientos"
-                      onChange={handleInputChange}
-                      {...register('cantidadAcogimientos')}
-                    />
-                  </section>
                   <section>
                     <div>
                       <h2 className="font-[500] text-1xl">
@@ -401,54 +291,6 @@ export default function HomeFamilies() {
                         </label>
                       </div>
                     </RadioGroup>
-                  </section>
-                  <section className="flex flex-col gap-5">
-                    <div>
-                      <h2 className="font-[500] text-1xl">
-                        Fecha de inicio de Acogimeinto
-                      </h2>
-                    </div>
-                    <Input
-                      label="fechaInicioAcogimiento"
-                      type="date"
-                      onChange={handleInputChange}
-                      {...register('fechaInicioAcogimiento')}
-                    />
-                    <Input
-                      label="edadNna"
-                      type="number"
-                      placeholder="Edad del NNA"
-                      onChange={handleInputChange}
-                      {...register('edadNna')}
-                    />
-                    <Input
-                      label="rangoEdadNna"
-                      type="text"
-                      placeholder="Rango de edad"
-                      onChange={handleInputChange}
-                      {...register('rangoEdadNna')}
-                    />
-                    <Input
-                      label="sexoNna"
-                      type="text"
-                      placeholder="Sexo del NNA"
-                      onChange={handleInputChange}
-                      {...register('sexoNna')}
-                    />
-                    <Input
-                      label="nacionalidadNna"
-                      type="text"
-                      placeholder="Nacionalidad o pueblo del NNA"
-                      onChange={handleInputChange}
-                      {...register('nacionalidadNna')}
-                    />
-                    <Input
-                      label="tiempoAcogimiento"
-                      type="number"
-                      placeholder="Tiempo de Acogimiento"
-                      onChange={handleInputChange}
-                      {...register('tiempoAcogimiento')}
-                    />
                   </section>
                   <section>
                     <div>
@@ -522,9 +364,6 @@ export default function HomeFamilies() {
           </div>
         </div>
       </div>
-      {/*RECORDAR DE BORRAR*/}
-      <Footer />
-      {/*RECORDAR DE BORRAR*/}
     </>
   );
 }

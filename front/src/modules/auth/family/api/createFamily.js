@@ -3,7 +3,7 @@ import { AxiosBase } from '@/common/axios';
 
 export const createFamily = async (values) => {
   try {
-    const response = await AxiosBase.post('https://somosafac.onrender.com/api/familias', values);
+    const response = await AxiosBase.post('/familias', values);
     console.log(response);
     return response.data;
   } catch (error) {
