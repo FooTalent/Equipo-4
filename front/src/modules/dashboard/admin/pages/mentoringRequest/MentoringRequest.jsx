@@ -1,5 +1,5 @@
-import FamilyCard from "./components/FamilyCard";
-import Header from "./components/Header";
+import FamilyCard from './components/FamilyCard';
+import Header from './components/Header';
 
 function MentoringRequest() {
   return (
@@ -11,7 +11,7 @@ function MentoringRequest() {
         id="mentoringRequest"
         className="w-[668px] pt-[25px] pr-[20px] pb-[25px] pl-[20px]  bg-white rounded-2xl"
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-5">
           <Header />
           <FamilyCard />
         </div>
