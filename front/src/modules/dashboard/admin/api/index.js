@@ -97,3 +97,31 @@ export const getFamilyByIdApi = async (id) => {
       : 'Un error ha ocurrido';
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const response = await AxiosBase.get(
+      '/usuarios'
+    );
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) &&
+      error.status >= 400 &&
+      error.status < 500
+      ? 'No se pudo acceder al listado de usuarios'
+      : 'Un error ha ocurrido';
+  }
+};
+
+export const getAllVolunteersApi = async () => {
+  try {
+    const response = await AxiosBase.get('/voluntarios');
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) &&
+      error.status >= 400 &&
+      error.status < 500
+      ? 'No se pudo acceder al listado de voluntarios'
+      : 'Un error ha ocurrido';
+  }
+};

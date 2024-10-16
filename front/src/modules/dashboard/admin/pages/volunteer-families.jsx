@@ -1,9 +1,34 @@
-import { Input } from '@/components/ui';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui';
 import { AppLayout } from '@/layouts/app-layout';
 import { useNavigate } from 'react-router-dom';
 
 export default function VolunteerFamilies () {
   const navigate = useNavigate();
+  // const { data: usersData, isLoading: usersLoading } = useQuery({
+  //   queryKey: ['usuarios'],
+  //   queryFn: getAllVolunteersApi,
+  //   staleTime: 5 * 60 * 1000, // data is fresh for 5 minutes
+  //   cacheTime: 10 * 60 * 1000, // cache lasts for 10 minutes
+  //   onError: () => {
+  //     toast.error('Ha ocurrido un error');
+  //   },
+  // });
+  // const { data: volunteersData, isLoading: volunteersLoading } = useQuery({
+  //   queryKey: ['voluntarios'],
+  //   queryFn: getAllUsers,
+  //   staleTime: 5 * 60 * 1000, // data is fresh for 5 minutes
+  //   cacheTime: 10 * 60 * 1000, // cache lasts for 10 minutes
+  //   onError: () => {
+  //     toast.error('Ha ocurrido un error');
+  //   },
+  // });
   return (
     <AppLayout>
       <section className='h-full md:bg-gray-100 md:grid md:items-center'>
@@ -16,41 +41,28 @@ export default function VolunteerFamilies () {
             <p className='px-2 md:px-0 text-lf'>Estas son las familias disponible para ser voluntarias:</p>
           </div>
           <div className='flex flex-col gap-3'>
-            <div>
-              <Input
-                className='border-orange-500 border-2 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-            </div>
-            <div>
-              <Input
-                className='border-orange-500 border-2 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-            </div>
-            <div>
-              <Input
-                className='border-orange-500 border-2 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-            </div>
-            <div>
-              <Input
-                className='border-orange-500 border-2 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-            </div>
-            <div>
-              <Input
-                className='border-orange-500 border-2 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Nombre</TableHead>
+                  <TableHead>Estado Voluntario</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className='w-[50%]'>Elton Renner</TableCell>
+                  <TableCell className='w-[50%]'>Activo</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className='w-[33%]'>Frederica Ratke</TableCell>
+                  <TableCell className='w-[33%]'>Activo</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className='w-[33%]'>Leo Treutel</TableCell>
+                  <TableCell className='w-[33%]'>Activo</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
         </div>
       </section>
