@@ -58,7 +58,7 @@ public class ContactoController {
 
     @Operation(summary = "Obtener notificaciones pendientes", description = "Obtiene las notificaciones pendientes")
     @ApiResponse(responseCode = "200", description = "Notificaciones obtenidas exitosamente")
-    @GetMapping("/notificaciones")
+    @GetMapping("/notificaciones/pendientes")
     public ResponseEntity<List<NotificacionDTO>> obtenerNotificacionesPendientes() {
         List<NotificacionDTO> notificaciones = contactoService.obtenerNotificacionesPendientes();
         return ResponseEntity.ok(notificaciones);
@@ -72,17 +72,6 @@ public class ContactoController {
     @PatchMapping("/notificaciones/{notificacionId}")
     public ResponseEntity<Void> marcarNotificacionComoLeida(@PathVariable Long notificacionId) {
         contactoService.marcarNotificacionComoLeida(notificacionId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "Eliminar contacto", description = "Elimina un contacto")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Contacto eliminado exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Contacto no encontrado")
-    })
-    @DeleteMapping("/{contactoId}")
-    public ResponseEntity<Void> eliminarContacto(@PathVariable Long contactoId) {
-        contactoService.eliminarContacto(contactoId);
         return ResponseEntity.noContent().build();
     }
 

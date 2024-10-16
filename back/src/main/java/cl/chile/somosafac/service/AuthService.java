@@ -1,12 +1,19 @@
 package cl.chile.somosafac.service;
 
+import cl.chile.somosafac.DTO.FamiliaDTO;
 import cl.chile.somosafac.DTO.PasswordDTO;
 import cl.chile.somosafac.DTO.UsuarioDTO;
+import cl.chile.somosafac.entity.FamiliaEntity;
+import cl.chile.somosafac.entity.NotificacionEntity;
 import cl.chile.somosafac.entity.UsuarioEntity;
+import cl.chile.somosafac.mapper.FamiliaMapperManual;
+import cl.chile.somosafac.repository.FamiliaRepository;
+import cl.chile.somosafac.repository.NotificacionRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import cl.chile.somosafac.security.JwtService;
 import cl.chile.somosafac.security.LoginRequest;
 import cl.chile.somosafac.security.RegisterRequest;
+import cl.chile.somosafac.security.Role;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,6 +32,8 @@ import java.util.UUID;
 public class AuthService {
     private long tiempoExpiracionResetToken = 86400000; // 1 dia - Consultar con equipo
     private final UsuarioRepository usuarioRepository;
+    private final FamiliaRepository familiaRepository;
+    private final NotificacionRepository notificacionRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -36,13 +43,12 @@ public class AuthService {
         UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         usuario.setFechaUltimoAcceso(LocalDateTime.now());
-        usuario.setPrimerIngreso(false);
         usuarioRepository.save(usuario);
 
         String token = jwtService.getToken(usuario);
         // Configuracion de la cookie
         Cookie jwtCookie = new Cookie("token", token);
-        jwtCookie.setHttpOnly(true);  // Evita que la cookie sea accesible desde JavaScript
+        jwtCookie.setHttpOnly(true);  // Evita que la cookie sea accesible desde JavaScript - Consultar con equipo
         jwtCookie.setPath("/");
         jwtCookie.setSecure(true);
         jwtCookie.setMaxAge(24 * 60 * 60); // Duracion de 1 dia - Consultar con equipo
@@ -51,6 +57,19 @@ public class AuthService {
         UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
         System.out.println("Cookie logout: " + jwtCookie.getName());
         System.out.println(jwtCookie.getValue());
+
+        // Redireccionar según el tipo de usuario
+        if (usuario.getTipoUsuario().equals(Role.FAMILIA)) {
+            response.setHeader("Location", "/familia/" + usuario.getId());
+            response.setStatus(HttpServletResponse.SC_FOUND);
+        }
+
+        // Redireccionar para cambiar la contraseña en el primer ingreso
+        if (usuario.isPrimerIngreso()) {
+            response.setHeader("Location", "/cambiar-contrasena");
+            response.setStatus(HttpServletResponse.SC_FOUND);
+        }
+
         return usuarioDTO;
     }
 
@@ -60,6 +79,8 @@ public class AuthService {
         }
 
         UsuarioEntity usuario = UsuarioEntity.builder()
+                .nombre(request.getNombre())
+                .apellido(request.getApellido())
                 .correo(request.getCorreo())
                 .contrasenaHash(passwordEncoder.encode(request.getContrasenaHash()))
                 .tipoUsuario(request.getTipoUsuario())
@@ -69,19 +90,41 @@ public class AuthService {
 
         usuarioRepository.save(usuario);
 
+        // Verificar si el rol del usuario es "familia"
+        if (request.getTipoUsuario().equals(Role.FAMILIA)) {
+            FamiliaDTO familiaDTO = new FamiliaDTO();
+            // Configurar los datos necesarios para la familia
+            familiaDTO.setNombreFaUno(usuario.getNombre());
+            familiaDTO.setEmail(usuario.getCorreo());
+            familiaDTO.setUsuario(usuario.getId());
+            FamiliaEntity familia = FamiliaMapperManual.familiaToEntity(familiaDTO);
+            familiaRepository.save(familia);
+        }
+
+        // Crear notificacion para el usuario con rol de familia
+        if (request.getTipoUsuario().equals(Role.FAMILIA)) {
+            NotificacionEntity notificacion = new NotificacionEntity();
+            notificacion.setUsuario(usuario);
+            notificacion.setMensaje("Se ha creado un nuevo usuario con el rol de familia.");
+            notificacion.setFechaEnvio(LocalDateTime.now());
+            notificacion.setVisto(false);
+            notificacionRepository.save(notificacion);
+        }
+
         UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
         return usuarioDTO;
     }
 
-    public String cambiarContrasenaPrimerIngreso(Long id, PasswordDTO nuevaContrasena) {
-        UsuarioEntity usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Usuario con id " + id + " no encontrado."));
+    public UsuarioDTO cambiarContrasenaPrimerIngreso(String email, PasswordDTO nuevaContrasena) {
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         try {
-            usuario.setContrasenaHash(passwordEncoder.encode(nuevaContrasena.getPassword()));
+            usuario.setContrasenaHash(passwordEncoder.encode(nuevaContrasena.getContrasenaHash()));
+            usuario.setPrimerIngreso(false);
             usuarioRepository.save(usuario);
 
-            return "Contraseña actualizada exitosamente.";
+            return UsuarioDTO.fromEntity(usuario);
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar contraseña.");
         }
@@ -103,7 +146,7 @@ public class AuthService {
     public UsuarioEntity validarResetToken(String token) {
         Optional<UsuarioEntity> usuario = usuarioRepository.findByResetToken(token);
         if (usuario.isEmpty() || esTokenExpirado(usuario.get().getFechaExpiracionResetToken())) {
-            throw new RuntimeException("El Token no es válido o ha expirado.");
+            throw new RuntimeException("El código que recibiste en el email ya no es válido o ha expirado.");
         }
         return usuario.get();
     }

@@ -17,6 +17,10 @@ import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 import CreateUser from '@/modules/dashboard/admin/components/create-user';
 import HomeFamilies from '@/modules/auth/family/HomeFamilies';
+import FamilyForgotPassword from '@/modules/auth/family/olvidar-contrasena.jsx';
+import FamilyResetPassword from '@/modules/auth/family/recuperar-contrasena.jsx';
+import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
+import MentoringRequest from '@/modules/dashboard/admin/pages/mentoringRequest/MentoringRequest';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +48,14 @@ const router = createBrowserRouter([
     element: <FamilyLogin />
   },
   {
+    path: '/auth/familia/olvidar-contrasena',
+    element: <FamilyForgotPassword />,
+  },
+  {
+    path: '/auth/familia/recuperar-contrasena',
+    element: <FamilyResetPassword />,
+  },
+  {
     path: '/auth/familia/personalizar',
     element: <PersonalizeCredentialsFamily />
   },
@@ -68,6 +80,10 @@ const router = createBrowserRouter([
     element: <AdminProfile />
   },
   {
+    path: '/admin/notificacion',
+    element: <AdminNotifications />
+  },
+  {
     path: '/admin/solicitud-mentorias',
     element: <RequestMentoring />
   },
@@ -86,6 +102,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/email-general',
     element: <GeneralEmail />
+  },
+  {
+    path: '/admin/solicitud-mentorias',
+    element: <MentoringRequest />
   },
   {
     path: '/admin/crear-usuario',

@@ -17,7 +17,6 @@ public class FamiliaMapperManual {
         }
         FamiliaDTO familiaDTO = new FamiliaDTO();
         familiaDTO.setId(familia.getId());
-
         FamiliaDTO dto = new FamiliaDTO();
         dto.setId(familia.getId());
         dto.setNombreFaUno(familia.getNombreFaUno());
@@ -60,7 +59,7 @@ public class FamiliaMapperManual {
 
         // Manejo del usuario
         if (familia.getUsuario() != null) {
-            dto.setUsuario(familia.getUsuario().getId().toString());
+            dto.setUsuario(Long.valueOf(familia.getUsuario().getId().toString()));
         } else {
             dto.setUsuario(null); // o algún valor por defecto
         }
@@ -85,7 +84,7 @@ public class FamiliaMapperManual {
         // Establecer la relación con UsuarioEntity
         UsuarioEntity usuario = new UsuarioEntity();
         try {
-            usuario.setId(Long.parseLong(familiaDTO.getUsuario()));
+            usuario.setId(Long.parseLong(String.valueOf(familiaDTO.getUsuario())));
         } catch (NumberFormatException e) {
             // Manejar la excepción
         }
@@ -160,7 +159,7 @@ public class FamiliaMapperManual {
         // Actualizar la relación con UsuarioEntity
         UsuarioEntity usuario = new UsuarioEntity();
         try {
-            usuario.setId(Long.parseLong(familiaDTO.getUsuario()));
+            usuario.setId(Long.parseLong(String.valueOf(familiaDTO.getUsuario())));
         } catch (NumberFormatException e) {
             // Manejar la excepción
         }

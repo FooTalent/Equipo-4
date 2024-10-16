@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
 
     @NotEmpty(message = "Por favor, introduzca un correo electronico valido")
-    @Email
+    @Email(message = "Debe ser un correo válido.")
     String correo;
 
     @NotEmpty(message = "Por favor, ingrese su contraseña")

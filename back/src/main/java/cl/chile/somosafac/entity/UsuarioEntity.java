@@ -31,6 +31,12 @@ public class UsuarioEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String nombre;
+
+    @Column(nullable = false)
+    private String apellido;
+
     @Column(nullable = false, unique = true)
     private String correo;
 
@@ -115,6 +121,10 @@ public class UsuarioEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean isPrimerIngreso() {
+        return primerIngreso;
     }
 }
 
