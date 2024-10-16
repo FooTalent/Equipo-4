@@ -61,14 +61,16 @@ const AdminLogin = () => {
       if (data.correo) {
         setUser(data);
         toast.success('Inicio de sesión exitoso');
-        if (data.tipoUsuario === 'ADMIN') {
-          if (data.primerIngreso === 'true') {
-            navigate('/auth/admin/personalizar');
-          } else {
-            navigate('/admin/dashboard');
-          }
+        if (data.tipoUsuario === 'ADMIN' && data.primerIngreso === 'true')
+        {
+          navigate('/auth/admin/personalizar');
+        } else if (data.tipoUsuario === 'ADMIN' && data.primerIngreso === 'false') {
+          navigate('/admin/dashboard');
+        } else if (data.tipoUsuario !== 'ADMIN' && data.primerIngreso === 'true')
+        {
+          navigate('/auth/familia/personalizar');
         } else {
-          navigate('/');
+          navigate('/familia');
         }
       } else {
         toast.error(data);
@@ -90,7 +92,7 @@ const AdminLogin = () => {
       <div className='max-w-md w-full space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
         <div>
           <h2 className='mt-6 text-3xl text-gray-900'>
-            Ingresa las credenciales suministradas
+            Ingresa tus credenciales
           </h2>
         </div>
         <Form {...form} className='border-0 outline-none '>
@@ -134,13 +136,18 @@ const AdminLogin = () => {
                 {form.formState.errors && <p className="text-red-500 text-sm">{form?.formState?.errors?.contrasenaHash?.message}</p>}
               </div>
             </div>
-
+            <div className='text-center text-sm'>
+              <Link to={'/auth/familia/olvidar-contrasena'}
+                className=''>
+                ¿Necesitas recuperar la contraseña?
+              </Link>
+            </div>
             <div>
               <Button
                 type='submit'
                 disabled={mutation.isPending}
                 variant='default'
-                className='text-black w-full mt-4 py-6 bg-orange-400 hover:bg-orange-500'
+                className='text-black w-full mt-4 md:mt-0 py-6 bg-orange-400 hover:bg-orange-500'
               >
                 {mutation.isPending ? <Spinner /> : 'Iniciar Sesión'}
               </Button>

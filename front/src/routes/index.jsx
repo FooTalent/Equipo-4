@@ -1,6 +1,5 @@
 import App from '@/App';
 import AdminLogin from '@/modules/auth/admin/page';
-import UserType from '@/modules/auth/components/user-type';
 import Auth from '@/modules/auth/page';
 import PersonalizeCredentialsAdmin from '@/modules/auth/admin/personalize';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -32,11 +31,7 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    path: '/auth/tipo-usuario',
-    element: <UserType />
-  },
-  {
-    path: '/auth/admin/ingresar',
+    path: '/auth/ingresar',
     element: <AdminLogin />
   },
   {
