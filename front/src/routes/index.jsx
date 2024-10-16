@@ -16,11 +16,16 @@ import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
 import GeneralEmail from '@/modules/dashboard/admin/pages/general-email';
 import CreateUser from '@/modules/dashboard/admin/components/create-user';
+import MentoringRequest from '@/modules/dashboard/admin/pages/mentoringRequest/MentoringRequest';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />
+  },
+  {
+    path: '/solicitud-mentorias',
+    element: <MentoringRequest />
   },
   {
     path: '/auth',
