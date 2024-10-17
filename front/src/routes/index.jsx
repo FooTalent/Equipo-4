@@ -8,7 +8,7 @@ import Terminos from '@/modules/auth/family/terminos';
 import ContratoConfidencialidad from '@/modules/auth/family/contrato-confidencialidad';
 import AdminDashboard from '@/modules/dashboard/admin/page';
 import AdminProfile from '@/modules/dashboard/admin/pages/profile';
-import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
+//import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
 import VolunteerFamilies from '@/modules/dashboard/admin/pages/volunteer-families';
 import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families';
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
     element: <ContratoConfidencialidad />
   },
   {
-    path: '/auth/familia/home-families',
+    path: '/familia',
     element: <HomeFamilies />
   },
   {
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin/solicitud-mentorias',
-    element: <RequestMentoring />
+    element: <MentoringRequest />
   },
   {
     path: '/admin/familias-voluntarias',
