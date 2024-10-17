@@ -36,7 +36,7 @@ public class VoluntarioService {
     }
 
     public VoluntarioDTO createVoluntario(VoluntarioDTO voluntarioDTO) {
-        UsuarioEntity usuario = usuarioRepository.findById(voluntarioDTO.getUsuarioId())
+        UsuarioEntity usuario = usuarioRepository.findById((Long) voluntarioDTO.getUsuarioVoluntario().get("id"))
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         VoluntarioEntity voluntario = VoluntarioMapperManual.voluntarioToEntity(voluntarioDTO);
