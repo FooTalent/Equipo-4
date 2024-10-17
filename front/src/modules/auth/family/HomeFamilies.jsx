@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, Input } from '@/components/ui';
 import useAuthStore from '@/store/user';
 import { createFamily } from './api/createFamily';
+import { AppLayout } from '@/layouts/app-layout';
 export default function HomeFamilies() {
   const user = useAuthStore((state) => state.user);
   const { control, register, handleSubmit, setValue } = useForm();
@@ -44,7 +45,7 @@ export default function HomeFamilies() {
   }, []);
 
   return (
-    <>
+    <AppLayout>
       <div
         id='home-families-container'
         className='w-[100%] min-h-screen bg-[#e6e6e6]'
@@ -368,6 +369,6 @@ export default function HomeFamilies() {
           </div>
         </div>
       </div>
-    </>
+    </AppLayout>
   );
 }

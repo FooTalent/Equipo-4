@@ -48,6 +48,15 @@ module.exports = {
         orangeLight: {
           DEFAULT: '#FFBA69',
         },
+        orangeDefault: {
+		  DEFAULT: '#FFDEB8'
+        },
+        grayDefault: {
+		  DEFAULT: '#BFBFBF',
+        },
+		 greenDefault: {
+		  DEFAULT: '#8EA69D',
+        },
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',

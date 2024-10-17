@@ -8,7 +8,7 @@ import Terminos from '@/modules/auth/family/terminos';
 import ContratoConfidencialidad from '@/modules/auth/family/contrato-confidencialidad';
 import AdminDashboard from '@/modules/dashboard/admin/page';
 import AdminProfile from '@/modules/dashboard/admin/pages/profile';
-import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
+//import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
 import VolunteerFamilies from '@/modules/dashboard/admin/pages/volunteer-families';
 import FollowUpFamilies from '@/modules/dashboard/admin/pages/follow-up-families';
 import ListFamilies from '@/modules/dashboard/admin/pages/list-families';
@@ -17,9 +17,9 @@ import CreateUser from '@/modules/dashboard/admin/components/create-user';
 import FamilyForgotPassword from '@/modules/auth/family/olvidar-contrasena.jsx';
 import FamilyResetPassword from '@/modules/auth/family/recuperar-contrasena.jsx';
 import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
-import MentoringRequest from '@/modules/dashboard/admin/pages/mentoringRequest/MentoringRequest';
 import HomeFamilies from '@/modules/auth/family/HomeFamilies';
 import Login from '@/modules/auth/login/page';
+import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
 
 const router = createBrowserRouter([
   {
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
     element: <ContratoConfidencialidad />
   },
   {
-    path: '/auth/familia/home-families',
+    path: '/familia',
     element: <HomeFamilies />
   },
   {
@@ -97,10 +97,6 @@ const router = createBrowserRouter([
   {
     path: '/admin/email-general',
     element: <GeneralEmail />
-  },
-  {
-    path: '/admin/solicitud-mentorias',
-    element: <MentoringRequest />
   },
   {
     path: '/admin/crear-usuario',
