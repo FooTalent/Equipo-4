@@ -71,7 +71,7 @@ export const getAdminNotification = async (user_id) => {
 export const getAllMentoringApi = async () => {
   try {
     const response = await AxiosBase.get(
-      'https://somosafac.onrender.com/api/mentorias'
+      '/mentorias'
     );
     return response.data;
   } catch (error) {
