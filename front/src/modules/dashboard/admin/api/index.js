@@ -125,3 +125,16 @@ export const getAllVolunteersApi = async () => {
       : 'Un error ha ocurrido';
   }
 };
+
+export const searchFamiliesApi = async (values) => {
+  try {
+    const response = await AxiosBase.get(`/familias/familias/buscar?nombre=${values?.nombre}`);
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) &&
+      error.status >= 400 &&
+      error.status < 500
+      ? 'No se pudo encontrar la familia'
+      : 'Un error ha ocurrido';
+  }
+};
