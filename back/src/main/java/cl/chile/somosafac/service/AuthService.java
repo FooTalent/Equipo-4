@@ -9,6 +9,10 @@ import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.mapper.FamiliaMapperManual;
 import cl.chile.somosafac.repository.FamiliaRepository;
 import cl.chile.somosafac.repository.NotificacionRepository;
+import cl.chile.somosafac.exception.ExpiredCredentialsException;
+import cl.chile.somosafac.exception.InvalidCredentialsException;
+import cl.chile.somosafac.exception.ResourceAlreadyExistsException;
+import cl.chile.somosafac.exception.ResourceNotFoundException;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import cl.chile.somosafac.security.JwtService;
 import cl.chile.somosafac.security.LoginRequest;
@@ -19,7 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +43,14 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public UsuarioDTO login(LoginRequest request, HttpServletResponse response) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenaHash()));
-        UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
+
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenaHash()));
+        }catch (AuthenticationException e){
+            throw new InvalidCredentialsException("Correo o contraseña inválidos");
+        }
+
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow(() -> new ResourceNotFoundException("Usuario","Email",request.getCorreo()));
 
         usuario.setFechaUltimoAcceso(LocalDateTime.now());
         usuarioRepository.save(usuario);
@@ -63,7 +73,7 @@ public class AuthService {
 
     public UsuarioDTO register(RegisterRequest request) {
         if (usuarioRepository.findByCorreo(request.getCorreo()).isPresent()) {
-            throw new RuntimeException("El correo ya está en uso");
+            throw new ResourceAlreadyExistsException("Corre electrónico","Email",request.getCorreo());
         }
 
         UsuarioEntity usuario = UsuarioEntity.builder()
@@ -104,9 +114,9 @@ public class AuthService {
         return usuarioDTO;
     }
 
-    public UsuarioDTO cambiarContrasenaPrimerIngreso(String email, PasswordDTO nuevaContrasena) {
-        UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
+    public UsuarioDTO cambiarContrasenaPrimerIngreso(Long id, PasswordDTO nuevaContrasena) {
+        UsuarioEntity usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario","ID",id));
 
         try {
             usuario.setContrasenaHash(passwordEncoder.encode(nuevaContrasena.getContrasenaHash()));
@@ -122,7 +132,7 @@ public class AuthService {
     // Recuperar contrasena
     public String generarResetToken(String email) {
         UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario con correo: " + email + " no encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario","Correo",email));
 
         String token = UUID.randomUUID().toString();
         usuario.setResetToken(token);
@@ -135,7 +145,7 @@ public class AuthService {
     public UsuarioEntity validarResetToken(String token) {
         Optional<UsuarioEntity> usuario = usuarioRepository.findByResetToken(token);
         if (usuario.isEmpty() || esTokenExpirado(usuario.get().getFechaExpiracionResetToken())) {
-            throw new RuntimeException("El código que recibiste en el email ya no es válido o ha expirado.");
+            throw new ExpiredCredentialsException("El Token no es válido o ha expirado.");
         }
         return usuario.get();
     }

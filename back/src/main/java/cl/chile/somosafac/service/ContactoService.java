@@ -6,6 +6,7 @@ import cl.chile.somosafac.DTO.NotificacionDTO;
 import cl.chile.somosafac.entity.ContactoEntity;
 import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.entity.NotificacionEntity;
+import cl.chile.somosafac.exception.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.ContactoMapperManual;
 import cl.chile.somosafac.mapper.NotificacionMapperManual;
 import cl.chile.somosafac.repository.ContactoRepository;
@@ -33,6 +34,9 @@ public class ContactoService {
     @Transactional(readOnly = true)
     public List<FamiliaDTO> listarFamiliasConContacto() {
         List<FamiliaEntity> familias = familiaRepository.findAll();
+        if (familias.isEmpty()){
+            throw new ResourceNotFoundException("Contactos");
+        }
         return familias.stream()
                 .map(familia -> {
                     FamiliaDTO familiaDTO = ContactoMapperManual.familiaToDto(familia);
@@ -54,7 +58,7 @@ public class ContactoService {
             List<ContactoEntity> contactos = contactoRepository.findByFamiliaId(familiaId);
             return contactos.stream().map(ContactoMapperManual::contactoToDto).toList();
         } else {
-            return List.of();
+            throw new ResourceNotFoundException("Contactos");
         }
     }
 
@@ -91,6 +95,9 @@ public class ContactoService {
     @Transactional(readOnly = true)
     public List<NotificacionDTO> obtenerNotificacionesPendientes() {
         List<NotificacionEntity> notificaciones = notificacionRepository.findByVistoFalse();
+        if (notificaciones.isEmpty()){
+            throw new ResourceNotFoundException("Notificaciones");
+        }
         return notificaciones.stream().map(notificacion -> {
             NotificacionDTO notificacionDTO = NotificacionMapperManual.notificacionToDto(notificacion);
             notificacionDTO.setId(notificacion.getId());
@@ -106,6 +113,9 @@ public class ContactoService {
     @Transactional
     public void marcarNotificacionComoLeida(Long notificacionId) {
         Optional<NotificacionEntity> notificacion = notificacionRepository.findById(notificacionId);
+        if (notificacion.isEmpty()){
+            throw new ResourceNotFoundException("Notificacion");
+        }
         notificacion.ifPresent(value -> {
             value.setVisto(true);
             notificacionRepository.save(value);
@@ -117,6 +127,12 @@ public class ContactoService {
      */
     @Transactional
     public void eliminarContacto(Long contactoId) {
+
+        Optional<ContactoEntity> contacto = this.contactoRepository.findById(contactoId);
+
+        if (contacto.isEmpty()){
+            throw new ResourceNotFoundException("Contacto");
+        }
         contactoRepository.deleteById(contactoId);
     }
 
@@ -131,7 +147,7 @@ public class ContactoService {
             ContactoEntity contactoActualizado = contactoRepository.save(contacto.get());
             return ContactoMapperManual.contactoToDto(contactoActualizado);
         } else {
-            return null;
+            throw new ResourceNotFoundException("Contacto");
         }
     }
 
@@ -144,6 +160,10 @@ public class ContactoService {
     @Transactional(readOnly = true)
     public ContactoDTO obtenerContactoPorId(Long contactoId) {
         Optional<ContactoEntity> contacto = contactoRepository.findById(contactoId);
+
+        if (contacto.isEmpty()){
+            throw new ResourceNotFoundException("Contacto");
+        }
         return contacto.map(ContactoMapperManual::contactoToDto).orElse(null);
     }
 }

@@ -78,7 +78,7 @@ public class AuthController {
     })
     @PutMapping("/password")
     public ResponseEntity<String> cambiarContrasenaPrimerIngreso(@RequestParam String email,@Valid @RequestBody PasswordDTO nuevaContrasena) {
-        authService.cambiarContrasenaPrimerIngreso(email, nuevaContrasena);
+        authService.cambiarContrasenaPrimerIngreso(Long.valueOf(email), nuevaContrasena);
         return ResponseEntity.ok("Contraseña actualizada exitosamente.");
     }
 

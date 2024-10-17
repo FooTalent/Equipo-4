@@ -2,6 +2,7 @@ package cl.chile.somosafac.service;
 
 import cl.chile.somosafac.DTO.FamiliaDTO;
 import cl.chile.somosafac.entity.FamiliaEntity;
+import cl.chile.somosafac.exception.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.FamiliaMapperManual;
 import cl.chile.somosafac.repository.FamiliaRepository;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class FamiliaService {
     @Transactional(readOnly = true)
     public List<FamiliaDTO> getFamilias() {
         List<FamiliaEntity> familias = familiaRepository.findAll();
+        if(familias.isEmpty()){
+            throw new ResourceNotFoundException("Familias");
+        }
         return familias.stream()
                 .map(FamiliaMapperManual::familiaToDto)
                 .collect(Collectors.toList());
@@ -31,6 +35,10 @@ public class FamiliaService {
     @Transactional(readOnly = true)
     public FamiliaDTO getFamilia(Long id) {
         Optional<FamiliaEntity> familia = familiaRepository.findById(id);
+
+        if (familia.isEmpty()){
+            throw new ResourceNotFoundException("Familia","ID",id);
+        }
         return familia.map(FamiliaMapperManual::familiaToDto).orElse(null);
     }
 
@@ -46,6 +54,10 @@ public class FamiliaService {
         System.out.println("updateFamilia - id: " + id);
         Optional<FamiliaEntity> familiaExistente = familiaRepository.findById(id);
         System.out.println("familiaExistente: " + familiaExistente.isPresent());
+
+        if(familiaExistente.isEmpty()){
+            throw new ResourceNotFoundException("Familia","ID",id);
+        }
 
         return familiaExistente.map(familia -> {
             System.out.println("familia: " + familia);
@@ -70,8 +82,7 @@ public class FamiliaService {
         if (familiaExistente.isPresent()) {
             familiaRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Familia no encontrada");
-
+            throw new ResourceNotFoundException("Familia","ID",id);
         }
     }
 }

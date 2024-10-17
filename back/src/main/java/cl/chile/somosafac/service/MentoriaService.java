@@ -2,8 +2,10 @@ package cl.chile.somosafac.service;
 
 import cl.chile.somosafac.DTO.MentoriaDTO;
 import cl.chile.somosafac.entity.MentoriaEntity;
+import cl.chile.somosafac.exception.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.MentoriaMapperManual;
 import cl.chile.somosafac.repository.MentoriaRepository;
+import org.springframework.boot.web.embedded.netty.NettyWebServer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,9 @@ public class MentoriaService {
     @Transactional(readOnly = true)
     public List<MentoriaDTO> getMentorias() {
         List<MentoriaEntity> mentorias = mentoriaRepository.findAll();
+        if (mentorias.isEmpty()){
+            throw new ResourceNotFoundException("Mentorias");
+        }
         return mentorias.stream()
                 .map(MentoriaMapperManual::mentoriaToDto)
                 .collect(Collectors.toList());
@@ -30,8 +35,10 @@ public class MentoriaService {
 
     @Transactional(readOnly = true)
     public MentoriaDTO getMentoria(Long id) {
-        Optional<MentoriaEntity> mentoria = mentoriaRepository.findById(id);
-        return mentoria.map(MentoriaMapperManual::mentoriaToDto).orElse(null);
+        MentoriaEntity mentoria = mentoriaRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Mentoria","ID",id));
+
+        return MentoriaMapperManual.mentoriaToDto(mentoria);
     }
 
     @Transactional
@@ -44,6 +51,9 @@ public class MentoriaService {
     @Transactional
     public Optional<MentoriaDTO> updateMentoria(Long id, MentoriaDTO mentoriaDTO) {
         Optional<MentoriaEntity> mentoriaExistente = mentoriaRepository.findById(id);
+        if (mentoriaExistente.isEmpty()){
+            throw new ResourceNotFoundException("Mentoria","ID",id);
+        }
         return mentoriaExistente.map(mentoria -> {
             MentoriaMapperManual.updateMentoriaFromDto(mentoriaDTO, mentoria);
             MentoriaEntity mentoriaActualizada = mentoriaRepository.save(mentoria);
@@ -57,7 +67,7 @@ public class MentoriaService {
         if (mentoriaExistente.isPresent()) {
             mentoriaRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Mentoria no encontrada");
+            throw new ResourceNotFoundException("Mentoria","ID",id);
         }
     }
 }
