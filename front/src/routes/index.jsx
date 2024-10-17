@@ -17,9 +17,9 @@ import CreateUser from '@/modules/dashboard/admin/components/create-user';
 import FamilyForgotPassword from '@/modules/auth/family/olvidar-contrasena.jsx';
 import FamilyResetPassword from '@/modules/auth/family/recuperar-contrasena.jsx';
 import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
-import MentoringRequest from '@/modules/dashboard/admin/pages/mentoringRequest/MentoringRequest';
 import HomeFamilies from '@/modules/auth/family/HomeFamilies';
 import Login from '@/modules/auth/login/page';
+import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
 
 const router = createBrowserRouter([
   {
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin/solicitud-mentorias',
-    element: <MentoringRequest />
+    element: <RequestMentoring />
   },
   {
     path: '/admin/familias-voluntarias',
