@@ -3,6 +3,8 @@ package cl.chile.somosafac.mapper;
 import cl.chile.somosafac.DTO.FamiliaDTO;
 import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.entity.UsuarioEntity;
+import cl.chile.somosafac.exception.InvalidFormatException;
+import cl.chile.somosafac.exception.ResourceNotFoundException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,7 +15,7 @@ public class FamiliaMapperManual {
     // Conversión de FamiliaEntity a FamiliaDTO
     public static FamiliaDTO familiaToDto(FamiliaEntity familia) {
         if (familia == null) {
-            return null; // o lanza una excepción
+            throw new ResourceNotFoundException("Famila") ; // o lanza una excepción
         }
         FamiliaDTO familiaDTO = new FamiliaDTO();
         familiaDTO.setId(familia.getId());
@@ -87,7 +89,7 @@ public class FamiliaMapperManual {
         try {
             usuario.setId(Long.parseLong(familiaDTO.getUsuario()));
         } catch (NumberFormatException e) {
-            // Manejar la excepción
+            throw new InvalidFormatException("El formato de ID del usuario no es valido");
         }
         familia.setUsuario(usuario);
 
@@ -162,7 +164,7 @@ public class FamiliaMapperManual {
         try {
             usuario.setId(Long.parseLong(familiaDTO.getUsuario()));
         } catch (NumberFormatException e) {
-            // Manejar la excepción
+            throw new InvalidFormatException("El formato de ID del usuario no es valido ");
         }
         familia.setUsuario(usuario);
     }

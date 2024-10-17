@@ -3,6 +3,7 @@ package cl.chile.somosafac.service;
 import cl.chile.somosafac.DTO.VoluntarioDTO;
 import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.entity.VoluntarioEntity;
+import cl.chile.somosafac.exception.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.VoluntarioMapperManual;
 import cl.chile.somosafac.repository.VoluntarioRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;
@@ -24,12 +25,15 @@ public class VoluntarioService {
 
     public VoluntarioDTO getVoluntario(Long id) {
         VoluntarioEntity voluntario = voluntarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Voluntario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Voluntario","ID",id));
         return VoluntarioMapperManual.voluntarioToDto(voluntario);
     }
 
     public List<VoluntarioDTO> getAllVoluntarios() {
         List<VoluntarioEntity> voluntarios = voluntarioRepository.findAll();
+        if (voluntarios.isEmpty()){
+            throw new ResourceNotFoundException("Voluntarios");
+        }
         return voluntarios.stream()
                 .map(VoluntarioMapperManual::voluntarioToDto)
                 .collect(Collectors.toList());
@@ -37,7 +41,7 @@ public class VoluntarioService {
 
     public VoluntarioDTO createVoluntario(VoluntarioDTO voluntarioDTO) {
         UsuarioEntity usuario = usuarioRepository.findById(voluntarioDTO.getUsuarioId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario","ID",voluntarioDTO.getUsuarioId()));
 
         VoluntarioEntity voluntario = VoluntarioMapperManual.voluntarioToEntity(voluntarioDTO);
         voluntario.setUsuario(usuario);
@@ -47,7 +51,7 @@ public class VoluntarioService {
 
     public VoluntarioDTO updateVoluntario(Long id, VoluntarioDTO voluntarioDTO) {
         VoluntarioEntity voluntario = voluntarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Voluntario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Voluntario","ID",voluntarioDTO.getUsuarioId()));
 
         VoluntarioMapperManual.updateVoluntarioFromDto(voluntarioDTO, voluntario);
 
@@ -55,6 +59,9 @@ public class VoluntarioService {
     }
 
     public void deleteVoluntario(Long id) {
-        voluntarioRepository.deleteById(id);
+        VoluntarioEntity voluntario = voluntarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Voluntario","ID",id));
+
+        this.voluntarioRepository.deleteById(id);
     }
 }

@@ -2,6 +2,7 @@ package cl.chile.somosafac.service;
 
 import cl.chile.somosafac.DTO.UsuarioDTO;
 import cl.chile.somosafac.entity.UsuarioEntity;
+import cl.chile.somosafac.exception.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.UsuarioMapper;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public List<UsuarioDTO> obtenerTodos() {
         List<UsuarioEntity> usuarios = usuarioRepository.findAll();
+        if (usuarios.isEmpty()){
+            throw new ResourceNotFoundException("Usuarios");
+        }
         return usuarios.stream()
                 .map(UsuarioDTO::fromEntity)
                 .collect(Collectors.toList());
@@ -35,6 +39,9 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public UsuarioDTO obtenerPorId(Long id) {
         Optional<UsuarioEntity> usuario = usuarioRepository.findById(id);
+        if(usuario.isEmpty()){
+            throw new ResourceNotFoundException("Usuario","ID",id);
+        }
         return usuario.map(UsuarioDTO::fromEntity).orElse(null);
     }
 
@@ -42,11 +49,10 @@ public class UsuarioService {
     @Transactional
     public UsuarioDTO actualizarUsuario(Long id, UsuarioDTO usuarioDTO) {
         Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findById(id);
-
         if (usuarioExistente.isPresent()) {
             UsuarioEntity usuario = usuarioExistente.get();
             usuario.setCorreo(usuarioDTO.getCorreo());
-//            usuario.setContrasenaHash(usuarioDTO.getContrasenaHash());
+    //      usuario.setContrasenaHash(usuarioDTO.getContrasenaHash());
             usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
             usuario.setActivo(usuarioDTO.getActivo());
             usuario.setVerificado(usuarioDTO.getVerificado());
@@ -55,9 +61,12 @@ public class UsuarioService {
             usuario = usuarioRepository.save(usuario);
 
             return UsuarioDTO.fromEntity(usuario);
-        } else {
-            throw new NoSuchElementException("Usuario " + id + " no encontrado");
+        }else {
+            throw new ResourceNotFoundException("Usuario","ID",id);
         }
+
+
+
     }
 
 
@@ -68,7 +77,7 @@ public class UsuarioService {
             UsuarioEntity usuario = usuarioExistente.get();
             usuarioRepository.deleteById(usuario.getId());
         }else{
-            throw new NoSuchElementException("Usuario " + id + " no encontrado");
+            throw new ResourceNotFoundException("Usuario","ID",id);
         }
     }
 }

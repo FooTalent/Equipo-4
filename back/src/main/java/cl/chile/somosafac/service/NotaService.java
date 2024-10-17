@@ -4,6 +4,7 @@ import cl.chile.somosafac.DTO.NotaDTO;
 import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.entity.NotaEntity;
 import cl.chile.somosafac.entity.VoluntarioEntity;
+import cl.chile.somosafac.exception.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.NotaMapperManual;
 import cl.chile.somosafac.repository.NotaRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class NotaService {
     @Transactional(readOnly = true)
     public List<NotaDTO> getNotas() {
         List<NotaEntity> notas = notaRepository.findAll();
+        if (notas.isEmpty()){
+            throw new ResourceNotFoundException("Notas");
+        }
         return notas.stream()
                 .map(NotaMapperManual::notaToDto)
                 .collect(Collectors.toList());
@@ -34,7 +38,7 @@ public class NotaService {
     @Transactional(readOnly = true)
     public NotaDTO getNota(Long id) {
         NotaEntity nota = notaRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Nota " + id + " no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Nota","ID",id));
 
         return NotaMapperManual.notaToDto(nota);
     }
@@ -49,7 +53,7 @@ public class NotaService {
     @Transactional
     public NotaDTO updateNota(Long id, NotaDTO notaDTO, FamiliaEntity familia, VoluntarioEntity voluntario) {
         NotaEntity nota = notaRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Nota " + id + " no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Nota","ID",id));
 
         nota.setDescripcion(notaDTO.getDescripcion());
         if(familia != null){
@@ -66,7 +70,7 @@ public class NotaService {
     @Transactional
     public void deleteNota(Long id) {
         NotaEntity nota = notaRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Nota " + id + " no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Nota","ID",id));
         notaRepository.deleteById(nota.getId());
     }
 }

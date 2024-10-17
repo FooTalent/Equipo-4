@@ -41,7 +41,7 @@ public class UsuarioController {
     @Operation(summary = "Actualizar un usuario", description = "Actualiza un usuario existente por su ID")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"), @ApiResponse(responseCode = "404", description = "Usuario no encontrado")})
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> actualizarUsuario(@Valid @PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioDTO> actualizarUsuario(@PathVariable @Valid Long id, @RequestBody UsuarioDTO usuarioDTO) {
         UsuarioDTO usuarioActualizado = usuarioService.actualizarUsuario(id, usuarioDTO);
         return usuarioActualizado != null ? ResponseEntity.ok(usuarioActualizado) : ResponseEntity.notFound().build();
     }
