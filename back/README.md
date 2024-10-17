@@ -127,7 +127,7 @@ Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 5. Abre un Pull Request.
 
 ## Despliegue
-Puedes acceder al enlace de la API a través del siguiente link: https://somosafac.onrender.com/swagger-ui/index.html
+https://somosafac.onrender.com/swagger-ui/index.html
 
 ## Licencia
 
