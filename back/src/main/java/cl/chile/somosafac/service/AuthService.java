@@ -17,6 +17,7 @@ import cl.chile.somosafac.security.Role;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,7 +31,10 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private long tiempoExpiracionResetToken = 86400000; // 1 dia - Consultar con equipo
+
+    @Value("${jwt.reset.expiration}")
+    private long tiempoExpiracionResetToken;
+
     private final UsuarioRepository usuarioRepository;
     private final FamiliaRepository familiaRepository;
     private final NotificacionRepository notificacionRepository;
@@ -40,25 +44,22 @@ public class AuthService {
 
     public UsuarioDTO login(LoginRequest request, HttpServletResponse response) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenaHash()));
-        UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         usuario.setFechaUltimoAcceso(LocalDateTime.now());
         usuarioRepository.save(usuario);
 
         String token = jwtService.getToken(usuario);
-        // Configuracion de la cookie
+        // Configuración de la cookie
         Cookie jwtCookie = new Cookie("token", token);
-        jwtCookie.setHttpOnly(true);  // Evita que la cookie sea accesible desde JavaScript - Consultar con equipo
+        jwtCookie.setHttpOnly(true);
         jwtCookie.setPath("/");
         jwtCookie.setSecure(true);
-        jwtCookie.setMaxAge(24 * 60 * 60); // Duracion de 1 dia - Consultar con equipo
+        jwtCookie.setMaxAge(24 * 60 * 60); // 24 horas
         response.addCookie(jwtCookie);
 
-        UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
-        System.out.println("Cookie logout: " + jwtCookie.getName());
-        System.out.println(jwtCookie.getValue());
-
-        return usuarioDTO;
+        return UsuarioDTO.fromEntity(usuario);
     }
 
     public UsuarioDTO register(RegisterRequest request) {
@@ -90,7 +91,7 @@ public class AuthService {
             familiaRepository.save(familia);
         }
 
-        // Crear notificacion para el usuario con rol de familia
+        // Crear notificación para el usuario con rol de familia
         if (request.getTipoUsuario().equals(Role.FAMILIA)) {
             NotificacionEntity notificacion = new NotificacionEntity();
             notificacion.setUsuario(usuario);
@@ -100,8 +101,7 @@ public class AuthService {
             notificacionRepository.save(notificacion);
         }
 
-        UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
-        return usuarioDTO;
+        return UsuarioDTO.fromEntity(usuario);
     }
 
     public UsuarioDTO cambiarContrasenaPrimerIngreso(String email, PasswordDTO nuevaContrasena) {
@@ -119,7 +119,7 @@ public class AuthService {
         }
     }
 
-    // Recuperar contrasena
+    // Recuperar contraseña
     public String generarResetToken(String email) {
         UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario con correo: " + email + " no encontrado."));
