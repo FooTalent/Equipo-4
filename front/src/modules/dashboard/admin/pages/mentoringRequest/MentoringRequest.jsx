@@ -49,7 +49,9 @@ function MentoringRequest() {
                 <FamilyCard key={index} mentoring={mentoring} />
               ))
             ) : (
-              <p>No mentoring requests available</p>
+              <p className='flex items-center justify-center w-full h-full'>
+                No se encuentran solicitudes de mentorias
+              </p>
             )}
           </div>
         </div>
