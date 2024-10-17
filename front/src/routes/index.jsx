@@ -99,10 +99,6 @@ const router = createBrowserRouter([
     element: <GeneralEmail />
   },
   {
-    path: '/admin/solicitud-mentorias',
-    element: <MentoringRequest />
-  },
-  {
     path: '/admin/crear-usuario',
     element: <CreateUser />
   },
