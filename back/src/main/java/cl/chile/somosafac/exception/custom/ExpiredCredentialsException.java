@@ -1,4 +1,4 @@
-package cl.chile.somosafac.exception;
+package cl.chile.somosafac.exception.custom;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

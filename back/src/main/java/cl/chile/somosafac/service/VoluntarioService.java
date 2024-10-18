@@ -3,7 +3,7 @@ package cl.chile.somosafac.service;
 import cl.chile.somosafac.DTO.VoluntarioDTO;
 import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.entity.VoluntarioEntity;
-import cl.chile.somosafac.exception.ResourceNotFoundException;
+import cl.chile.somosafac.exception.custom.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.VoluntarioMapperManual;
 import cl.chile.somosafac.repository.VoluntarioRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;

@@ -1,14 +1,18 @@
-package cl.chile.somosafac.exception;
+package cl.chile.somosafac.exception.custom;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+@EqualsAndHashCode(callSuper = true)
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
+@Data
 public class ResourceNotFoundException extends RuntimeException{
 
-    public String resourceName;
-    public String fieldName;
-    public Object valueName;
+    private String resourceName;
+    private String fieldName;
+    private Object valueName;
 
     public ResourceNotFoundException (String resourceName, String fieldName, Object valueName){
         super(String.format("%s no encontrado con el %s : %s", resourceName, fieldName, valueName));

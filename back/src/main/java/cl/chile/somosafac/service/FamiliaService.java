@@ -2,7 +2,7 @@ package cl.chile.somosafac.service;
 
 import cl.chile.somosafac.DTO.FamiliaDTO;
 import cl.chile.somosafac.entity.FamiliaEntity;
-import cl.chile.somosafac.exception.ResourceNotFoundException;
+import cl.chile.somosafac.exception.custom.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.FamiliaMapperManual;
 import cl.chile.somosafac.repository.FamiliaRepository;
 import org.springframework.stereotype.Service;

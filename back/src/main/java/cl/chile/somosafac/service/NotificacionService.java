@@ -3,7 +3,7 @@ package cl.chile.somosafac.service;
 import cl.chile.somosafac.DTO.NotificacionDTO;
 import cl.chile.somosafac.entity.NotificacionEntity;
 import cl.chile.somosafac.entity.UsuarioEntity;
-import cl.chile.somosafac.exception.ResourceNotFoundException;
+import cl.chile.somosafac.exception.custom.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.NotificacionMapperManual;
 import cl.chile.somosafac.repository.NotificacionRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;

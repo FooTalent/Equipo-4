@@ -1,5 +1,6 @@
-package cl.chile.somosafac.exception;
+package cl.chile.somosafac.exception.handler;
 
+import cl.chile.somosafac.exception.custom.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -99,6 +100,53 @@ public class GlobalExceptionHandler {
                 .path(webRequest.getDescription(false).replace("uri=",""))
                 .build();
         logger.error("Formato invalido: {} - {}", exception.getMessage(), errorResponse.getPath());
+        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailSendException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ErrorResponse> handlerEmailSendException(EmailSendException exception,
+                                                                   WebRequest webRequest){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now().toString())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                .message(exception.getMessage())
+                .path(webRequest.getDescription(false).replace("uri=",""))
+                .build();
+        logger.error("Error al enviar el email: {} - {}", exception.getMessage(), errorResponse.getPath());
+        return new ResponseEntity<>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+
+    @ExceptionHandler(TemplateNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handlerTemplateNotFoundException (TemplateNotFoundException exception,
+                                                                   WebRequest webRequest){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now().toString())
+                .status(HttpStatus.NOT_FOUND.value())
+                .error(HttpStatus.NOT_FOUND.getReasonPhrase())
+                .message(exception.getMessage())
+                .path(webRequest.getDescription(false).replace("uri=",""))
+                .build();
+        logger.error("Error carga de plantillas: {} - {}", exception.getMessage(), errorResponse.getPath());
+        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidEmailException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handlerInvalidEmailException(InvalidEmailException exception,
+                                                                      WebRequest webRequest){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now().toString())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(exception.getMessage())
+                .path(webRequest.getDescription(false).replace("uri=",""))
+                .build();
+        logger.error("Los email nulos: {} - {}", exception.getMessage(), errorResponse.getPath());
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 

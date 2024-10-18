@@ -1,4 +1,4 @@
-package cl.chile.somosafac.exception;
+package cl.chile.somosafac.exception.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

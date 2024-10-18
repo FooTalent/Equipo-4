@@ -4,15 +4,13 @@ import cl.chile.somosafac.DTO.NotaDTO;
 import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.entity.NotaEntity;
 import cl.chile.somosafac.entity.VoluntarioEntity;
-import cl.chile.somosafac.exception.ResourceNotFoundException;
+import cl.chile.somosafac.exception.custom.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.NotaMapperManual;
 import cl.chile.somosafac.repository.NotaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

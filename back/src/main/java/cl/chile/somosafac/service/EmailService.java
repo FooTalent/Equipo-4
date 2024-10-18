@@ -1,8 +1,10 @@
 package cl.chile.somosafac.service;
 
 import cl.chile.somosafac.DTO.EmailDTO;
-import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.entity.UsuarioEntity;
+import cl.chile.somosafac.exception.custom.EmailSendException;
+import cl.chile.somosafac.exception.custom.InvalidEmailException;
+import cl.chile.somosafac.exception.custom.TemplateNotFoundException;
 import cl.chile.somosafac.repository.FamiliaRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import cl.chile.somosafac.security.Role;
@@ -39,7 +41,7 @@ public class EmailService {
 
             mailSender.send(message);
         } catch (Exception e) {
-            throw new RuntimeException("Error al enviar email: " + e.getMessage());
+            throw new EmailSendException("Error al enviar el correo Electrónico",email,e);
         }
     }
 
@@ -68,13 +70,13 @@ public class EmailService {
             mailSender.send(message);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al enviar email: " + e.getMessage());
+            throw new TemplateNotFoundException("No se pudo cargar la platilla del correo electrónico");
         }
     }
 
     public void enviarEmailDestinatarios(EmailDTO emailDTO) {
         if (emailDTO == null || emailDTO.getDestinatario() == null) {
-            throw new IllegalArgumentException("El Email o el destinatario no pueden ser nulos.");
+            throw new InvalidEmailException("El Email o el destinatario no pueden ser nulos.");
         }
 
         List<String> destinatarios = new ArrayList<>();
@@ -103,7 +105,7 @@ public class EmailService {
 
             mailSender.send(message);
         } catch (Exception e) {
-            throw new RuntimeException("Error al enviar emails: " + e.getMessage());
+            throw new EmailSendException("Error al enviar el correo Electrónico:",emailDTO.toString(),e );
         }
     }
 }

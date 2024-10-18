@@ -6,7 +6,7 @@ import cl.chile.somosafac.DTO.NotificacionDTO;
 import cl.chile.somosafac.entity.ContactoEntity;
 import cl.chile.somosafac.entity.FamiliaEntity;
 import cl.chile.somosafac.entity.NotificacionEntity;
-import cl.chile.somosafac.exception.ResourceNotFoundException;
+import cl.chile.somosafac.exception.custom.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.ContactoMapperManual;
 import cl.chile.somosafac.mapper.NotificacionMapperManual;
 import cl.chile.somosafac.repository.ContactoRepository;

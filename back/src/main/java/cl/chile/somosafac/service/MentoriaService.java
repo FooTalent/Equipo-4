@@ -2,10 +2,9 @@ package cl.chile.somosafac.service;
 
 import cl.chile.somosafac.DTO.MentoriaDTO;
 import cl.chile.somosafac.entity.MentoriaEntity;
-import cl.chile.somosafac.exception.ResourceNotFoundException;
+import cl.chile.somosafac.exception.custom.ResourceNotFoundException;
 import cl.chile.somosafac.mapper.MentoriaMapperManual;
 import cl.chile.somosafac.repository.MentoriaRepository;
-import org.springframework.boot.web.embedded.netty.NettyWebServer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
