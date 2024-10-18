@@ -20,8 +20,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function ListFamilies() {
   const [currentFamilies, setCurrentFamilies] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
   const [family, setFamily] = useState(null);
-  const [index, setIndex] = useState(5);
   const navigate = useNavigate();
   const schema = yup.object({
     nombre: yup
@@ -50,44 +51,27 @@ export default function ListFamilies() {
     },
   });
 
-  const handlePreviousIndex = () => {
-    if (index > 5) {
-      const remainingItems = data.length - (index - 5);
-      if (remainingItems < 5) {
-      // If fewer than 5 items were on the last page, navigate back by a smaller slice
-        setCurrentFamilies(data.slice(index - (index % 5), index - (index % 5) + 5));
-      } else {
-      // Otherwise, navigate back by a full slice of 5 items
-        setCurrentFamilies(data.slice(index - 10, index - 5));
-      }
-      setIndex((prev) => prev - 5);
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
-  const handleNextIndex = () => {
-    const remainingItems = data?.length - index;
-    if (remainingItems > 5) {
-      setCurrentFamilies(data.slice(index, index + 5));
-      setIndex((prev) => prev + 5);
-    } else if (remainingItems > 0) {
-      setCurrentFamilies(data.slice(index, index + remainingItems));
-      setIndex((prev) => prev + remainingItems);
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(data.length / itemsPerPage)) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
   useEffect(() => {
     if (data && data.length > 0) {
-      if (data.length >= 5) {
-        setIndex(5);
-        setCurrentFamilies(data.slice(0, 5));
-      } else {
-        setIndex(data.length);
-        setCurrentFamilies(data.slice(0, data.length));
-      }
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      setCurrentFamilies(data.slice(startIndex, endIndex));
     } else {
       setCurrentFamilies([]);
     }
-  }, [data]);
+  }, [data, currentPage]);
   const mutation = useMutation({
     mutationFn: searchFamiliesApi,
     onSuccess: (data) => {
@@ -177,23 +161,27 @@ export default function ListFamilies() {
             <Pagination>
               <PaginationContent className='flex justify-between w-full'>
                 <PaginationItem
-                  className={`hover:cursor-pointer ${index <= 5 ? 'text-gray-200 hover:text-gray-200' : ''}`}
+                  className={`hover:cursor-pointer ${currentPage === 1 ? 'text-gray-200 hover:text-gray-200' : ''}`}
                 >
                   <PaginationPrevious
                     className={`${
-                      index <= 5 ? 'hover:bg-transparent hover:text-gray-200 hover:cursor-not-allowed' : undefined
+                      currentPage === 1 ? 'hover:bg-transparent hover:text-gray-200 hover:cursor-not-allowed' : undefined
                     }`}
-                    aria-disabled={index <= 5}
-                    onClick={handlePreviousIndex}
+                    onClick={handlePreviousPage}
                   />
                 </PaginationItem>
-                <PaginationItem className={`hover:cursor-pointer ${data?.length - index < 5 ? 'text-gray-200 hover:text-gray-200' : ''}`}>
+                <PaginationItem
+                  className={`hover:cursor-pointer ${
+                    currentPage === Math.ceil(data.length / itemsPerPage) ? 'text-gray-200 hover:text-gray-200' : ''
+                  }`}
+                >
                   <PaginationNext
                     className={`${
-                      data?.length - index < 5 ? 'hover:bg-transparent hover:text-gray-200 hover:cursor-not-allowed' : undefined
+                      currentPage === Math.ceil(data.length / itemsPerPage)
+                        ? 'hover:bg-transparent hover:text-gray-200 hover:cursor-not-allowed'
+                        : undefined
                     }`}
-                    aria-disabled={data?.length - index < 5}
-                    onClick={handleNextIndex} />
+                    onClick={handleNextPage} />
                 </PaginationItem>
               </PaginationContent>
             </Pagination>

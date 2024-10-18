@@ -165,7 +165,7 @@ export const sendGeneralEmailApi = async (values) => {
     return axios.isAxiosError(error) &&
     error.status >= 400 &&
     error.status < 500
-        ? 'No se pudo enviar el email'
-        : 'Un error ha ocurrido';
+      ? 'No se pudo enviar el email'
+      : 'Un error ha ocurrido';
   }
 };
