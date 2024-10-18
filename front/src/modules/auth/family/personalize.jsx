@@ -14,33 +14,37 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import useAuthStore from '@/store/user.js';
 import { personalizeFamilyApi } from '@/modules/auth/family/api/familyAuthApi.js';
+import Spinner from '@/components/ui/spinner';
 
 const PersonalizeCredentialsFamily = () => {
   const schema = yup.object({
-    correo:
-        yup.string('Introduce un correo valido')
-          .required('Introduce un correo valido')
-          .email('Introduce un correo valido'),
     contrasenaHash:
         yup.string('Introduce contraseña valida')
           .required('Introduce contraseña valida')
           .min(8, 'Una contraseña tiene que tener un minimo de 8 caracteres')
           .max(35, 'Una contraseña no puede tener que tener más que 35 caracteres')
           .matches(
-            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/,
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d\s])[A-Za-z\d@$!%*#?&_/]{8,}$/,
             'La contraseña debe contener al menos una letra, un número y un carácter especial'),
     repiteContrasena: yup
       .string('Introduce tu contraseña de nuevo')
       .required('Tienes que introducer tu contraseña de nuevo')
       .oneOf([yup.ref('contrasenaHash')], 'La contraseña y la confirmación deben ser las mismas'),
+    terms: yup
+      .bool()
+      .oneOf([true], 'Debes aceptar los términos y condiciones'),
+    contract: yup
+      .bool()
+      .oneOf([true], 'Debes aceptar el contrato de confidencialidad'),
   });
 
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      correo: '',
       contrasenaHash: '',
-      repiteContrasena: ''
+      repiteContrasena: '',
+      terms: false,
+      contract: false,
     }
   });
 
@@ -53,11 +57,10 @@ const PersonalizeCredentialsFamily = () => {
     if (user) {
       if (user.tipoUsuario === 'FAMILIA') {
         if (user.primerIngreso === 'false') {
-          navigate('/familia/dashboard');
+          navigate('/familia');
         }
-      } else {
-        navigate('/');
       }
+      if (user.tipoUsuario === 'ADMIN') navigate('/admin/dashboard');
     }
     if (!user) navigate('/auth');
   }, [user, navigate]);
@@ -68,7 +71,7 @@ const PersonalizeCredentialsFamily = () => {
       if (data === 'Contraseña actualizada exitosamente.') {
         setFirstLogin('false');
         toast.success(data);
-        navigate('/familia/dashboard');
+        navigate('/familia');
       } else {
         toast.error(data);
       }
@@ -79,22 +82,23 @@ const PersonalizeCredentialsFamily = () => {
   });
 
   const onSubmit = async (data) => {
-    if (user.correo !== data.correo)
-    {
-      toast.error('Usa tu correo electrónico registrado');
-    } else {
-      mutation.mutate({ correo: data?.correo, contrasenaHash: data?.contrasenaHash });
-    }
+    mutation.mutate({ correo: user?.correo, contrasenaHash: data?.contrasenaHash });
   };
 
   const handleTermsChange = () => {
     const currentValue = form.getValues('terms');
-    form.setValue('terms', !currentValue, { shouldValidate: true });
+    form.setValue('terms', !currentValue);
+    if (!currentValue) {
+      form.clearErrors('terms');
+    }
   };
 
   const handleContractChange = () => {
     const currentValue = form.getValues('contract');
-    form.setValue('contract', !currentValue, { shouldValidate: true });
+    form.setValue('contract', !currentValue);
+    if (!currentValue) {
+      form.clearErrors('contract');
+    }
   };
 
   return (
@@ -103,7 +107,7 @@ const PersonalizeCredentialsFamily = () => {
       <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
         <img src='/common/logo-phrase.svg' alt='family one' className=''/>
       </Link>
-      <div className='max-w-md w-full space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
+      <div className='max-w-md w-full space-y-8 bg-white  md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
         <div className='flex flex-col gap-4'>
           <h2 className='mt-6 text-3xl text-gray-900'>
               Ahora, personaliza tus credenciales
@@ -192,10 +196,10 @@ const PersonalizeCredentialsFamily = () => {
             <div>
               <Button
                 type='submit'
-                variant='default'
-                className='w-full mt-4 py-6 bg-orange-400  hover:border-orange-500 hover:border-2 hover:bg-white text-black hover:text-black'
+                variant='orange'
+                className='w-full mt-4 py-6 font-semibold'
               >
-                  Continuar
+                {mutation.isPending ? <Spinner /> : 'Continuar'}
               </Button>
             </div>
           </form>
