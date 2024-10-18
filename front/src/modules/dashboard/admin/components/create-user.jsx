@@ -32,6 +32,7 @@ import Spinner from '@/components/ui/spinner';
 export default function CreateUser() {
   const [isOpen, setIsOpen] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+  const [userTypeChanged, setUserTypedChanged] = useState('');
   const form = useForm({
     resolver: yupResolver(schemaCreateUser),
     defaultValues: {
@@ -39,7 +40,8 @@ export default function CreateUser() {
       nombre: '',
       apellido: '',
       correo: '',
-      contrasenaHash: ''
+      contrasenaHash: '',
+      cargo: ''
     }
   });
   const resetForm = () => {
@@ -88,7 +90,16 @@ export default function CreateUser() {
     },
   });
   const onSubmit = (data) => {
-    mutationCreateUser.mutate(data);
+    mutationCreateUser.mutate(
+      {
+        nombre: data.nombre,
+        apellido: data.apellido,
+        tipoUsuario: data.tipoUsuario,
+        correo: data.correo,
+        contrasenaHash: data.contrasenaHash,
+        cargo: data.tipoUsuario === 'ADMIN' ? data.cargo : ''
+      }
+    );
   };
   const sendEmail = () => {
     const data = {
@@ -120,7 +131,10 @@ export default function CreateUser() {
                     render={({ field }) => (
                       <FormItem>
                         <Label>Tipo de usuario</Label>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select  onValueChange={(value) => {
+                          field.onChange(value);
+                          setUserTypedChanged(value);
+                        }}  defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder='' className='text-gray-200 text-opacity-25' />
@@ -161,6 +175,21 @@ export default function CreateUser() {
                     />
                     {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.apellido?.message}</p>}
                   </div>
+                  {userTypeChanged === 'ADMIN' && <>
+                    <div className='flex flex-col gap-3'>
+                      <Label htmlFor='cargo'>
+              Cargo
+                      </Label>
+                      <Input
+                        id='cargo'
+                        name='cargo'
+                        placeholder='Escriba cargo'
+                        className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0'
+                        {...form.register('cargo', { required: false })}
+                      />
+                      {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.cargo?.message}</p>}
+                    </div>
+                  </>}
                   <div className='flex flex-col gap-3'>
                     <Label htmlFor='correo'>
               Correo
