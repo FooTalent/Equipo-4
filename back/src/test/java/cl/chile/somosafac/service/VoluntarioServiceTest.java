@@ -12,7 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,11 +49,16 @@ class VoluntarioServiceTest {
         usuarioEntity.setId(1L);
         voluntarioEntity.setUsuario(usuarioEntity);
 
+        // Cambiar la forma en que se establece el usuario en el DTO
         voluntarioDTO = new VoluntarioDTO();
         voluntarioDTO.setId(1L);
         voluntarioDTO.setOcupacion("Ocupación");
         voluntarioDTO.setEstadoVoluntario("Activo");
-        voluntarioDTO.setUsuarioId(1L);
+
+        // Crear el mapa usuarioVoluntario
+        Map<String, Object> usuarioVoluntario = new HashMap<>();
+        usuarioVoluntario.put("id", 1L);
+        voluntarioDTO.setUsuarioVoluntario(usuarioVoluntario);
     }
 
     @Test
@@ -68,7 +75,8 @@ class VoluntarioServiceTest {
         assertEquals(voluntarioDTO.getId(), voluntarios.get(0).getId());
         assertEquals(voluntarioDTO.getOcupacion(), voluntarios.get(0).getOcupacion());
         assertEquals(voluntarioDTO.getEstadoVoluntario(), voluntarios.get(0).getEstadoVoluntario());
-        assertEquals(voluntarioDTO.getUsuarioId(), voluntarios.get(0).getUsuarioId());
+        // Ajusta según el nuevo DTO
+        assertEquals(voluntarioDTO.getUsuarioVoluntario().get("id"), voluntarios.get(0).getUsuarioVoluntario().get("id"));
     }
 
     @Test

@@ -59,11 +59,9 @@ public class FamiliaController {
             @ApiResponse(responseCode = "200", description = "Familias encontradas exitosamente"),
             @ApiResponse(responseCode = "404", description = "Familias no encontradas")
     })
-    @GetMapping("/familias/buscar")
-    public List<FamiliaDTO> searchFamilias(@RequestParam(required = false) String nombre,
-                                           @RequestParam(required = false) String ciudad,
-                                           @RequestParam(required = false) String region) {
-        return familiaService.searchFamilias(nombre, ciudad, region);
+    @PostMapping("/buscar")
+    public List<FamiliaDTO> searchFamilias(@RequestParam(required = false) String nombre) {
+        return familiaService.searchFamilias(nombre);
     }
 
     @Operation(summary = "Actualizar una familia", description = "Actualiza una familia existente por su ID")

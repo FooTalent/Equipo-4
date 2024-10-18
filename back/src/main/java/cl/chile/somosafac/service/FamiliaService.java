@@ -69,8 +69,8 @@ public class FamiliaService {
     }
 
     @Transactional(readOnly = true)
-    public List<FamiliaDTO> searchFamilias(String nombre, String ciudad, String region) {
-        List<FamiliaEntity> familias = familiaRepository.searchFamilias(nombre, ciudad, region);
+    public List<FamiliaDTO> searchFamilias(String nombre) {
+        List<FamiliaEntity> familias = familiaRepository.findByNombreFaUnoContainingIgnoreCase(nombre);
         return familias.stream()
                 .map(FamiliaMapperManual::familiaToDto)
                 .collect(Collectors.toList());

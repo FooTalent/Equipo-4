@@ -9,10 +9,6 @@ import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.mapper.FamiliaMapperManual;
 import cl.chile.somosafac.repository.FamiliaRepository;
 import cl.chile.somosafac.repository.NotificacionRepository;
-import cl.chile.somosafac.exception.custom.ExpiredCredentialsException;
-import cl.chile.somosafac.exception.custom.InvalidCredentialsException;
-import cl.chile.somosafac.exception.custom.ResourceAlreadyExistsException;
-import cl.chile.somosafac.exception.custom.ResourceNotFoundException;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import cl.chile.somosafac.security.JwtService;
 import cl.chile.somosafac.security.LoginRequest;
@@ -21,9 +17,10 @@ import cl.chile.somosafac.security.Role;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +31,10 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private long tiempoExpiracionResetToken = 86400000; // 1 dia - Consultar con equipo
+
+    @Value("${jwt.reset.expiration}")
+    private long tiempoExpiracionResetToken;
+
     private final UsuarioRepository usuarioRepository;
     private final FamiliaRepository familiaRepository;
     private final NotificacionRepository notificacionRepository;
@@ -43,37 +43,28 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public UsuarioDTO login(LoginRequest request, HttpServletResponse response) {
-
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenaHash()));
-        }catch (AuthenticationException e){
-            throw new InvalidCredentialsException("Correo o contraseña inválidos");
-        }
-
-        UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo()).orElseThrow(() -> new ResourceNotFoundException("Usuario","Email",request.getCorreo()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenaHash()));
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         usuario.setFechaUltimoAcceso(LocalDateTime.now());
         usuarioRepository.save(usuario);
 
         String token = jwtService.getToken(usuario);
-        // Configuracion de la cookie
+        // Configuración de la cookie
         Cookie jwtCookie = new Cookie("token", token);
-        jwtCookie.setHttpOnly(true);  // Evita que la cookie sea accesible desde JavaScript - Consultar con equipo
+        jwtCookie.setHttpOnly(true);
         jwtCookie.setPath("/");
         jwtCookie.setSecure(true);
-        jwtCookie.setMaxAge(24 * 60 * 60); // Duracion de 1 dia - Consultar con equipo
+        jwtCookie.setMaxAge(24 * 60 * 60); // 24 horas
         response.addCookie(jwtCookie);
 
-        UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
-        System.out.println("Cookie logout: " + jwtCookie.getName());
-        System.out.println(jwtCookie.getValue());
-
-        return usuarioDTO;
+        return UsuarioDTO.fromEntity(usuario);
     }
 
     public UsuarioDTO register(RegisterRequest request) {
         if (usuarioRepository.findByCorreo(request.getCorreo()).isPresent()) {
-            throw new ResourceAlreadyExistsException("Corre electrónico","Email",request.getCorreo());
+            throw new RuntimeException("El correo ya está en uso");
         }
 
         UsuarioEntity usuario = UsuarioEntity.builder()
@@ -100,7 +91,7 @@ public class AuthService {
             familiaRepository.save(familia);
         }
 
-        // Crear notificacion para el usuario con rol de familia
+        // Crear notificación para el usuario con rol de familia
         if (request.getTipoUsuario().equals(Role.FAMILIA)) {
             NotificacionEntity notificacion = new NotificacionEntity();
             notificacion.setUsuario(usuario);
@@ -110,13 +101,12 @@ public class AuthService {
             notificacionRepository.save(notificacion);
         }
 
-        UsuarioDTO usuarioDTO = UsuarioDTO.fromEntity(usuario);
-        return usuarioDTO;
+        return UsuarioDTO.fromEntity(usuario);
     }
 
-    public UsuarioDTO cambiarContrasenaPrimerIngreso(Long id, PasswordDTO nuevaContrasena) {
-        UsuarioEntity usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario","ID",id));
+    public UsuarioDTO cambiarContrasenaPrimerIngreso(String email, PasswordDTO nuevaContrasena) {
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         try {
             usuario.setContrasenaHash(passwordEncoder.encode(nuevaContrasena.getContrasenaHash()));
@@ -129,10 +119,10 @@ public class AuthService {
         }
     }
 
-    // Recuperar contrasena
+    // Recuperar contraseña
     public String generarResetToken(String email) {
         UsuarioEntity usuario = usuarioRepository.findByCorreo(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario","Correo",email));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario con correo: " + email + " no encontrado."));
 
         String token = UUID.randomUUID().toString();
         usuario.setResetToken(token);
@@ -145,7 +135,7 @@ public class AuthService {
     public UsuarioEntity validarResetToken(String token) {
         Optional<UsuarioEntity> usuario = usuarioRepository.findByResetToken(token);
         if (usuario.isEmpty() || esTokenExpirado(usuario.get().getFechaExpiracionResetToken())) {
-            throw new ExpiredCredentialsException("El Token no es válido o ha expirado.");
+            throw new RuntimeException("El código que recibiste en el email ya no es válido o ha expirado.");
         }
         return usuario.get();
     }

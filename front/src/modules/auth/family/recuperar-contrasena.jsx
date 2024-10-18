@@ -76,7 +76,7 @@ const FamilyResetPassword = () => {
       <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
         <img src='/common/logo-phrase.svg' alt='family one' className=''/>
       </Link>
-      <div className='max-w-md w-full space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
+      <div className='max-w-md w-full space-y-8 bg-white md:mt-[6vh] md:h-fit md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
         <div className='flex flex-col gap-4'>
           <h2 className='mt-6 text-3xl text-gray-900'>
             Restablecer contraseña
@@ -137,8 +137,8 @@ const FamilyResetPassword = () => {
               <Button
                 type='submit'
                 disabled={mutation.isPending}
-                variant='default'
-                className='w-full mt-4 py-6 bg-orange-400 hover:bg-orange-500'
+                variant='orange'
+                className='w-full mt-4 py-6'
               >
                 {mutation.isPending ? <Spinner /> : 'Guardard'}
               </Button>

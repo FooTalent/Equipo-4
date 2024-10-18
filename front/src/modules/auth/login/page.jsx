@@ -30,7 +30,7 @@ const Login = () => {
       .min(8, 'Una contraseña tiene que tener un minimo de 8 caracteres')
       .max(35, 'Una contraseña no puede tener que tener más que 35 caracteres')
       .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/,
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d\s])[A-Za-z\d@$!%*#?&_/]{8,}$/,
         'La contraseña debe contener al menos una letra, un número y un carácter especial')
   });
   const form = useForm({
@@ -57,7 +57,7 @@ const Login = () => {
         if (user.primerIngreso === 'true') {
           navigate('/auth/familia/personalizar');
         } else {
-          navigate('/');
+          navigate('/familia');
         }
       }
     }
@@ -96,7 +96,7 @@ const Login = () => {
       <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
         <img src='/common/logo-phrase.svg' alt='family one' className=''/>
       </Link>
-      <div className='max-w-md w-full space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
+      <div className='max-w-md w-full space-y-8 bg-white md:shadow-lg md:mt-[6vh] md:h-fit md:mx-auto md:w-full md:p-5 md:rounded-xl'>
         <div>
           <h2 className='mt-6 text-3xl text-gray-900'>
             Ingresa tus credenciales
@@ -153,8 +153,8 @@ const Login = () => {
               <Button
                 type='submit'
                 disabled={mutation.isPending}
-                variant='default'
-                className='text-black w-full mt-4 md:mt-0 py-6 bg-orange-400 hover:bg-orange-500'
+                variant='orange'
+                className='w-full mt-4 md:mt-0 py-6'
               >
                 {mutation.isPending ? <Spinner /> : 'Iniciar Sesión'}
               </Button>

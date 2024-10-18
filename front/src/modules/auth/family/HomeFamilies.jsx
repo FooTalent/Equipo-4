@@ -4,7 +4,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, Input } from '@/components/ui';
 import useAuthStore from '@/store/user';
 import { createFamily } from './api/createFamily';
+import Navbar from '@/components/shared/navbar';
+import Footer from '@/components/shared/footer';
+import { useNavigate } from 'react-router-dom';
+
 export default function HomeFamilies() {
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const { control, register, handleSubmit, setValue } = useForm();
   const [twoMembers, setTwoMembers] = useState(null);
@@ -37,6 +42,8 @@ export default function HomeFamilies() {
   };
 
   useEffect(() => {
+    if (!user) navigate('/auth');
+    if (user.tipoUsuario === 'ADMIN') navigate('/admin/dashboard');
     if (user) {
       setUserData(user.id);
     }
@@ -44,10 +51,11 @@ export default function HomeFamilies() {
   }, []);
 
   return (
-    <>
+    <main>
+      <Navbar />
       <div
         id='home-families-container'
-        className='w-[100%] min-h-screen bg-[#e6e6e6]'
+        className='w-[100%] bg-white md:bg-grayDefault'
       >
         <div
           id='home-families'
@@ -368,6 +376,7 @@ export default function HomeFamilies() {
           </div>
         </div>
       </div>
-    </>
+      <Footer />
+    </main>
   );
 }

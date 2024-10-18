@@ -4,12 +4,20 @@ import cl.chile.somosafac.DTO.VoluntarioDTO;
 import cl.chile.somosafac.entity.VoluntarioEntity;
 import cl.chile.somosafac.entity.UsuarioEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class VoluntarioMapperManual {
 
     public static VoluntarioDTO voluntarioToDto(VoluntarioEntity voluntario) {
         VoluntarioDTO dto = new VoluntarioDTO();
+
+        Map<String, Object> usuarioVoluntario = new HashMap<>();
+        usuarioVoluntario.put("id", voluntario.getId());
+        usuarioVoluntario.put("nombre", voluntario.getUsuario().getNombre());
+        dto.setUsuarioVoluntario(usuarioVoluntario);
+
         dto.setId(voluntario.getId());
-        dto.setUsuarioId(voluntario.getUsuario().getId());
         dto.setOcupacion(voluntario.getOcupacion());
         dto.setEstadoVoluntario(voluntario.getEstadoVoluntario());
         return dto;
@@ -20,10 +28,9 @@ public class VoluntarioMapperManual {
         voluntario.setOcupacion(voluntarioDTO.getOcupacion());
         voluntario.setEstadoVoluntario(voluntarioDTO.getEstadoVoluntario());
 
-        // Establecer la relación con UsuarioEntity
-        if (voluntarioDTO.getUsuarioId() != null) {
+        if(voluntarioDTO.getUsuarioVoluntario() != null && voluntarioDTO.getId() != null) {
             UsuarioEntity usuario = new UsuarioEntity();
-            usuario.setId(voluntarioDTO.getUsuarioId());
+            usuario.setId((Long) voluntarioDTO.getUsuarioVoluntario().get("id"));
             voluntario.setUsuario(usuario);
         }
 
@@ -34,10 +41,9 @@ public class VoluntarioMapperManual {
         voluntario.setOcupacion(voluntarioDTO.getOcupacion());
         voluntario.setEstadoVoluntario(voluntarioDTO.getEstadoVoluntario());
 
-        // Actualizar la relación con UsuarioEntity
-        if (voluntarioDTO.getUsuarioId() != null) {
+        if(voluntarioDTO.getUsuarioVoluntario() != null && voluntarioDTO.getId() != null) {
             UsuarioEntity usuario = new UsuarioEntity();
-            usuario.setId(voluntarioDTO.getUsuarioId());
+            usuario.setId((Long) voluntarioDTO.getUsuarioVoluntario().get("id"));
             voluntario.setUsuario(usuario);
         }
     }

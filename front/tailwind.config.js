@@ -45,6 +45,42 @@ module.exports = {
           DEFAULT: 'hsl(var(--button))',
           foreground: 'hsl(var(--button-foreground))'
         },
+		 orange: {
+          DEFAULT: '#FF961A',
+		 },
+		 orangeHover: {
+		  DEFAULT: '#E68717',
+		 },
+		 orangePressed: {
+		  DEFAULT: '#BF7114',
+		 },
+		 orangeDisabled: {
+		  DEFAULT: '#FFDEB8',
+		 },
+		 green: {
+		  DEFAULT: '#3EB489',
+		 },
+		 greenHover: {
+		  DEFAULT: '#256C52',
+		 },
+		 greenPressed: {
+		  DEFAULT: '#163F30',
+		 },
+		 greenDisabled: {
+		  DEFAULT: '#8EA69D',
+		 },
+		 red: {
+		  DEFAULT: '#C30016',
+		 },
+		 redHover: {
+		  DEFAULT: '#920011',
+		 },
+		 redPressed: {
+		  DEFAULT: '#58000A',
+		 },
+		 redDisabled: {
+		  DEFAULT: '#ECB0B7',
+		 },
         orangeLight: {
           DEFAULT: '#FFBA69',
         },
