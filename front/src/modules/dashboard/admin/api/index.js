@@ -128,7 +128,7 @@ export const getAllVolunteersApi = async () => {
 
 export const searchFamiliesApi = async (values) => {
   try {
-    const response = await AxiosBase.get(`/familias/familias/buscar?nombre=${values?.nombre}`);
+    const response = await AxiosBase.post(`/familias/buscar?nombre=${values?.nombre}`);
     return response.data;
   } catch (error) {
     return axios.isAxiosError(error) &&

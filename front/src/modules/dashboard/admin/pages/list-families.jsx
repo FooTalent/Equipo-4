@@ -91,10 +91,10 @@ export default function ListFamilies() {
   const mutation = useMutation({
     mutationFn: searchFamiliesApi,
     onSuccess: (data) => {
-      if (data) {
+      if (data?.length > 0) {
         setFamily(data);
       } else {
-        toast.error(data);
+        toast.success('No hay alguien con este nombre');
       }
     },
     onError: () => {
@@ -108,7 +108,7 @@ export default function ListFamilies() {
   return (
     <AppLayout>
       <section className='h-full md:bg-grayDefault md:grid'>
-        <div className='p-0 grid md:flex md:flex-col gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:mt-[10vh] md:h-fit md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto'>
+        <div className='transition-all duration-300 ease-in-out p-0 grid md:flex md:flex-col gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:mt-[10vh] md:h-fit md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto'>
           <div className='flex flex-col gap-4'>
             <div className='flex md:flex-col gap-2 md:gap-5'>
               <img
@@ -127,13 +127,17 @@ export default function ListFamilies() {
                   <div className='relative my-3'>
                     <Input
                       name='nombre'
-                      placeholder={`${form.formState.errors && form?.formState?.errors?.nombre?.message ? form?.formState?.errors?.nombre?.message : 'Busca por nombre'}`}
+                      placeholder={'Busca por nombre'}
                       className='rounded-3xl bg-neutral-200 placeholder:text-emerald-500 py-4 px-12 focus-visible:ring-0 focus-visible:ring-offset-0'
                       {...form.register('nombre', { required: true })}
                     />
                     <img src='/common/search.svg' alt='buscar familia' className=' absolute top-2 left-4'/>
-                    <button type='submit' className='text-sm absolute top-3 right-4 bg-emerald-400 text-gray-100 rounded-xl px-2'>Buscar</button>
-                    {/* <img src='/common/close-circle.svg' alt='borrar el buscador' className=' absolute top-2 right-4' /> */}
+                    <button type='submit' className={`${family ? 'hidden' : 'block'} text-sm absolute top-[0px] right-0 bg-green hover:bg-greenHover text-gray-100  rounded-r-full px-4 h-10 flex items-center justify-center`}>Buscar</button>
+                    <button className={`absolute top-2 right-4 ${family ? 'block' : 'hidden'}`} onClick={() => {
+                      setFamily(null);
+                      form.clearErrors();
+                      form.reset();
+                    }}><img src='/common/close-circle.svg' alt='borrar el buscador' /></button>
                   </div>
                 </form>
               </Form>
@@ -144,7 +148,19 @@ export default function ListFamilies() {
               <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-400'></div>
             </div>
           )}
-          {!isLoading && data?.length !== 0 && (
+          {!isLoading && family && <>
+            {family &&
+                family?.map((familia) => (
+                  <div className='animate-fade-in' key={familia.id}>
+                    <Familia
+                      usuario={familia?.nombreFaUno}
+                      id={familia.id}
+                      nombreFaUno={familia?.nombreFaUno}
+                    />
+                  </div>
+                ))}
+          </>}
+          {!isLoading && !family && data?.length !== 0 && (
             <>
               {currentFamilies &&
                 currentFamilies?.map((familia) => (
@@ -157,7 +173,7 @@ export default function ListFamilies() {
                 ))}
             </>
           )}
-          {!isLoading && data?.length !== 0 && (
+          {!isLoading && !family && data?.length !== 0 && (
             <Pagination>
               <PaginationContent className='flex justify-between w-full'>
                 <PaginationItem
