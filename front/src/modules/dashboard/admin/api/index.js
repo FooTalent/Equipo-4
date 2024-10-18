@@ -142,17 +142,20 @@ export const searchFamiliesApi = async (values) => {
 export const sendGeneralEmailApi = async (values) => {
   const { destinatarios, asunto, mensaje } = values;
   try {
+    console.log('Datos enviados a la API:', { destinatarios, asunto, mensaje });
     const response = await AxiosBase.post('/api/email/general', {
       destinatarios,
       asunto,
       mensaje
     });
+    console.log('Respuesta de la API:', response.data);
     return response.data;
   } catch (error) {
+    console.error('Error en la API:', error);
     return axios.isAxiosError(error) &&
     error.status >= 400 &&
     error.status < 500
         ? 'No se pudo enviar el email'
         : 'Un error ha ocurrido';
   }
-};
+};;
