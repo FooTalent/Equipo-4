@@ -156,7 +156,7 @@ export const sendGeneralEmailApi = async (values) => {
   const { destinatarios, asunto, mensaje } = values;
   try {
     console.log('Datos enviados a la API:', { destinatarios, asunto, mensaje });
-    const response = await AxiosBase.post('/api/email/general', {
+    const response = await AxiosBase.post('/email/general', {
       destinatarios,
       asunto,
       mensaje
