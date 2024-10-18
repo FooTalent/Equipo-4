@@ -138,3 +138,16 @@ export const searchFamiliesApi = async (values) => {
       : 'Un error ha ocurrido';
   }
 };
+
+export const searchFamilyApi = async (id) => {
+  try {
+    const response = await AxiosBase.get(
+      `/familias/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) && error.status >= 400 && error.status < 500
+      ? 'No se pudo encontrar la familia'
+      : 'Un error ha ocurrido';
+  }
+};
