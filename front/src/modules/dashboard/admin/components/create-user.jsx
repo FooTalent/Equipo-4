@@ -189,8 +189,8 @@ export default function CreateUser() {
                   </div>
                 </div>
                 <DialogFooter className='flex flex-row gap-2 mt-4'>
-                  <DialogClose className={` ${mutationCreateUser.isPending ? 'hidden' : ''} bg-transparent text-red-500 border border-red-500 hover:bg-red-500 hover:text-white text-lg font-light w-full rounded-md`}>Cancelar</DialogClose>
-                  <Button type='submit' className='bg-emerald-500 hover:bg-white hover:border hover:border-emerald-500 hover:text-emerald-500 text-lg font-light w-full'>{mutationCreateUser.isPending ? <Spinner /> : 'Confirmar'}</Button>
+                  <DialogClose className={` ${mutationCreateUser.isPending ? 'hidden' : ''} text-lg font-light w-full rounded-md text-white bg-red focus:bg-white hover:bg-redHover focus:text-red focus:border focus:border-red`}>Cancelar</DialogClose>
+                  <Button variant={'green'} type='submit' className='text-lg font-light w-full'>{mutationCreateUser.isPending ? <Spinner /> : 'Confirmar'}</Button>
                 </DialogFooter>
               </form>
             </Form>
