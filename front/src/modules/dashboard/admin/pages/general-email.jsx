@@ -29,10 +29,10 @@ export default function GeneralEmail() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const schema = yup.object({
-        destinatarios: yup
+        destinatario: yup
             .string()
             .required('Debe seleccionar los destinatarios'),
-        asunto: yup
+        titulo: yup
             .string()
             .required('El asunto es requerido')
             .min(3, 'El asunto debe tener al menos 3 caracteres')
@@ -46,8 +46,8 @@ export default function GeneralEmail() {
     const form = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
-            destinatarios: '',
-            asunto: '',
+            destinatario: '',
+            titulo: '',
             mensaje: ''
         }
     });
@@ -82,8 +82,8 @@ export default function GeneralEmail() {
 
         console.log('Datos antes de enviar:', data);
         mutation.mutate({
-            destinatarios: data.destinatarios,
-            asunto: data.asunto,
+            destinatario: data.destinatario,
+            titulo: data.titulo,
             mensaje: data.mensaje
         });
     };
@@ -109,7 +109,7 @@ export default function GeneralEmail() {
                             <div className='flex flex-col gap-6 md:-mt-0'>
                                 <FormField
                                     control={form.control}
-                                    name='destinatarios'
+                                    name='destinatario'
                                     render={({ field }) => (
                                         <FormItem>
                                             <Label>Destinatarios</Label>
@@ -140,7 +140,7 @@ export default function GeneralEmail() {
 
                                 <FormField
                                     control={form.control}
-                                    name='asunto'
+                                    name='titulo'
                                     render={({ field }) => (
                                         <FormItem>
                                             <Label>Asunto</Label>
