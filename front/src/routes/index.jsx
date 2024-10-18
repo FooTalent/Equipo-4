@@ -20,6 +20,7 @@ import AdminNotifications from '@/modules/dashboard/admin/pages/notifications';
 import HomeFamilies from '@/modules/auth/family/HomeFamilies';
 import Login from '@/modules/auth/login/page';
 import RequestMentoring from '@/modules/dashboard/admin/pages/request-mentoring';
+import FamilyProfile from '@/modules/dashboard/admin/pages/family-profile';
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
   {
     path: '/admin/crear-usuario',
     element: <CreateUser />
+  },
+  {
+    path: '/admin/familia/:id',
+    element: <FamilyProfile />
   },
   {
     path: '*',

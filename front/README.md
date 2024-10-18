@@ -1,25 +1,25 @@
 # Frontend - Equipo 4 Foo Talent
 
 ## Descripcion
-Este es el repositorio de la parte frontend del proyecto de Equipo 4. Aquí se encuentran todos los componentes, servicios y funcionalidades que conforman la interfaz de usuario de la aplicación.
+Este es el repositorio de la parte frontend de FamilyOne. Aquí se encuentran todos los componentes, servicios y funcionalidades que conforman la interfaz de usuario de la aplicación.
 
 ## Equipo de desarrollo
 <div align="left">
    <div style="display: inline-block; margin: 15px;">
-    <img src="https://avatars.githubusercontent.com/DanteNico1087" width="150" height="150" style="border-radius: 50%;" />
-    <h3>Dante Nicolás Caballero</h3>
+    <img src="https://avatars.githubusercontent.com/emanuelpps" width="150" height="150" style="border-radius: 50%;" />
+    <h3>Emanuel Pagés</h3>
     <p>
-      <a href="http://github.com/DanteNico1087" target="_blank">
+      <a href="http://github.com/emanuelpps" target="_blank">
         <img src="https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white" height="30" />
       </a>
     </p>
   </div>
   
   <div style="display: inline-block; margin: 15px;">
-    <img src="https://avatars.githubusercontent.com/OsvaldoRamirez97" width="150" height="150" style="border-radius: 50%;" />
-    <h3>Osvaldo Ramirez</h3>
+    <img src="https://avatars.githubusercontent.com/Gustaf-dev-code" width="150" height="150" style="border-radius: 50%;" />
+    <h3>Gustavo A. Briceño G.</h3>
     <p>
-      <a href="http://github.com/OsvaldoRamirez97" target="_blank">
+      <a href="http://github.com/Gustaf-dev-code" target="_blank">
         <img src="https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white" height="30" />
       </a>
     </p>
@@ -99,5 +99,5 @@ Esto iniciará el servidor de desarrollo y abrirá la aplicación en tu navegado
 9. Si has agregado código que debe ser probado, agrega ejemplos de pruebas (capturas de pantalla o comentarios descriptivos por lo menos).
 
 
-## Licencia 
-MIT
+## Licencia
+Copyright 2024 FamilyOne. Todos los derechos reservados.

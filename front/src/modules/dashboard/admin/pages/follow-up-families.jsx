@@ -1,4 +1,3 @@
-import { Input } from '@/components/ui';
 import { AppLayout } from '@/layouts/app-layout';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,49 +12,10 @@ export default function FollowUpFamilies () {
               <img onClick={() => navigate('/admin/dashboard')} src='/common/arrow-left.svg' alt='Regresar a la página principal' className='self-start pt-2 md:pt-0 hover:cursor-pointer' />
               <p className='self-center -mb-2 md:-mb-0 text-2xl md:w-full'>Seguimiento de Familias</p>
             </div>
-            <p className='px-2 md:px-0 text-lf'>Estas son las familias a las cuales se les debe realizar seguimiento:</p>
+            {/* <p className='px-2 md:px-0 text-lf'>Estas son las familias a las cuales se les debe realizar seguimiento:</p> */}
           </div>
           <div className='flex flex-col gap-3'>
-            <div className='relative'>
-              <Input
-                className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
-            </div>
-            <div className='relative'>
-              <Input
-                className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
-            </div>
-            <div className='relative'>
-              <Input
-                className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
-            </div>
-            <div className='relative'>
-              <Input
-                className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
-            </div>
-            <div className='relative'>
-              <Input
-                className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                placeholder='Nombre y Apellido'
-                disabled
-              />
-              <img src='/dashboard-admin/minus-square.svg' alt='borrar la familia' className='absolute top-2 right-2' />
-            </div>
+            <p className='text-2xl md:text-base text-center py-6 mt-[20%] md:mt-0'>No tienes <br className='block md:hidden'/> seguimientos <br className='block md:hidden'/> pendientes</p>
           </div>
         </div>
       </section>
