@@ -69,8 +69,8 @@ export default function GeneralEmail() {
 
   return (
     <AppLayout>
-      <section className='h-full md:bg-grayDefault md:grid'>
-        <div className='h-full relative p-0 grid md:flex md:flex-col gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:h-fit md:mt-[10vh]  md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto'>
+      <section className='h-full md:bg-grayDefault md:grid md:items-center'>
+        <div className='h-full relative p-0 grid md:flex md:flex-col gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:h-3/4 md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto'>
           <div className='flex flex-col gap-4'>
             <div className='flex md:flex-col gap-2 md:gap-5'>
               <img
@@ -142,11 +142,10 @@ export default function GeneralEmail() {
                   )}
                 />
 
-                <div className='bottom-6 w-[96.5%] mx-auto'>
+                <div className='absolute bottom-6 w-[96.5%] mx-auto'>
                   <Button
                     type='submit'
-                    variant='orange'
-                    className='w-full font-semibold text-black text-lg py-6'
+                    className='bg-orange-500 hover:bg-orange-600 w-full text-black text-lg font-light py-6'
                     disabled={mutation.isPending}
                   >
                     {mutation.isPending ? (
