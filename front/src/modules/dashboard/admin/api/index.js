@@ -151,3 +151,21 @@ export const searchFamilyApi = async (id) => {
       : 'Un error ha ocurrido';
   }
 };
+
+export const sendGeneralEmailApi = async (values) => {
+  const { destinatarios, asunto, mensaje } = values;
+  try {
+    const response = await AxiosBase.post('/api/email/general', {
+      destinatarios,
+      asunto,
+      mensaje
+    });
+    return response.data;
+  } catch (error) {
+    return axios.isAxiosError(error) &&
+    error.status >= 400 &&
+    error.status < 500
+        ? 'No se pudo enviar el email'
+        : 'Un error ha ocurrido';
+  }
+};
