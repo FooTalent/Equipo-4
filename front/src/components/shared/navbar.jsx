@@ -1,13 +1,26 @@
 import useAuthStore from '@/store/user';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  Dialog,
+  DialogTrigger,
+  Button,
+  DialogContent,
+  DialogClose,
+  DialogFooter
+} from '../ui';
+import { useState } from 'react';
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const onLogout = () => {
     logout();
     navigate('/auth');
+  };
+  const handleDialogChange = (open) => {
+    setIsOpen(open);
   };
   return (
     <nav className='bg-orangeLight '>
@@ -25,10 +38,24 @@ export default function Navbar() {
             <img src='/common/perfil.svg' alt='perfil' className='w-7 mx-auto' />
             <p>Perfil</p>
           </Link>
-          <button onClick={onLogout} className='flex flex-col md:gap-1'>
-            <img src='/common/logout.svg' alt='cerrar sesion' className='w-6 mx-auto' />
-            <p className=''>Cerrar sesión</p>
-          </button>
+          <Dialog open={isOpen} onOpenChange={handleDialogChange}>
+            <DialogTrigger asChild>
+              <button>
+                <img src='/common/logout.svg' alt='cerrar sesion' className='w-6 mx-auto' />
+                <p className=''>Cerrar sesión</p>
+              </button>
+            </DialogTrigger>
+            <DialogContent className='md:max-w-[450px] py-8 border-0 rounded-2xl w-[95%] mx-auto bg-gray-300'>
+              <div className='text-lg text-center font-semibold'>
+                <p>Estas por cerrar tu sesión</p>
+                <p>¿Estas seguro que deseas continuar?</p>
+              </div>
+              <DialogFooter className='flex w-full gap-2'>
+                <DialogClose className={'w-full rounded-md text-white bg-green focus:bg-white hover:bg-greenHover focus:text-green focus:border focus:border-green'}>Cancelar</DialogClose>
+                <Button type='submit' onClick={onLogout} variant='red' className='py-6 w-full'>Cerrar Sesión</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </section>
     </nav>
