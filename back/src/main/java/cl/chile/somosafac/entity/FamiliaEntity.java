@@ -37,7 +37,8 @@ public class FamiliaEntity {
     @Column(name = "rut_fa_dos", unique = true, length = 12)
     private String rutFaDos;
 
-    @Column(name = "fecha_nacimiento_fa_uno", nullable = false)
+
+    @Column(name = "fecha_nacimiento_fa_uno", nullable = true)
     private LocalDate fechaNacimientoFaUno;
 
     @Column(name = "fecha_nacimiento_fa_dos")
