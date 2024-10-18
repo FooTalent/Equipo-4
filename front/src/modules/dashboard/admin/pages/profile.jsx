@@ -97,8 +97,8 @@ export default function AdminProfile() {
   }, [form.formState.defaultValues.apellido, form.formState.defaultValues.correo, form.formState.defaultValues.nombre, watchedFields]);
   return (
     <AppLayout>
-      <section className='h-full md:bg-grayDefault md:grid md:items-center'>
-        <div className='p-0 h-full flex flex-col md:flex-col gap-16 md:gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:h-3/4 md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto'>
+      <section className='h-full md:bg-grayDefault md:grid'>
+        <div className='p-0 h-full flex flex-col md:flex-col gap-16 md:gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:mt-[10vh] md:h-fit md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto'>
           <div className='flex h-fit py-1 gap-2 md:gap-5'>
             <img onClick={() => navigate('/admin/dashboard')} src='/common/arrow-left.svg' alt='Regresar a la página principal' className='self-start pt-2 md:pt-0 hover:cursor-pointer' />
             <p className='self-start mt-1 md:mt-0 md:-mb-0 text-2xl md:w-full'>Perfil Administrador</p>
@@ -146,8 +146,8 @@ export default function AdminProfile() {
                 </div>
               </div>
               <div className='h-full md:mt-0 flex flex-col justify-end gap-2'>
-                <Button type='submit' disabled={!error} className='disabled:bg-gray-400 disabled:text-black bg-green-600 hover:bg-green-700  text-white'>{mutation.isPending ? <Spinner /> : 'Guardar Cambios'}</Button>
-                <Button type='button' onClick={() => handleCancle()} disabled={!error} className={`${mutation.isPending ? 'hidden' : ''} disabled:bg-gray-400 disabled:text-black disabled:border-gray-400 bg-white hover:bg-orange-400 text-orange-400 hover:text-white border-2 border-orange-400`}>Cancelar</Button>
+                <Button variant={'green'} type='submit' disabled={!error} className='  '>{mutation.isPending ? <Spinner /> : 'Guardar Cambios'}</Button>
+                <Button variant={'orange'} type='button' onClick={() => handleCancle()} disabled={!error} className={`${mutation.isPending ? 'hidden' : ''}`}>Cancelar</Button>
               </div>
             </form>
           </Form>

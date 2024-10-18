@@ -60,7 +60,7 @@ const FamilyForgotPassword = () => {
       <Link to={'/auth/ingresar'} className='hidden md:block top-4 left-4 w-full'>
         <img src='/common/logo-phrase.svg' alt='family one' className=''/>
       </Link>
-      <div className='max-w-md w-full space-y-8 bg-white md:h-3/4 md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
+      <div className='max-w-md w-full space-y-8 bg-white md:mt-[6vh] md:h-fit md:shadow-lg  md:mx-auto md:w-full md:p-5 md:rounded-xl'>
         <div className='flex flex-col gap-4'>
           <h2 className='mt-6 text-3xl text-gray-900'>
             Recuperar contraseña
@@ -95,13 +95,9 @@ const FamilyForgotPassword = () => {
               >
                 {mutation.isPending ? <Spinner /> : 'Enviar'}
               </Button>
-              <Link
-                to={'/auth/ingresar'}
-                variant='default'
-                className='bg-orange-400 hover:bg-orange-500 py-3 rounded text-center'
-              >
-                volver
-              </Link>
+              <Button variant={'orange'} className='py-6' onClick={() => navigate('/auth/ingresar')}>
+              volver
+              </Button>
             </div>
           </form>
         </Form>

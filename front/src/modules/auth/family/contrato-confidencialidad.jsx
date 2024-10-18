@@ -16,7 +16,7 @@ function ContratoConfidencialidad() {
       <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
         <img src='/common/logo-phrase.svg' alt='family one' className=''/>
       </Link>
-      <div className='max-w-[450px] z-30 w-full h-auto space-y-2 md:bg-white md:h-3/4 md:shadow-lg md:mx-auto md:w-full md:p-12 md:pb-12 md:pt-12 md:rounded-xl'>
+      <div className='max-w-[450px] z-30 w-full h-auto space-y-2 md:bg-white md:mt-[6vh] md:h-fit md:shadow-lg md:mx-auto md:w-full md:p-12 md:pb-12 md:pt-12 md:rounded-xl'>
         <section className='flex flex-col items-center max-w-md w-full space-y-4'>
 
           <h1 className='text-2xl font-bold mb-4 text-center'>Contrato de confidencialidad</h1>
@@ -39,8 +39,8 @@ function ContratoConfidencialidad() {
           </div>
           <Button
             onClick={handleBack}
-            variant='default'
-            className='w-full mt-4 py-6 bg-orange-400 font-bold text-base hover:border-orange-500 hover:border-2 hover:bg-white text-black hover:text-black'>
+            variant='orange'
+            className='w-full mt-4 py-6 font-bold text-base'>
             {'Volver'}
           </Button>
         </section>
