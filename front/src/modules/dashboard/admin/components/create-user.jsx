@@ -97,7 +97,7 @@ export default function CreateUser() {
         tipoUsuario: 'ADMIN',
         correo: data.correo,
         contrasenaHash: data.contrasenaHash,
-        cargo: data.tipoUsuario === 'ADMIN' ? data.cargo : ''
+        cargo: data.cargo
       }
     );
   };

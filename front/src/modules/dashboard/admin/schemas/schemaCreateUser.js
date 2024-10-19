@@ -28,6 +28,5 @@ export const schemaCreateUser = yup.object({
       .max(35, 'Una contraseña no puede tener que tener más que 35 caracteres')
       .matches(
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/,
-        'La contraseña debe contener al menos una letra, un número y un carácter especial'),
-  cargo: yup.string().nullable().min(3, 'Un cargo debe tener un minimo de 3 caracteres').max(25, 'Un cargo no debe tener más que 25 caracteres')
+        'La contraseña debe contener al menos una letra, un número y un carácter especial')
 });
