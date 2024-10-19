@@ -94,10 +94,10 @@ export default function CreateUser() {
       {
         nombre: data.nombre,
         apellido: data.apellido,
-        tipoUsuario: data.tipoUsuario,
+        tipoUsuario: 'ADMIN',
         correo: data.correo,
         contrasenaHash: data.contrasenaHash,
-        cargo: data.tipoUsuario === 'ADMIN' ? data.cargo : ''
+        cargo: data.cargo
       }
     );
   };
