@@ -2,6 +2,7 @@ package cl.chile.somosafac.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +36,7 @@ public class FamiliaDTO {
     @Pattern(regexp = "^[0-9]{9}-[Kk|0-9]$", message = "El RUT del padre/madre 2 no es válido")
     private String rutFaDos;
 
-    @NotNull(message = "La fecha de nacimiento del padre/madre 1 no puede ser nula")
+    @Column(nullable = true)
     private LocalDate fechaNacimientoFaUno;
 
     private LocalDate fechaNacimientoFaDos;
