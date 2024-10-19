@@ -56,24 +56,14 @@ export default function GeneralEmail() {
             toast.success('Email enviado exitosamente');
             navigate('/admin/dashboard');
         },
-        onError: (error) => {
-            console.error('❌ Error del servidor:', error);
+        onError: () => {
             toast.error('Ha ocurrido un error al enviar el email');
         }
     });
 
     const onSubmit = async (data) => {
-        console.log('📨 Datos a enviar:', {
-            destinatario: data.destinatario,
-            titulo: data.titulo,
-            mensaje: data.mensaje
-        });
-
         mutation.mutate(data);
     };
-
-    const formValues = form.watch();
-    console.log('🔄 Valores actuales del formulario:', formValues);
 
     return (
         <AppLayout>

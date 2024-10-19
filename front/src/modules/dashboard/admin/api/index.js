@@ -80,7 +80,7 @@ export const getAllMentoringApi = async () => {
       error.status < 500
       ? 'No se pudo acceder al listado de mentorias'
       : 'Un error ha ocurrido';
-  };
+  }
 };
 
 export const getFamilyByIdApi = async (id) => {
