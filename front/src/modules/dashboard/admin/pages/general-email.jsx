@@ -22,11 +22,9 @@ import { sendGeneralEmailApi } from '@/modules/dashboard/admin/api';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
 
 export default function GeneralEmail() {
     const navigate = useNavigate();
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const schema = yup.object({
         destinatario: yup
@@ -54,83 +52,63 @@ export default function GeneralEmail() {
 
     const mutation = useMutation({
         mutationFn: sendGeneralEmailApi,
-        onMutate: (variables) => {
-            setIsSubmitting(true);
-            console.log('Datos que se enviarán al backend:', variables);
-        },
-        onSuccess: (data) => {
-            console.log('Respuesta exitosa del backend:', data);
+        onSuccess: () => {
             toast.success('Email enviado exitosamente');
-            setIsSubmitting(false);
             navigate('/admin/dashboard');
         },
-        onError: (error) => {
-            console.error('Error completo:', error);
-            setIsSubmitting(false);
+        onError: () => {
             toast.error('Ha ocurrido un error al enviar el email');
         },
     });
 
-    const onSubmit = async (data) => {
-        console.log('Datos del formulario:', data);
-
-        const errors = await form.trigger();
-        if (!errors) {
-            console.log('Validación fallida');
-            return;
-        }
-
-        console.log('Datos antes de enviar:', data);
-        mutation.mutate({
-            destinatario: data.destinatario,
-            titulo: data.titulo,
-            mensaje: data.mensaje
-        });
+    const onSubmit = (data) => {
+        mutation.mutate(data);
     };
 
     return (
         <AppLayout>
-            <section className='h-full md:bg-grayDefault md:grid md:items-center'>
-                <div className='h-full relative p-0 grid md:flex md:flex-col gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:h-3/4 md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto'>
-                    <div className='flex flex-col gap-4'>
-                        <div className='flex md:flex-col gap-2 md:gap-5'>
+            <section className="h-full md:bg-grayDefault md:grid md:items-center">
+                <div className="h-full relative p-0 grid md:flex md:flex-col gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:h-3/4 md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto">
+                    <div className="flex flex-col gap-4">
+                        <div className="flex md:flex-col gap-2 md:gap-5">
                             <img
                                 onClick={() => navigate('/admin/dashboard')}
-                                src='/common/arrow-left.svg'
-                                alt='Regresar a la página principal'
-                                className='self-start pt-2 md:pt-0 hover:cursor-pointer'
+                                src="/common/arrow-left.svg"
+                                alt="Regresar a la página principal"
+                                className="self-start pt-2 md:pt-0 hover:cursor-pointer"
                             />
-                            <p className='self-center -mb-2 md:-mb-0 text-2xl md:w-full'>E-mail General</p>
+                            <p className="self-center -mb-2 md:-mb-0 text-2xl md:w-full">
+                                E-mail General
+                            </p>
                         </div>
                     </div>
 
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                            <div className='flex flex-col gap-6 md:-mt-0'>
+                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <div className="flex flex-col gap-6 md:-mt-0">
                                 <FormField
                                     control={form.control}
-                                    name='destinatario'
+                                    name="destinatario"
                                     render={({ field }) => (
                                         <FormItem>
                                             <Label>Destinatarios</Label>
                                             <Select
-                                                onValueChange={(value) => {
-                                                    console.log('Valor seleccionado en destinatarios:', value);
-                                                    field.onChange(value);
-                                                }}
+                                                onValueChange={field.onChange}
                                                 defaultValue={field.value}
-                                                disabled={isSubmitting}
                                             >
                                                 <FormControl>
                                                     <SelectTrigger>
-                                                        <SelectValue placeholder='Selecione destinatarios' className='placeholder:text-gray-400' />
+                                                        <SelectValue
+                                                            placeholder="Selecione destinatarios"
+                                                            className="placeholder:text-gray-400"
+                                                        />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <SelectItem value='general'>Listado General</SelectItem>
-                                                    <SelectItem value='voluntarias'>Familias voluntarias</SelectItem>
-                                                    <SelectItem value='mentoria'>Familias a la espera de mentoria</SelectItem>
-                                                    <SelectItem value='personal'>Personal</SelectItem>
+                                                    <SelectItem value="general">Listado General</SelectItem>
+                                                    <SelectItem value="voluntarias">Familias voluntarias</SelectItem>
+                                                    <SelectItem value="mentoria">Familias a la espera de mentoria</SelectItem>
+                                                    <SelectItem value="personal">Personal</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -140,19 +118,14 @@ export default function GeneralEmail() {
 
                                 <FormField
                                     control={form.control}
-                                    name='titulo'
+                                    name="titulo"
                                     render={({ field }) => (
                                         <FormItem>
                                             <Label>Asunto</Label>
                                             <Input
                                                 {...field}
-                                                onChange={(e) => {
-                                                    console.log('Valor ingresado en asunto:', e.target.value);
-                                                    field.onChange(e);
-                                                }}
-                                                disabled={isSubmitting}
-                                                className='border-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400'
-                                                placeholder='Escriba el asunto'
+                                                className="border-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400"
+                                                placeholder="Escriba el asunto"
                                             />
                                             <FormMessage />
                                         </FormItem>
@@ -161,33 +134,28 @@ export default function GeneralEmail() {
 
                                 <FormField
                                     control={form.control}
-                                    name='mensaje'
+                                    name="mensaje"
                                     render={({ field }) => (
                                         <FormItem>
                                             <Label>Mensaje</Label>
                                             <Textarea
                                                 {...field}
-                                                onChange={(e) => {
-                                                    console.log('Valor ingresado en mensaje:', e.target.value);
-                                                    field.onChange(e);
-                                                }}
-                                                disabled={isSubmitting}
-                                                placeholder='Escriba aquí su mensaje'
-                                                className='border-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 resize-none'
+                                                placeholder="Escriba aquí su mensaje"
+                                                className="border-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 resize-none"
                                             />
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
 
-                                <div className='absolute bottom-6 w-[96.5%] mx-auto'>
+                                <div className="absolute bottom-6 w-[96.5%] mx-auto">
                                     <Button
                                         type="submit"
-                                        className='bg-orange-500 hover:bg-orange-600 w-full text-black text-lg font-light py-6'
-                                        disabled={isSubmitting}
+                                        className="bg-orange-500 hover:bg-orange-600 w-full text-black text-lg font-light py-6"
+                                        disabled={mutation.isPending}
                                     >
-                                        {isSubmitting ? (
-                                            <div className='animate-spin rounded-full h-6 w-6 border-b-2 border-gray-400'></div>
+                                        {mutation.isPending ? (
+                                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-400" />
                                         ) : (
                                             'Enviar'
                                         )}

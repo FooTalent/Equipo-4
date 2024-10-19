@@ -30,7 +30,7 @@ const Login = () => {
       .min(8, 'Una contraseña tiene que tener un minimo de 8 caracteres')
       .max(35, 'Una contraseña no puede tener que tener más que 35 caracteres')
       .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/,
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d\s])[A-Za-z\d@$!%*#?&_/]{8,}$/,
         'La contraseña debe contener al menos una letra, un número y un carácter especial')
   });
   const form = useForm({
@@ -57,7 +57,7 @@ const Login = () => {
         if (user.primerIngreso === 'true') {
           navigate('/auth/familia/personalizar');
         } else {
-          navigate('/');
+          navigate('/familia');
         }
       }
     }

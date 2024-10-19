@@ -2,13 +2,26 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { MdArrowBackIosNew } from 'react-icons/md';
+import { useEffect } from 'react';
+import useAuthStore from '@/store/user';
 
 function ContratoConfidencialidad() {
   const navigate = useNavigate();
-
+  const user =useAuthStore((state) => state.user);
   const handleBack = () => {
     navigate('/auth/familia/personalizar');
   };
+  useEffect(() => {
+    if (user) {
+      if (user.tipoUsuario === 'FAMILIA') {
+        if (user.primerIngreso === 'false') {
+          navigate('/familia');
+        }
+      }
+      if (user.tipoUsuario === 'ADMIN') navigate('/admin/dashboard');
+    }
+    if (!user) navigate('/auth');
+  }, [user, navigate]);
 
   return (
     <div className='relative md:bg-grayDefault py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4'>
