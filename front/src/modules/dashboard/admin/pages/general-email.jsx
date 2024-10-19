@@ -22,7 +22,6 @@ import { sendGeneralEmailApi } from '@/modules/dashboard/admin/api';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 export default function GeneralEmail() {
     const navigate = useNavigate();
 
@@ -32,9 +31,9 @@ export default function GeneralEmail() {
             .required('Debe seleccionar los destinatarios'),
         titulo: yup
             .string()
-            .required('El asunto es requerido')
-            .min(3, 'El asunto debe tener al menos 3 caracteres')
-            .max(100, 'El asunto no puede tener más de 100 caracteres'),
+            .required('El título es requerido')  // Cambia "El asunto es requerido" a "El título es requerido"
+            .min(3, 'El título debe tener al menos 3 caracteres')  // Cambia "asunto" a "título"
+            .max(100, 'El título no puede tener más de 100 caracteres'),
         mensaje: yup
             .string()
             .required('El mensaje es requerido')
@@ -50,20 +49,20 @@ export default function GeneralEmail() {
         }
     });
 
+
     const mutation = useMutation({
         mutationFn: sendGeneralEmailApi,
         onSuccess: () => {
-            console.log('✅ Respuesta exitosa del servidor:', response);
             toast.success('Email enviado exitosamente');
             navigate('/admin/dashboard');
         },
-        onError: () => {
+        onError: (error) => {
             console.error('❌ Error del servidor:', error);
             toast.error('Ha ocurrido un error al enviar el email');
-        },
+        }
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log('📨 Datos a enviar:', {
             destinatario: data.destinatario,
             titulo: data.titulo,
@@ -82,12 +81,15 @@ export default function GeneralEmail() {
                 <div className="h-full relative p-0 grid md:flex md:flex-col gap-6 max-w-6xl mx-auto px-2 md:px-4 md:py-4 md:h-3/4 md:bg-white md:w-[650px] md:rounded-lg md:border-0 md:mx-auto">
                     <div className="flex flex-col gap-4">
                         <div className="flex md:flex-col gap-2 md:gap-5">
-                            <img
+                            <button
                                 onClick={() => navigate('/admin/dashboard')}
-                                src="/common/arrow-left.svg"
-                                alt="Regresar a la página principal"
                                 className="self-start pt-2 md:pt-0 hover:cursor-pointer"
-                            />
+                            >
+                                <img
+                                    src="/common/arrow-left.svg"
+                                    alt="Regresar a la página principal"
+                                />
+                            </button>
                             <p className="self-center -mb-2 md:-mb-0 text-2xl md:w-full">
                                 E-mail General
                             </p>
@@ -95,7 +97,7 @@ export default function GeneralEmail() {
                     </div>
 
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
                             <div className="flex flex-col gap-6 md:-mt-0">
                                 <FormField
                                     control={form.control}
