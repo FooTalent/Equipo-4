@@ -53,17 +53,28 @@ export default function GeneralEmail() {
     const mutation = useMutation({
         mutationFn: sendGeneralEmailApi,
         onSuccess: () => {
+            console.log('✅ Respuesta exitosa del servidor:', response);
             toast.success('Email enviado exitosamente');
             navigate('/admin/dashboard');
         },
         onError: () => {
+            console.error('❌ Error del servidor:', error);
             toast.error('Ha ocurrido un error al enviar el email');
         },
     });
 
     const onSubmit = (data) => {
+        console.log('📨 Datos a enviar:', {
+            destinatario: data.destinatario,
+            titulo: data.titulo,
+            mensaje: data.mensaje
+        });
+
         mutation.mutate(data);
     };
+
+    const formValues = form.watch();
+    console.log('🔄 Valores actuales del formulario:', formValues);
 
     return (
         <AppLayout>
