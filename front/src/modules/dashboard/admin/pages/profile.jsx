@@ -139,10 +139,6 @@ export default function AdminProfile() {
                     disabled={!editFields.correo}
                     {...form.register('correo', { required: false })}
                   />
-                  <button type='button' onClick={() => updateEdit('correo')} className={`absolute top-2 right-2 ${editFields.correo ? 'hidden' : 'block'}`}><img src='/common/edit-input-field.svg' alt='editar' /></button>
-                  <button type='button' onClick={() => handleReset('correo')} className={`absolute top-2 right-2 ${editFields.correo ? 'block' : 'hidden'}`}><img src='/common/delete.svg' alt='borrar' /></button>
-                  <button type='button' onClick={() => updateEdit('correo')} className={`absolute top-2 text-green-700 right-9 ${editFields.correo ? 'block' : 'hidden'}`}><img src='/common/save.svg' alt='borrar' className='text-green-400' /></button>
-                  {form.formState.errors && <p className='text-red-500 text-sm py-1'>{form?.formState?.errors?.correo?.message}</p>}
                 </div>
               </div>
               <div className='h-full md:mt-0 flex flex-col justify-end gap-2'>

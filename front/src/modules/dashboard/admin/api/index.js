@@ -80,7 +80,7 @@ export const getAllMentoringApi = async () => {
       error.status < 500
       ? 'No se pudo acceder al listado de mentorias'
       : 'Un error ha ocurrido';
-  };
+  }
 };
 
 export const getFamilyByIdApi = async (id) => {
@@ -153,12 +153,12 @@ export const searchFamilyApi = async (id) => {
 };
 
 export const sendGeneralEmailApi = async (values) => {
-  const { destinatarios, asunto, mensaje } = values;
+  const { destinatario, titulo, mensaje } = values;
   try {
-    console.log('Datos enviados a la API:', { destinatarios, asunto, mensaje });
+    console.log('Datos enviados a la API:', { destinatario, titulo, mensaje });
     const response = await AxiosBase.post('/email/general', {
-      destinatarios,
-      asunto,
+      destinatario,
+      titulo,
       mensaje
     });
     console.log('Respuesta de la API:', response.data);
@@ -171,4 +171,4 @@ export const sendGeneralEmailApi = async (values) => {
       ? 'No se pudo enviar el email'
       : 'Un error ha ocurrido';
   }
-};;
+};
