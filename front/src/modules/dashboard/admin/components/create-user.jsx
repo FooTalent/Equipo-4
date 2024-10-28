@@ -94,7 +94,7 @@ export default function CreateUser() {
       {
         nombre: data.nombre,
         apellido: data.apellido,
-        tipoUsuario: 'ADMIN',
+        tipoUsuario: data.tipoUsuario,
         correo: data.correo,
         contrasenaHash: data.contrasenaHash,
         cargo: data.cargo
@@ -210,6 +210,7 @@ export default function CreateUser() {
                     <Input
                       id='contrasenaHash'
                       name='contrasenaHash'
+                      type='password'
                       placeholder='Escriba contraseña'
                       className='border-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0'
                       {...form.register('contrasenaHash', { required: true })}
