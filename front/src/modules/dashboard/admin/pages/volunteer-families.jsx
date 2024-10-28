@@ -85,7 +85,6 @@ export default function VolunteerFamilies () {
                   </TableHeader>
                   <TableBody>
                     {currentFamilies.map((familia) => {
-                      console.log(familia); // Log to inspect each family object
                       return (
                         <TableRow key={familia.id}>
                           <TableCell className='w-[50%]'>{familia?.usuarioVoluntario?.nombre}</TableCell>
