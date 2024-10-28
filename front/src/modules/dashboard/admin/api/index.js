@@ -155,13 +155,11 @@ export const searchFamilyApi = async (id) => {
 export const sendGeneralEmailApi = async (values) => {
   const { destinatario, titulo, mensaje } = values;
   try {
-    console.log('Datos enviados a la API:', { destinatario, titulo, mensaje });
     const response = await AxiosBase.post('/email/general', {
       destinatario,
       titulo,
       mensaje
     });
-    console.log('Respuesta de la API:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error en la API:', error);

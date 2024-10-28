@@ -1,6 +1,4 @@
 const FamilyCard = ({ mentoring }) => {
-  console.log(mentoring);
-
   return (
     <div
       id='mentoringRequest-family-card'

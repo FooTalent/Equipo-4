@@ -28,10 +28,6 @@ export default function FamilyProfile() {
       toast.error('Ha ocurrido un error');
     },
   });
-  const onSubmit = (values) =>{
-    console.log(values);
-  };
-  console.log(familia);
   useEffect(() => {
     if (!user) navigate('/auth');
     if (user && user.tipoUsuario !== 'ADMIN') navigate('/familia');
@@ -56,7 +52,7 @@ export default function FamilyProfile() {
           <div className='flex flex-col gap-3'>
             <>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
+                <form>
                   <div>
                     {!isLoading && familia && <>
                       <section className={`${currentForm === 1 ? 'flex' : 'hidden'} flex-col gap-3 pt-4 md:pt-0`}>
