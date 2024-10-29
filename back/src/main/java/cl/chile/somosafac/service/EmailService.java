@@ -5,7 +5,6 @@ import cl.chile.somosafac.entity.UsuarioEntity;
 import cl.chile.somosafac.exception.custom.EmailSendException;
 import cl.chile.somosafac.exception.custom.InvalidEmailException;
 import cl.chile.somosafac.exception.custom.TemplateNotFoundException;
-import cl.chile.somosafac.repository.FamiliaRepository;
 import cl.chile.somosafac.repository.UsuarioRepository;
 import cl.chile.somosafac.security.Role;
 import jakarta.mail.internet.MimeMessage;
@@ -23,12 +22,10 @@ import java.util.stream.Collectors;
 public class EmailService {
     private final JavaMailSender mailSender;
     private final UsuarioRepository usuarioRepository;
-    private final FamiliaRepository familiaRepository;
 
-    public EmailService(JavaMailSender mailSender, UsuarioRepository usuarioRepository, FamiliaRepository familiaRepository) {
+    public EmailService(JavaMailSender mailSender, UsuarioRepository usuarioRepository) {
         this.mailSender = mailSender;
         this.usuarioRepository = usuarioRepository;
-        this.familiaRepository = familiaRepository;
     }
 
     public void enviarEmail(String email, String subject, String body) {
@@ -81,7 +78,7 @@ public class EmailService {
 
         List<String> destinatarios = new ArrayList<>();
 
-        if (emailDTO.getDestinatario().equals("Listado General")) {
+        if (emailDTO.getDestinatario().toLowerCase().equals("listado general")) {
             List<UsuarioEntity> usuarios = usuarioRepository.findByTipoUsuario(Role.ADMIN);
             System.out.println(usuarios);
 
