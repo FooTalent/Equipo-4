@@ -91,77 +91,84 @@ const Login = () => {
     mutation.mutate(data);
   };
   return (
-    <div className='relative md:bg-grayDefault py-8 h-screen grid md:flex md:flex-col md:gap-12 items-center px-4'>
+    <div className='h-screen grid lg:grid-cols-2 py-12 px-2 lg:px-0 text-center xl:max-w-6xl xl:mx-auto'>
       <Link className='block md:hidden absolute z-30 top-8 left-4' to={'/auth'}><MdArrowBackIosNew /></Link>
-      <Link to={'/auth'} className='hidden md:block top-4 left-4 w-full'>
-        <img src='/common/logo-phrase.svg' alt='family one' className=''/>
-      </Link>
-      <div className='max-w-md w-full space-y-8 bg-white md:shadow-lg md:mt-[6vh] md:h-fit md:mx-auto md:w-full md:p-5 md:rounded-xl'>
-        <div>
-          <h2 className='mt-6 text-3xl text-gray-900'>
-            Ingresa tus credenciales
-          </h2>
-        </div>
-        <Form {...form} className='border-0 outline-none '>
-          <form className='mt-8 space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
-            <div className='-space-y-px flex flex-col gap-3'>
-              <div className='mb-4 flex flex-col gap-3'>
-                <Label htmlFor='correo'>
+      <div className='relative'>
+        <div className='h-full w-full lg:max-w-lg lg:mx-0 space-y-8 bg-white'>
+          <div className='pt-[25%] md:pt-[15%] lg:pt-[25%]'>
+            <Link className='hidden md:block' to={'/auth'}><MdArrowBackIosNew /></Link>
+            <h2 className='mt-10 text-left text-3xl text-gray-900'>
+            Inicio de sesión
+            </h2>
+          </div>
+          <Form {...form} className='border-0 outline-none '>
+            <form className='mt-8 space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
+              <div className='-space-y-px flex flex-col gap-3 text-left'>
+                <div className='mb-4 flex flex-col gap-3'>
+                  <Label htmlFor='correo'>
                 Correo
-                </Label>
-                <Input
-                  id='correo'
-                  name='correo'
-                  type='text'
-                  className=' outline-none'
-                  placeholder='Escribe tu correo electrónico'
-                  {...form.register('correo', { required: true })}
-                />
-                {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.correo?.message}</p>}
+                  </Label>
+                  <Input
+                    id='correo'
+                    name='correo'
+                    type='text'
+                    className=' outline-none'
+                    placeholder='Escribe tu correo electrónico'
+                    {...form.register('correo', { required: true })}
+                  />
+                  {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.correo?.message}</p>}
+                </div>
+                <div className='mt-4 flex flex-col gap-3 relative'>
+                  <Label htmlFor='contrasenaHash'>Contraseña</Label>
+                  <IoIosEyeOff
+                    onClick={() => setShowPassword(!showPassword)}
+                    className={`${
+                      !showPassword ? 'block' : 'hidden'
+                    } absolute text-gray right-0 top-[36.6px] mr-2 hover:cursor-pointer`}
+                  />
+                  <IoIosEye
+                    onClick={() => setShowPassword(!showPassword)}
+                    className={`${
+                      showPassword ? 'block' : 'hidden'
+                    } absolute text-gray right-0 top-[36.6px] mr-2 hover:cursor-pointer`}
+                  />
+                  <Input
+                    id='contrasenaHash'
+                    name='contrasenaHash'
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder='Escribe tu contraseña'
+                    {...form.register('contrasenaHash', { required: true })}
+                  />
+                  {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.contrasenaHash?.message}</p>}
+                </div>
               </div>
-              <div className='mt-4 flex flex-col gap-3 relative'>
-                <Label htmlFor='contrasenaHash'>Contraseña</Label>
-                <IoIosEyeOff
-                  onClick={() => setShowPassword(!showPassword)}
-                  className={`${
-                    !showPassword ? 'block' : 'hidden'
-                  } absolute text-gray right-0 top-[36.6px] mr-2 hover:cursor-pointer`}
-                />
-                <IoIosEye
-                  onClick={() => setShowPassword(!showPassword)}
-                  className={`${
-                    showPassword ? 'block' : 'hidden'
-                  } absolute text-gray right-0 top-[36.6px] mr-2 hover:cursor-pointer`}
-                />
-                <Input
-                  id='contrasenaHash'
-                  name='contrasenaHash'
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder='Escribe tu contraseña'
-                  {...form.register('contrasenaHash', { required: true })}
-                />
-                {form.formState.errors && <p className='text-red-500 text-sm'>{form?.formState?.errors?.contrasenaHash?.message}</p>}
-              </div>
-            </div>
-            <div className='text-center text-sm'>
-              <Link to={'/auth/olvidar-contrasena'}
-                className=''>
+              <div className='text-center text-sm'>
+                <Link to={'/auth/olvidar-contrasena'}
+                  className=''>
                 ¿Necesitas recuperar la contraseña?
-              </Link>
-            </div>
-            <div>
-              <Button
-                type='submit'
-                disabled={mutation.isPending}
-                variant='orange'
-                className='w-full mt-4 md:mt-0 py-6'
-              >
-                {mutation.isPending ? <Spinner /> : 'Iniciar Sesión'}
-              </Button>
-            </div>
-          </form>
-        </Form>
+                </Link>
+              </div>
+              <div>
+                <Button
+                  type='submit'
+                  disabled={mutation.isPending}
+                  variant='orange'
+                  className='w-full mt-4 md:mt-0 py-6'
+                >
+                  {mutation.isPending ? <Spinner /> : 'Iniciar Sesión'}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
+        <div className='hidden lg:block lg:-mt-14'>
+          <img src='/common/logo-fondo-claro.svg' alt='family one' className=' max-w-48'/>
+        </div>
       </div>
+      <section className='hidden lg:flex relative justify-end'>
+        <img src='/auth/login-photo.svg' alt='una familia feliz' className='relative max-w-[500px]' />
+        <img src='/auth/Rectangle-auth-screens.svg' alt='' className='absolute top-8 left-0 max-w-[495px]'/>
+      </section>
     </div>
   );
 };
